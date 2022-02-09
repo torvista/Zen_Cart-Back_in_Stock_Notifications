@@ -60,12 +60,38 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 <p>Simply follow the instructions for the version of Back In Stock Notifications already installed..</p>
 
 <ol class="TableOfContents">
-	<li><a href="#upgrading-from-version-2-6-0-or-2-4-0">Upgrading to Version 3.0.1 from Version 2.6.0 or Version 2.4.0</a></li>
-	<li><a href="#upgrading-from-version-2-2-4-2-2-0">Upgrading to Version 3.0.1 from Version 2.0.0 - 2.2.4</a></li>
+	<li><a href="#upgrading-from-version-3-0-x">Upgrading to Version 3.0.2 from Version 3.0.x</a></li>
+	<li><a href="#upgrading-from-version-2-6-0-or-2-4-0">Upgrading to Version 3.0.2 from Version 2.6.0 or Version 2.4.0</a></li>
+	<li><a href="#upgrading-from-version-2-2-4-2-2-0">Upgrading to Version 3.0.2 from Version 2.0.0 - 2.2.4</a></li>
 </ol>
 
 
-<h2><a name="upgrading-from-version-2-6-0-or-2-4-0" id="upgrading-from-version-2-6-0-or-2-4-0"></a>Upgrading to Version 3.0.1 from Version 2.6.0 or Version 2.4.0</h2>
+<h2><a name="upgrading-from-version-2-6-0-or-2-4-0" id="upgrading-from-version-3-0-x"></a>Upgrading to Version 3.0.2 from Version 3.0.x</h2>
+<p>The changes between these versions are minor:</p>
+
+<ol class="InstallationSteps">
+	<li>
+		<h4>Updated Files for the store's &ldquo;admin&rdquo; folder</h4>
+		
+		<p>Two of the admin files have been updated.</p>
+		
+		<p>Overwrite the existing admin files with the updated files from version 3.0.2.</p>
+		
+		<p>Most Zen Cart stores have their admin directory renamed from the default of &ldquo;admin&rdquo;.</p>
+		<p>Copy all of the folders and files from the <span class="FileName">files/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
+		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folders/files in the <span class="FileName">files/admin</span> folder into the &ldquo;admin&rdquo; directory for the store will put the files in the correct locations.</p>
+		
+		<ul class="Steps">
+			<li>admin/includes/functions/back_in_stock_notifications_functions.php</li>
+			<li class="NoMarginBottom">admin/back_in_stock_notifications.php</li>
+		</ul>
+	</li>
+</ol>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+
+<h2><a name="upgrading-from-version-2-6-0-or-2-4-0" id="upgrading-from-version-2-6-0-or-2-4-0"></a>Upgrading to Version 3.0.2 from Version 2.6.0 or Version 2.4.0</h2>
 <p>The changes between these versions are major but fairly easy to make, especially if the store's versions of the template files are similar to a fresh Zen Cart installation's versions:</p>
 
 <ol class="InstallationSteps">
@@ -74,7 +100,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<p>All of the admin files have been updated.</p>
 		
-		<p>Overwrite all existing admin files with the updated files from version 3.0.1.</p>
+		<p>Overwrite all existing admin files with the updated files from version 3.0.2.</p>
 		
 		<p>Most Zen Cart stores have their admin directory renamed from the default of &ldquo;admin&rdquo;.</p>
 		<p>Copy all of the folders and files from the <span class="FileName">files/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
@@ -98,7 +124,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<p>All of the files in this folder have been updated.</p>
 		
-		<p>Overwrite all existing files in the <span class="FileName">includes</span> folder with the updated files from version 3.0.1.</p>
+		<p>Overwrite all existing files in the <span class="FileName">includes</span> folder with the updated files from version 3.0.2.</p>
 		
 		<p>Copy the <span class="FileName">includes</span> folder from the <span class="FileName">files</span> folder into the store's main directory.</p>
 		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folder into the root directory for the store will put the files in the correct locations.</p>
@@ -155,7 +181,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>
 		<h4>Updated BISN Template Files</h4>
 		
-		<p>If the any of the following files exist in the store's templates directory, they must be updated as the files have been updated for version 3.0.1.</p>
+		<p>If the any of the following files exist in the store's templates directory, they must be updated as the files have been updated for version 3.0.2.</p>
 		
 		<ul class="Steps">
 			<li>includes/templates/STORE-TEMPLATE/templates/inc.html.back_in_stock_notifications.html</li>
@@ -215,7 +241,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 <p class="BackToTop"><a href="#top">Back to top</a></p>
 
 
-<h2><a name="upgrading-from-version-2-2-4-2-2-0" id="upgrading-from-version-2-2-4-2-2-0"></a>Upgrading to Version 3.0.1 from Version 2.0.0 - 2.2.4</h2>
+<h2><a name="upgrading-from-version-2-2-4-2-2-0" id="upgrading-from-version-2-2-4-2-2-0"></a>Upgrading to Version 3.0.2 from Version 2.0.0 - 2.2.4</h2>
 <p>The changes between these versions are major but fairly easy to make, especially if the store's versions of the template files are similar to a fresh Zen Cart installation's versions:</p>
 
 <ol class="InstallationSteps">
@@ -224,7 +250,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<p>All of the admin files have been updated.</p>
 		
-		<p>Overwrite all existing admin files with the updated files from version 3.0.1.</p>
+		<p>Overwrite all existing admin files with the updated files from version 3.0.2.</p>
 		
 		<p>Most Zen Cart stores have their admin directory renamed from the default of &ldquo;admin&rdquo;.</p>
 		<p>Copy all of the folders and files from the <span class="FileName">files/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
@@ -248,7 +274,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<p>All of the files in this folder have been updated.</p>
 		
-		<p>Overwrite all existing files in the <span class="FileName">includes</span> folder with the updated files from version 3.0.1.</p>
+		<p>Overwrite all existing files in the <span class="FileName">includes</span> folder with the updated files from version 3.0.2.</p>
 		
 		<p>Copy the <span class="FileName">includes</span> folder from the <span class="FileName">files</span> folder into the store's main directory.</p>
 		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folder into the root directory for the store will put the files in the correct locations.</p>
@@ -305,7 +331,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>
 		<h4>Updated BISN Template Files</h4>
 		
-		<p>If the any of the following files exist in the store's templates directory, they must be updated as the files have been updated for version 3.0.1.</p>
+		<p>If the any of the following files exist in the store's templates directory, they must be updated as the files have been updated for version 3.0.2.</p>
 		
 		<ul class="Steps">
 			<li>includes/templates/STORE-TEMPLATE/templates/inc.html.back_in_stock_notifications.html</li>

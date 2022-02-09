@@ -13,7 +13,7 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 719 2011-06-13 18:00:43Z conor $
+ * @version     $Id: back_in_stock_notifications.php 711 2011-06-12 17:37:26Z conor $
  */
 
 /**

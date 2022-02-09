@@ -1,4 +1,4 @@
-// $Id: inc.js.crossfade.js 719 2011-06-13 18:00:43Z conor $
+// $Id: inc.js.crossfade.js 708 2011-06-11 14:02:26Z conor $
 
 /**
  * @fileoverview Contains crossfade functions, used to fade between a list of HTML elements which

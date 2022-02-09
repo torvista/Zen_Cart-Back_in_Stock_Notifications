@@ -14,7 +14,7 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications_functions.php 719 2011-06-13 18:00:43Z conor $
+ * @version     $Id: back_in_stock_notifications_functions.php 816 2011-08-14 10:57:16Z conor $
  */
 
 
@@ -130,7 +130,7 @@ function sendBackInStockNotifications($test_mode = false)
 					zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'products_id=' .
 					$products_result->fields['product_id']) . '" target="_blank">' .
 					htmlentities($products_result->fields['products_name'], ENT_COMPAT, CHARSET) .
-					'</a></p>';
+					'</a></p>' . "\n";
 				
 				$products_result->MoveNext();
 			}
@@ -392,7 +392,7 @@ function buildLinkToProductAdminPage($name, $id, $products_type)
 	$name_length = 55;
 	
 	$new_name = '<a href="' . zen_href_link($type_admin_handler, 'pID=' . $id . '&product_type=' .
-		$products_type . '&action=new_product', 'SSL', true, true, false, false) . '" title="' .
+		$products_type . '&action=new_product', 'NONSSL', true, true, false, false) . '" title="' .
 		htmlentities($name, ENT_COMPAT, CHARSET) . '" target="_blank">' .
 		htmlentities(substr($name, 0, $name_length), ENT_COMPAT, CHARSET) .
 		(strlen($name) > $name_length ? '...' : '') . '</a>'; 

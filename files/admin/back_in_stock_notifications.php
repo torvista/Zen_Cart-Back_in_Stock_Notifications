@@ -12,17 +12,17 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 719 2011-06-13 18:00:43Z conor $
+ * @version     $Id: back_in_stock_notifications.php 816 2011-08-14 10:57:16Z conor $
  */
 
 /**
  * Version info - don't touch!
  */
-define('CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION', '3.0.1');
+define('CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION', '3.0.2');
 
 require('includes/application_top.php');
 
-require_once(DIR_FS_ADMIN . DIR_WS_FUNCTIONS . 'back_in_stock_notifications_functions.php');
+require_once(DIR_WS_FUNCTIONS . 'back_in_stock_notifications_functions.php');
 
 $bisn_options = array (
 	0 => array(
@@ -97,7 +97,7 @@ switch($_GET['option']){
 				$products_query_raw .= ' ORDER BY cd.categories_name, pd.products_name';
 		}
 		
-		$products_query_raw = strtolower(str_replace("\n", ' ', $products_query_raw));
+		$products_query_raw = str_replace("\n", ' ', $products_query_raw);
 		$products_query_raw = str_replace("\r", ' ', $products_query_raw);
 		$products_query_raw = str_replace("\t", ' ', $products_query_raw);
 		
@@ -178,7 +178,7 @@ switch($_GET['option']){
 					' bisns.date_subscribed DESC';
 		}
 		
-		$subscriptions_query_raw = strtolower(str_replace("\n", ' ', $subscriptions_query_raw));
+		$subscriptions_query_raw = str_replace("\n", ' ', $subscriptions_query_raw);
 		$subscriptions_query_raw = str_replace("\r", ' ', $subscriptions_query_raw);
 		$subscriptions_query_raw = str_replace("\t", ' ', $subscriptions_query_raw);
 		

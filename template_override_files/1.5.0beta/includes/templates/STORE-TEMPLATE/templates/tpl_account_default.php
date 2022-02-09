@@ -9,7 +9,7 @@
  * @copyright Copyright 2003-2005 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: tpl_account_default.php 358 2009-04-30 08:21:08Z Bob $
+ * @version $Id: tpl_account_default.php 4086 2006-08-07 02:06:18Z ajeh $
  */
 ?>
 
@@ -81,7 +81,6 @@
 <li><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_NEWSLETTERS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_NEWSLETTERS . '</a>'; ?></li>
 <?php } //endif newsletter unsubscribe ?>
 <?php
-
 // BEGIN CEON BACK IN STOCK NOTIFICATIONS 3 of 3
   if (BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
       if ($subscribed_to_notification_lists) {
@@ -91,7 +90,6 @@
       }
   }
 // END CEON BACK IN STOCK NOTIFICATIONS 3 of 3
-
   if (CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS == '1') {
 ?>
 <li><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_NOTIFICATIONS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_PRODUCTS . '</a>'; ?></li>

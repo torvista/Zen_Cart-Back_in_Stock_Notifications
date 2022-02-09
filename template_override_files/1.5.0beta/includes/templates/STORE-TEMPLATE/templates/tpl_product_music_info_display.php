@@ -2,20 +2,20 @@
 /**
  * Page Template
  *
- * Loaded automatically by index.php?main_page=product_free_shipping_info.<br />
- * Displays details of a "free-shipping" product (provided it is assigned to the product-free-shipping product type)
+ * Loaded automatically by index.php?main_page=product_music_info.<br />
+ * Displays details of a music product
  *
  * @package templateSystem
  * @copyright Copyright 2003-2006 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: tpl_product_free_shipping_info_display.php 391 2010-02-26 20:28:09Z conor $
+ * @version $Id: tpl_product_music_info_display.php 5369 2006-12-23 10:55:52Z drbyte $
  */
 ?>
-<div class="centerColumn" id="productFreeShipdisplay">
+<div class="centerColumn" id="productMusicDisplay">
 
 <!--bof Form start-->
-<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product'), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
+<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product', $request_type), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
 <!--eof Form start-->
 
 <?php if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>
@@ -55,11 +55,11 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
 <!--eof Main Product Image-->
 
 <!--bof Product Name-->
-<h1 id="productName" class="freeShip"><?php echo $products_name; ?></h1>
+<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
 <!--eof Product Name-->
 
 <!--bof Product Price block -->
-<h2 id="productPrices" class="freeShip">
+<h2 id="productPrices" class="productGeneral">
 <?php
 // base price
   if ($show_onetime_charges_description == 'true') {
@@ -79,7 +79,7 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
 
  <!--bof Product description -->
 <?php if ($products_description != '') { ?>
-<div id="productDescription" class="freeShip biggerText"><?php echo stripslashes($products_description); ?></div>
+<div id="productDescription" class="productGeneral biggerText"><?php echo stripslashes($products_description); ?></div>
 <?php } ?>
 <!--eof Product description -->
 <br class="clearBoth" />
@@ -90,7 +90,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
   // do nothing
 } else {
 ?>
-<?php
+            <?php
     $display_qty = (($flag_show_product_info_in_cart_qty == 1 and $_SESSION['cart']->in_cart($_GET['products_id'])) ? '<p>' . PRODUCTS_ORDER_QTY_TEXT_IN_CART . $_SESSION['cart']->get_quantity($_GET['products_id']) . '</p>' : '');
             if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
               // hide the quantity box and default to 1
@@ -106,11 +106,11 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
     <?php
       echo $display_qty;
       echo $display_button;
-// BEGIN BACK_IN_STOCK_NOTIFICATIONS 1 of 2
+// BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 2
 if (!is_null($product_back_in_stock_notification_form_link)) {
   echo '<p>' . $product_back_in_stock_notification_form_link . '</p>';
 }
-// END BACK_IN_STOCK_NOTIFICATIONS 1 of 2
+// END CEON BACK IN STOCK NOTIFICATIONS 1 of 2
             ?>
           </div>
   <?php } // display qty and button ?>
@@ -118,12 +118,14 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
 <!--eof Add to Cart Box-->
 
 <!--bof Product details list  -->
-<?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) ) { ?>
+<?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) or $flag_show_product_music_info_artist == 1 or $flag_show_product_music_info_genre == 1) { ?>
 <ul id="productDetailsList" class="floatingBox back">
   <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_quantity == 1) ? '<li>' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
+  <?php echo (($flag_show_product_music_info_artist == 1 and !empty($products_artist_name)) ? '<li>' . TEXT_PRODUCT_ARTIST . $products_artist_name . '</li>' : '') . "\n"; ?>
+  <?php echo (($flag_show_product_music_info_genre == 1 and !empty($products_music_genre_name)) ? '<li>' . TEXT_PRODUCT_MUSIC_GENRE . $products_music_genre_name . '</li>' : '') . "\n"; ?>
 </ul>
 <br class="clearBoth" />
 <?php
@@ -157,6 +159,16 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
   }
 ?>
 <!--eof Quantity Discounts table -->
+
+<!--bof Media Manager -->
+<div id="mediaManager" class="productMusic"><?php
+/**
+ * display the products related media clips
+ */
+ require($template->get_template_dir('/tpl_modules_media_manager.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_media_manager.php'); ?>
+<br class="clearBoth" /></div>
+<!--eof Media Manager -->
+<br class="clearBoth" />
 
 <!--bof Additional Product Images -->
 <?php
@@ -208,13 +220,13 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
   if ($products_date_available > date('Y-m-d H:i:s')) {
     if ($flag_show_product_info_date_available == 1) {
 ?>
-  <p id="productDateAvailable" class="freeShip centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
+  <p id="productDateAvailable" class="productMusic centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
 <?php
     }
   } else {
     if ($flag_show_product_info_date_added == 1) {
 ?>
-      <p id="productDateAdded" class="freeShip centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
+      <p id="productDateAdded" class="productMusic centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
 <?php
     } // $flag_show_product_info_date_added
   }
@@ -223,12 +235,12 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
 
 <!--bof Product URL -->
 <?php
-  if (zen_not_null($products_url)) {
-    if ($flag_show_product_info_url == 1) {
+  if (zen_not_null($products_record_company_url)) {
+    if ($flag_show_product_music_info_record_company == 1) {
 ?>
-    <p id="productInfoLink" class="freeShip centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=url&goto=' . urlencode($products_url), 'NONSSL', true, false)); ?></p>
+    <p id="productInfoLink" class="productMusic centeredContent"><?php echo sprintf(TEXT_RECORD_COMPANY_URL, zen_href_link(FILENAME_REDIRECT, 'action=url&goto=' . urlencode($products_record_company_url), 'NONSSL', true, false)); ?></p>
 <?php
-    } // $flag_show_product_info_url
+    } // $flag_show_product_info_record_company
   }
 ?>
 <!--eof Product URL -->
@@ -240,8 +252,7 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
 <!--bof Form close-->
 </form>
 <!--bof Form close-->
-
-<?php // BEGIN BACK_IN_STOCK_NOTIFICATIONS 2 of 2
+<?php // BEGIN CEON BACK IN STOCK NOTIFICATIONS 2 of 2
 if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification_build_form) {
   // Build the notification request form
   
@@ -251,7 +262,8 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   require_once(DIR_FS_CATALOG . DIR_WS_CLASSES . 'class.CeonXHTMLHiTemplate.php');
   
   // Load in and extract the template parts for Back In Stock Notification functionality
-  $bisn_template_filename = DIR_FS_CATALOG . DIR_WS_TEMPLATES . 'template_default/templates/' .
+  $bisn_template_filename = $template->get_template_dir('inc.html.back_in_stock_notifications.html',
+    DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/' .
     'inc.html.back_in_stock_notifications.html';
   
   $bisn_template = new CeonXHTMLHiTemplate($bisn_template_filename);
@@ -289,7 +301,7 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   
   // Add in the introductory text
   $intro_text = sprintf(BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO,
-    htmlentities($products_name));
+    htmlentities($products_name, ENT_COMPAT, CHARSET));
   $notice_text = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE;
   $back_in_stock_notification_form->setVariable('intro', $intro_text);
   $back_in_stock_notification_form->setVariable('notice', $notice_text);
@@ -304,6 +316,5 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   
   print $back_in_stock_notification_form->getXHTMLSource();
 }
-// END BACK_IN_STOCK_NOTIFICATIONS 2 of 2 ?>
-
+// END CEON BACK IN STOCK NOTIFICATIONS 2 of 2 ?>
 </div>

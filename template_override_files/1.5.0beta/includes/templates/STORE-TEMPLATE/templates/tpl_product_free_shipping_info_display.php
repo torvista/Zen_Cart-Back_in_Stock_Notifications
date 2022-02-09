@@ -9,13 +9,13 @@
  * @copyright Copyright 2003-2006 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: tpl_product_free_shipping_info_display.php 391 2010-02-26 20:28:09Z conor $
+ * @version $Id: tpl_product_free_shipping_info_display.php 5369 2006-12-23 10:55:52Z drbyte $
  */
 ?>
 <div class="centerColumn" id="productFreeShipdisplay">
 
 <!--bof Form start-->
-<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product'), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
+<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product', $request_type), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
 <!--eof Form start-->
 
 <?php if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>
@@ -240,7 +240,6 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
 <!--bof Form close-->
 </form>
 <!--bof Form close-->
-
 <?php // BEGIN BACK_IN_STOCK_NOTIFICATIONS 2 of 2
 if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification_build_form) {
   // Build the notification request form
@@ -305,5 +304,4 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   print $back_in_stock_notification_form->getXHTMLSource();
 }
 // END BACK_IN_STOCK_NOTIFICATIONS 2 of 2 ?>
-
 </div>

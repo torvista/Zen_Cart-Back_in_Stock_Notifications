@@ -11,7 +11,7 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notification_unsubscribe.php 719 2011-06-13 18:00:43Z conor $
+ * @version     $Id: back_in_stock_notification_unsubscribe.php 710 2011-06-11 14:32:06Z conor $
  */
 
 define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_NAVBAR_TITLE', 'Suppression de Notification de Réapprovisionnement');
