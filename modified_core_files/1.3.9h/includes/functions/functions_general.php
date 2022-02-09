@@ -7,7 +7,7 @@
  * @copyright Copyright 2003-2010 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: functions_general.php 15831 2010-04-05 16:38:55Z wilt $
+ * @version $Id: functions_general.php 16312 2010-05-22 08:13:42Z wilt $
  */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
@@ -1195,7 +1195,7 @@ if (!defined('IS_ADMIN_FLAG')) {
             
             $product_back_in_stock_notification_form_link = sprintf(
               BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK,
-              zen_href_link(FILENAME_PRODUCT_INFO, $params, 'NONSSL') .
+              zen_href_link(zen_get_info_page($product_id), $params, 'NONSSL') .
               '#back_in_stock_notification_form');
           }
           

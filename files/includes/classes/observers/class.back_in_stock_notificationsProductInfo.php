@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Back In Stock Notifications Product Info Page Notification Form Display
+ * Ceon Back In Stock Notifications Product Info Page Notification Form Display.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: class.back_in_stock_notificationsProductInfo.php 710 2011-06-11 14:32:06Z conor $
+ * @version     $Id: class.back_in_stock_notificationsProductInfo.php 937 2012-02-10 11:42:20Z conor $
  */
 
 // {{{ class back_in_stock_notificationsProductInfo
@@ -20,12 +20,11 @@
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: class.back_in_stock_notificationsProductInfo.php 710 2011-06-11 14:32:06Z conor $
  */
 class back_in_stock_notificationsProductInfo extends base
 {
@@ -48,7 +47,7 @@ class back_in_stock_notificationsProductInfo extends base
 	
 	function update($callingClass, $notifier, $paramsArray)
 	{
-		global $db, $products_quantity,
+		global $db, $request_type, $products_quantity,
 			$product_back_in_stock_notification_form_link,
 			$back_in_stock_notification_build_form,
 			$back_in_stock_notification_form_customer_name,
@@ -84,7 +83,7 @@ class back_in_stock_notificationsProductInfo extends base
 					FROM
 						" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
 					WHERE
-						product_id = '" . (int)$_GET['products_id'] . "'
+						product_id = '" . (int) $_GET['products_id'] . "'
 					AND
 						(
 							customer_id = '"  . (int) $_SESSION['customer_id'] . "'
@@ -98,6 +97,7 @@ class back_in_stock_notificationsProductInfo extends base
 				if ($already_to_be_notified->RecordCount() > 0) {
 					// Customer is already subscribed to the notification list for this product
 					$back_in_stock_notification_build_form = false;
+					
 					$product_back_in_stock_notification_form_link =
 						BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED;
 				} else {
@@ -121,7 +121,8 @@ class back_in_stock_notificationsProductInfo extends base
 				// Build link to form
 				$product_back_in_stock_notification_form_link = sprintf(
 					BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-					zen_href_link(FILENAME_PRODUCT_INFO, zen_get_all_get_params(), 'NONSSL') .
+					zen_href_link(zen_get_info_page((int) $_GET['products_id']),
+					zen_get_all_get_params(array('number_of_uploads')), $request_type) .
 					'#back_in_stock_notification_form');
 			}
 		}

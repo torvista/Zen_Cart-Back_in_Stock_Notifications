@@ -1,4 +1,4 @@
-// $Id: inc.js.restrict-width.js 708 2011-06-11 14:02:26Z conor $
+// $Id: inc.js.restrict-width.js 904 2012-01-01 17:24:17Z conor $
 
 /**
  * @fileoverview Contains CeonRestrictWidth class, which can be used to restrict the width of a
@@ -13,7 +13,7 @@
  *
  * @class       CeonRestrictWidth
  * @author      Conor Kerr
- * @copyright   2008-2011 Ceon (http://ceon.net)
+ * @copyright   2008-2012 Ceon (http://ceon.net)
  * @version     2.0.0
  * @param       min_width_val   {integer}   The minimum width the div can be (in pixels).
  * @param       max_width_val   {integer}   The maximum width the div can be (in pixels).

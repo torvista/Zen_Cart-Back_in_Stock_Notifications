@@ -1,20 +1,21 @@
 <?php
 
 /**
- * Back In Stock Notifications Account Notifications Management Page.
+ * Ceon Back In Stock Notifications Account Notifications Management Page.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 710 2011-06-11 14:32:06Z conor $
+ * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
  */
 
 if (!$_SESSION['customer_id']) {
 	$_SESSION['navigation']->set_snapshot();
+	
 	zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
 }
 
@@ -22,6 +23,7 @@ require(DIR_FS_CATALOG . DIR_WS_MODULES . 'require_languages.php');
 
 $breadcrumb->add(ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_1, zen_href_link(FILENAME_ACCOUNT,
 	'', 'SSL'));
+
 $breadcrumb->add(ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_2);
 
 if (isset($_POST['back']) || isset($_POST['back_x'])) {
@@ -135,10 +137,13 @@ if (isset($_POST['submit']) || isset($_POST['submit_x'])) {
 		// Let user know that they were successfully unsubscribed
 		if ($num_unsubscribe_from == 1) {
 			$intro_success = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_SUCCESSFULLY_UNSUBSCRIBED_SINGULAR;
+			
 			$intro_unsubscribed_products =
 				htmlentities($unsubscribe_from[0]['product_name'], ENT_COMPAT, CHARSET);
+			
 		} else {
 			$intro_success = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_SUCCESSFULLY_UNSUBSCRIBED_PLURAL;
+			
 			for ($i = 0; $i < $num_unsubscribe_from; $i++) {
 				$intro_unsubscribed_products .=
 					htmlentities($unsubscribe_from[$i]['product_name'], ENT_COMPAT, CHARSET) .

@@ -9,7 +9,7 @@
  * @copyright Copyright 2003-2006 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: tpl_document_product_info_display.php 5369 2006-12-23 10:55:52Z drbyte $
+ * @version $Id: tpl_document_product_info_display.php 16242 2010-05-08 16:05:40Z ajeh $
  */
 ?>
 <div class="centerColumn" id="docProductDisplay">
@@ -106,11 +106,11 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
     <?php
       echo $display_qty;
       echo $display_button;
-// BEGIN BACK_IN_STOCK_NOTIFICATIONS 1 of 2
+// BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 2
 if (!is_null($product_back_in_stock_notification_form_link)) {
   echo '<p>' . $product_back_in_stock_notification_form_link . '</p>';
 }
-// END BACK_IN_STOCK_NOTIFICATIONS 1 of 2
+// END CEON BACK IN STOCK NOTIFICATIONS 1 of 2
             ?>
           </div>
   <?php } // display qty and button ?>
@@ -249,7 +249,8 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   require_once(DIR_FS_CATALOG . DIR_WS_CLASSES . 'class.CeonXHTMLHiTemplate.php');
   
   // Load in and extract the template parts for Back In Stock Notification functionality
-  $bisn_template_filename = DIR_FS_CATALOG . DIR_WS_TEMPLATES . 'template_default/templates/' .
+  $bisn_template_filename = $template->get_template_dir('inc.html.back_in_stock_notifications.html',
+    DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/' .
     'inc.html.back_in_stock_notifications.html';
   
   $bisn_template = new CeonXHTMLHiTemplate($bisn_template_filename);
@@ -265,17 +266,20 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   // Add the form action, titles, labels and button
   $form_start_tag = zen_draw_form('back_in_stock_notification',
     zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE, zen_get_all_get_params(),
-    'NONSSL'), 'POST');
+    $request_type), 'POST');
+  
   $back_in_stock_notification_form->setVariable('back_in_stock_notification_form_start_tag',
     $form_start_tag);
   
   $product_back_in_stock_notification_form_title = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE;
+  
   $back_in_stock_notification_form->setVariable('title',
     $product_back_in_stock_notification_form_title);
   
   $name_label = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_NAME;
   $email_label = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_EMAIL;
   $email_confirmation_label = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_CONFIRM_EMAIL;
+  
   $back_in_stock_notification_form->setVariable('name_label', $name_label);
   $back_in_stock_notification_form->setVariable('email_label', $email_label);
   $back_in_stock_notification_form->setVariable('email_confirmation_label',
@@ -287,8 +291,9 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   
   // Add in the introductory text
   $intro_text = sprintf(BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO,
-    htmlentities($products_name));
+    htmlentities($products_name, ENT_COMPAT, CHARSET));
   $notice_text = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE;
+  
   $back_in_stock_notification_form->setVariable('intro', $intro_text);
   $back_in_stock_notification_form->setVariable('notice', $notice_text);
   
@@ -302,5 +307,5 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
   
   print $back_in_stock_notification_form->getXHTMLSource();
 }
-// END BACK_IN_STOCK_NOTIFICATIONS 2 of 2 ?>
+// END CEON BACK IN STOCK NOTIFICATIONS 2 of 2 ?>
 </div>

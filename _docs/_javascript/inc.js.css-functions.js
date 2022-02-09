@@ -1,4 +1,4 @@
-// $Id: inc.js.css-functions.js 708 2011-06-11 14:02:26Z conor $
+// $Id: inc.js.css-functions.js 904 2012-01-01 17:24:17Z conor $
 
 /**
  * Looks for the very last occurrence (and therefore most significant) of a specified CSS style in
@@ -6,7 +6,7 @@
  * type can be specified to limit the search to that media type only.
  *
  * @author      Conor Kerr
- * @copyright   2008-2011 Ceon (http://ceon.net)
+ * @copyright   2008-2012 Ceon (http://ceon.net)
  * @param       selector  {string}   The selector for the style.
  * @param       media     {string}   The optional media type for the style.
  * @returns     {CSSStyle,boolean}   The CSSStyle object matching or false if not found.
@@ -149,7 +149,7 @@ function CeonSearchStyleSheetForCSSStyleRule(ss, selector, media)
  * Creates a new stylesheet of the specified media type and adds it to the current document.
  *
  * @author      Conor Kerr
- * @copyright   2008-2011 Ceon (http://ceon.net)
+ * @copyright   2008-2012 Ceon (http://ceon.net)
  * @param       media     {string}   The optional media type to assign to the newly created
  *                                   stylesheet.
  */

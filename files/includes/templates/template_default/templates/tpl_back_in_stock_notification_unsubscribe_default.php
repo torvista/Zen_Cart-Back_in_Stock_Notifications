@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Zen Cart : Back In Stock Notification Unsubscribe
+ * Ceon Back In Stock Notification Unsubscribe Page Template.
  *
  * Allows users to unsubscribe from a "Back In Stock" notification list for a given product.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: tpl_back_in_stock_notification_unsubscribe_default.php 710 2011-06-11 14:32:06Z conor $
+ * @version     $Id: tpl_back_in_stock_notification_unsubscribe_default.php 935 2012-02-06 14:08:25Z conor $
  */
 
 ?>
@@ -46,35 +46,41 @@ if ($action == 'display_details') {
 	
 	// Add the form action, titles and button
 	$form_start_tag = zen_draw_form('back_in_stock_notification',
-		zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE, '', 'NONSSL'), 'POST');
+		zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE, '', $request_type), 'POST');
+	
 	$back_in_stock_notification_unsubscribe_form->setVariable(
 		'back_in_stock_notification_unsubscribe_form_start_tag', $form_start_tag);
 	
 	// Build and add the back button
-	$back_button = '<a href="' . zen_href_link(FILENAME_DEFAULT, '', 'NONSSL') . '">' .
+	$back_button = '<a href="' . zen_href_link(FILENAME_DEFAULT, '', $request_type) . '">' .
 		zen_image_button(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT) . '</a>';
+	
 	$back_in_stock_notification_unsubscribe_form->setVariable('back_button', $back_button);
 	
 	// Build and add the submit button
 	$submit_button = zen_image_submit(BUTTON_IMAGE_UNSUBSCRIBE, BUTTON_UNSUBSCRIBE,
 		'name="confirm"');
+	
 	$back_in_stock_notification_unsubscribe_form->setVariable('submit_button', $submit_button);
 	
 	// Add in the introductory text
 	$message_text = sprintf(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_FORM_MESSAGE,
 		htmlentities($product_name, ENT_COMPAT, CHARSET), htmlentities(BUTTON_UNSUBSCRIBE,
 		ENT_COMPAT, CHARSET));
+	
 	$back_in_stock_notification_unsubscribe_form->setVariable('message', $message_text);
 	
 	// Add in the data about the notification to be unsubscribed from!
 	$back_in_stock_notification_unsubscribe_form->setVariable('id',
 		$back_in_stock_notification_id);
+	
 	$back_in_stock_notification_unsubscribe_form->setVariable('code',
 		$back_in_stock_notification_code);
 	
 	$back_in_stock_notification_unsubscribe_form->cleanSource();
 	
 	print $back_in_stock_notification_unsubscribe_form->getXHTMLSource();
+	
 } else {
 	// Build an error/success message
 	$back_in_stock_notification_unsubscribe_success = new CeonXHTMLHiTemplate;
@@ -93,14 +99,15 @@ if ($action == 'display_details') {
 	
 	// Build and add the continue button
 	$continue_button = '<a href="' . zen_href_link(FILENAME_DEFAULT, zen_get_all_get_params(),
-		'NONSSL') . '">' . zen_image_button(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT) . '</a>';
+		$request_type) . '">' . zen_image_button(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT) .
+		'</a>';
+	
 	$back_in_stock_notification_unsubscribe_success->setVariable('continue_button',
 		$continue_button);
 	
 	$back_in_stock_notification_unsubscribe_success->cleanSource();
 	
 	print $back_in_stock_notification_unsubscribe_success->getXHTMLSource();
-
 }
 
 ?>

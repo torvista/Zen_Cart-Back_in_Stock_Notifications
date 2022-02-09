@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Back In Stock Notifications functions.
+ * Ceon Back In Stock Notifications Functions.
  *
  * Main functions used to perform primary operations of the module. Can be used within a cron script
  * to automate Back In Stock notification functionality.
  * 
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2008 RubikIntegration team @ RubikIntegration.com
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications_functions.php 816 2011-08-14 10:57:16Z conor $
+ * @version     $Id: back_in_stock_notifications_functions.php 937 2012-02-10 11:42:20Z conor $
  */
 
 
@@ -122,12 +122,33 @@ function sendBackInStockNotifications($test_mode = false)
 					'name' => $products_result->fields['products_name']
 					);
 				
+				$product_type_result = $db->Execute("
+					SELECT
+						p.products_id,
+						pt.type_handler
+					FROM
+						" . TABLE_PRODUCTS . " p
+					LEFT JOIN
+						" . TABLE_PRODUCT_TYPES . " pt
+					ON
+						pt.type_id = p.products_type
+					WHERE
+						p.products_id = '" . (int) $products_result->fields['product_id'] . "'");
+				
+				if (!$product_type_result->EOF &&
+						!is_null($product_type_result->fields['type_handler']) &&
+						strlen($product_type_result->fields['type_handler']) > 0) {
+					$product_page = $product_type_result->fields['type_handler'] . '_info';
+				} else {
+					$product_page = 'product_info';
+				}
+				
 				$plain_text_msg .= $products_result->fields['products_name'] . "\n\n" . EMAIL_LINK .
-					zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'products_id=' .
+					zen_catalog_href_link($product_page, 'products_id=' .
 					$products_result->fields['product_id']) . "\n\n\n";
 				
 				$html_msg .= '<p class="BackInStockNotificationProduct">' . '<a href="' .
-					zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'products_id=' .
+					zen_catalog_href_link($product_page, 'products_id=' .
 					$products_result->fields['product_id']) . '" target="_blank">' .
 					htmlentities($products_result->fields['products_name'], ENT_COMPAT, CHARSET) .
 					'</a></p>' . "\n";

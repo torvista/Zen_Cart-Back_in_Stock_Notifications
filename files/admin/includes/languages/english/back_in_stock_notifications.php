@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Back In Stock Notifications Admin Language Definitions.
+ * Ceon Back In Stock Notifications Admin Language Definitions.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @author      Tony Niemann <tony@loosechicken.com>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 711 2011-06-12 17:37:26Z conor $
+ * @version     $Id: back_in_stock_notifications.php 937 2012-02-10 11:42:20Z conor $
  */
 
-define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Back In Stock Notifications');
+define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Ceon Back In Stock Notifications');
 
 define('TEXT_ACTION_TO_PERFORM', 'Action to Perform:');
 
@@ -23,6 +23,9 @@ define('TEXT_LIST_ALL_SUBSCRIPTIONS', 'List all subscriptions');
 define('TEXT_PREVIEW_NOTIFICATION_EMAILS', 'Perform a test run of notification e-mails to be sent');
 define('TEXT_SEND_NOTIFICATION_EMAILS', 'SEND NOTIFICATION E-MAILS for all subscribed products which are back in stock');
 define('TEXT_REMOVE_DELETED_PRODUCTS', 'Remove subscriptions for deleted products from database');
+
+define('TEXT_PRODUCTS_WITH_SUBSCRIPTIONS', 'Products with subscriptions');
+define('TEXT_ALL_SUBSCRIPTIONS', 'All subscriptions');
 
 define('TABLE_HEADING_PRODUCT_NAME', 'Product Name');
 define('TABLE_HEADING_PRODUCT_CATEGORY', 'Category');

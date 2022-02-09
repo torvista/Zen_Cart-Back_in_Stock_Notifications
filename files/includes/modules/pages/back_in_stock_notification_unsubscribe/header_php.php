@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Zen Cart : Back In Stock Notification Unsubscription page.
+ * Ceon Back In Stock Notifications Unsubscription page.
  *
  * Allows users to unsubscribe from a "Back In Stock" notification list for a given product.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 710 2011-06-11 14:32:06Z conor $
+ * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
  */
 
 /**
@@ -84,6 +84,7 @@ if ($action == 'display_details') {
 		BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_TITLE;
 	$back_in_stock_notification_unsubscribe_message =
 		BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_MESSAGE;
+	
 } else if ($action == 'unsubscribe') {
 	$unsubscribe_query = "
 		DELETE FROM

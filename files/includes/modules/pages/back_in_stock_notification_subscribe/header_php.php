@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Zen Cart : Back In Stock Notification Subscription page.
+ * Ceon Back In Stock Notification Subscription page.
  *
  * Allows users to subscribe to a "Back In Stock" notification list for a given product.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 711 2011-06-12 17:37:26Z conor $
+ * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
  */
 
 /**
@@ -63,28 +63,38 @@ if (isset($_POST['notify_me'])) {
 	if (isset($_POST['email'])) {
 		$_POST['email'] = trim($_POST['email']);
 	}
+	
 	if (isset($_POST['cofnospam'])) {
 		$_POST['cofnospam'] = trim($_POST['cofnospam']);
+		
 	} else if (isset($_SESSION['customer_id']) && isset($_POST['email'])) {
 		// Trust the input from anyone who has already logged in!
 		$_POST['cofnospam'] = $_POST['email'];
 	}
+	
 	if (!isset($_POST['email']) || $_POST['email'] == '') {
 		$form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_NOT_ENTERED;
+		
 	} else if (!CeonEmailValidation::isValid($_POST['email'])) {
 		$form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_INVALID;
+		
 	} else if (CeonEmailValidation::isHeaderInjection($_POST['email'])) {
 		$form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
+		
 	} else if (!isset($_POST['cofnospam']) || $_POST['cofnospam'] == '') {
 		$form_errors['cofnospam'] =
 			BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_NOT_ENTERED;
+		
 	} else if (!CeonEmailValidation::isValid($_POST['cofnospam'])) {
 		$form_errors['cofnospam'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_INVALID;
+		
 	} else if (CeonEmailValidation::isHeaderInjection($_POST['cofnospam'])) {
 		$form_errors['cofnospam'] =
 			BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
+		
 	} else if (CeonEmailValidation::isHeaderInjection($_POST['name'])) {
 		$form_errors['name'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
+		
 	} else if (strtolower($_POST['email']) != strtolower($_POST['cofnospam'])) {
 		$form_errors['cofnospam'] =
 			BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_DOESNT_MATCH;
@@ -208,6 +218,7 @@ if (isset($_POST['notify_me'])) {
 			
 			$success_message1 = sprintf(BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE1,
 				htmlentities($product_name, ENT_COMPAT, CHARSET));
+			
 			$success_message2 = BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE2;
 		}	
 	}
@@ -255,14 +266,13 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 			BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
 		$text_msg_part['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT;
 		$text_msg_part['URL_VALUE']	= zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS,
-			'', 'NONSSL', false);
+			'', 'SSL', false);
 	} else {
 		// Build link to unsubscription page	
 		$text_msg_part['URL_INTRO'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_INTRO;
 		$text_msg_part['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_TEXT;
 		$text_msg_part['URL_VALUE']	= zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE,
-			'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code, 'NONSSL',
-			false);
+			'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code, 'SSL', false);
 	}
 	
 	$html_msg['EMAIL_TEXT_HEADER'] = EMAIL_TEXT_HEADER;
@@ -282,14 +292,13 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 		$html_msg['URL_INTRO'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
 		$html_msg['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT;
 		$html_msg['URL_VALUE']	= zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '',
-			'NONSSL', false);
+			'SSL', false);
 	} else {
 		// Build link to unsubscription page	
 		$html_msg['URL_INTRO'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_INTRO;
 		$html_msg['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_TEXT;
 		$html_msg['URL_VALUE']	= zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE,
-			'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code, 'NONSSL',
-			false);
+			'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code, 'SSL', false);
 	}
 	
 	$text_msg_part['EXTRA_INFO'] = '';

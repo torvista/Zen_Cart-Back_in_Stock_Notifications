@@ -50,8 +50,8 @@ document.write('.NoscriptAndPrintOutputBlock { display: none; }<' + '/style>');
 <h1 class="Title">Back In Stock Notifications</h1>
 <div class="TitleByLineWrapper">&nbsp;
 	<div id="crossfade">
-		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
-		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank">Click here to get more great software from Ceon</a></p>
 	</div>
 </div>
 <ul class="MainMenu">
@@ -73,7 +73,7 @@ document.write('.NoscriptAndPrintOutputBlock { display: none; }<' + '/style>');
 </div>
 
 <p>Thanks for using software from Ceon.. we're sure it will contribute to making the store a great success!</p>
-<p>The Back In Stock Notifications is an essential module, which lets customers subscribe to a notification list for a product that has gone out of stock.</p>
+<p>Ceon Back In Stock Notifications is an essential module, which lets customers subscribe to a notification list for a product that has gone out of stock.</p>
 <p>The subscription process is completely automated. Customers don't have to have an account to subscribe themselves, but if they do, the subscription is automatically associated with their account.</p>
 <p>Once a product is back in stock, an e-mail can be sent to all those subscribed to the notification list for that product, using the convenient admin utility.</p>
 <p>The step-by-step <a href="sections/installation.html">Installation Instructions</a> for this module are easy to follow, with the whole process taking just a few minutes.</p>
@@ -86,28 +86,161 @@ document.write('.NoscriptAndPrintOutputBlock { display: none; }<' + '/style>');
 	<h3>Other Zen Cart Releases from Ceon</h3>
 	<p>We offer many modules essential for any Zen Cart store - check out the other modules we have available to help <strong>build a better and more profitable store</strong>...</p>
 	
-	<div class="OtherCeonReleasesMenuLeft">
-		<ul class="OtherCeonReleasesMenuLeft">
-			<li><a href="http://dev.ceon.net/web/zen-cart#uri?doc=zc-bisn">URI Mapping (SEO/SEF) Software</a></li>
-			<li><a href="http://dev.ceon.net/web/zen-cart#marketing?doc=zc-bisn">Marketing Modules</a></li>
-			<li><a href="http://dev.ceon.net/web/zen-cart#payment?doc=zc-bisn">Payment Modules</a></li>
-		</ul>
-	</div>
-	<div class="OtherCeonReleasesMenuRight">
-		<ul class="OtherCeonReleasesMenuRight">
-			<li><a href="http://dev.ceon.net/web/zen-cart#shipping?doc=zc-bisn">Advanced Shipping Software</a></li>
-			<li><a href="http://dev.ceon.net/web/zen-cart#tax?doc=zc-bisn">Tax Modules</a></li>
-		</ul>
-	</div>
-	
-	<div class="SpacerSmall"></div>
+	<ul class="OtherCeonReleasesMenu">
+		<li><a href="#uri">URI Mapping (SEO/SEF) Software</a></li>
+		<li><a href="#tax">Tax Modules</a></li>
+		<li><a href="#payment">Payment Modules</a></li>
+	</ul>
 </div>
 
 <div class="SpacerSmall"></div>
 
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+function otherReleasesShowDesc(id)
+{
+	if (document.getElementById) {
+		el = document.getElementById(id);
+		
+		if (el.style.display != 'block') {
+			el.style.display = 'block';
+		}
+		
+		document.getElementById(id + '-control').parentNode.removeChild(document.getElementById(id + '-control'));
+	}
+}
+// -->
+</script>
+
+<h3 class="OtherReleasesSectionTitle"><a name="uri" id="uri"></a>URI Mapping (SEO/SEF) Software</h2>
+
+<fieldset class="OtherReleases">
+	<legend><a href="http://dev.ceon.net/web/zen-cart/uri-mapping?doc=zc-bisn" target="_blank">Ceon URI Mapping</a></legend>
+	
+	<div class="Testimonial">
+		<blockquote>
+			<p>&ldquo;Ceon URI Mapping is absolutely fantastic and beats any other Zen Cart SEO module by a country mile. </p>
+			<p>&ldquo;I have found Ceon ZC modules to be among the best ZC mods out there!&rdquo;</p>
+		</blockquote>
+		<p class="TestimonialAuthor">Ewan Duthie,<br />
+		<a href="http://www.webintegrations.co.uk" target="_blank">Web Integrations Ltd.</a></p>
+	</div>
+	
+	<h1 class="ExtraEmphasis">Use <span class="Underlined">Static URIs</span> to make web addresses Easier to Remember and Easier to Enter. <br />Improve the store's Rankings in Search Engines!</h1>
+	
+	<p>The Ceon URI Mapping module is a very handy module that no Zen Cart site should be without!</p>
+	
+	<p>Unlike other SEO modules, where the URIs are generated automatically when a customer visits a page, this module allows <strong>specific URIs to be entered</strong> within the admin, or even for <strong>auto-generation to be used to create a static URI</strong> for an individual category/product/manufacturer/EZ-Page/Zen Cart page.</p> 
+	
+	<p>We believe this to be a much better solution as <strong>the store is in control of its URIs</strong>.</p>
+	
+	
+	<h4 class="Feature">Static, Human-Readable, Keyword-Based URIs</h4>
+	
+	<p>Ceon URI Mapping lets the store specify <strong>static, human-readable, keyword-based URIs</strong> to be used instead of the dynamic, ID-based URIs which Zen Cart uses as standard.</p>
+	
+	<div class="ExtraMarginLeft">
+		<p>For example, for a product, instead of dynamic URIs like this:</p>
+		<p class="Example">http://yourstore.com/index.php?main_page=product_info&amp;cPath=3&amp;products_id=5</p>
+		
+		<p>a static address - easy to read, easy to type in, and full of keywords - could be specified for the product:
+		<p class="Example">http://yourstore.com/books/life-is-good</p>
+	</div>
+	
+	
+	<h4 class="Feature">Easily Promote Sections of the Site</h4>
+	
+	<p>It's simple to promote sections of the site on advertising literature.</p>
+	
+	<div class="ExtraMarginLeft">
+		<p>For example, the following URI could be mapped to the specials page and put on flyers, posters and other sites:</p>
+		
+		<p class="Example">http://yourstore.com/EasterSpecials</p>
+	</div>
+	
+	
+	<h4 class="Feature">Packed Full of Features</h4>
+	
+	<p>Ceon URI Mapping is packed full of features, which include:</p>
+	
+	<ul class="BulletedList TighterList">
+		<li><h4 class="NoMarginTop">Full Multi-Language Support</h4></li>
+		<li><h4 class="NoMarginTop">Canonical URI Support</h4></li>
+		<li><h4 class="NoMarginTop">Historical URI Redirection <span style="font-weight: normal">(Never have a broken link again!)</span></h4></li>
+		<li><h4 class="NoMarginTop">URI Auto-Generation</h4></li>
+		<li><h4 class="NoMarginTop">Transliteration Support</h4></li>
+		<li><h4 class="NoMarginTop">100% Compatibility with Zen Cart</h4></li>
+		<li><h4 class="NoMarginTop">As well as many more!</h4></li>
+	</ul>
+	
+	<h1 class="ExtraEmphasis"><strong>Give potential customers easy to enter/remember URIs</strong> and <strong>improve the site's rankings in search engines</strong> - <a href="http://dev.ceon.net/web/zen-cart/uri-mapping/features?doc=zc-bisn" target="_blank">check out the full feature list</a> and <a href="http://dev.ceon.net/web/zen-cart/uri-mapping?doc=zc-bisn" target="_blank">download the module!</a></h1>
+</fieldset>
+
+
+<p class="OtherReleasesBackToTop"><a href="#top">Back to top</a></p>
+
+
+
+<h3 class="OtherReleasesSectionTitle"><a name="tax" id="tax"></a>Tax Modules</h2>
+
+<fieldset class="OtherReleases">
+	<legend><a href="http://dev.ceon.net/web/zen-cart/tax-declaration?doc=zc-bisn" target="_blank">Tax Declaration</a></legend>
+	
+	<p>The Tax Declaration module lets a store owner mark particular products as able to be exempt from tax if the customer signs a tax declaration upon checkout.</p>
+	<p>It allows the store to fully comply with Tax Declaration laws for people of special circumstance, for example those with disabilities in the UK.</p>
+	<p class="NoMarginBottom">Find out more and download the module from <a href="http://dev.ceon.net/web/zen-cart/tax-declaration?doc=zc-bisn" target="_blank">its website</a>.</p>
+</fieldset>
+
+<p class="OtherReleasesBackToTop"><a href="#top">Back to top</a></p>
+
+
+<h3 class="OtherReleasesSectionTitle"><a name="payment" id="payment"></a>Payment Modules</h2>
+
+<fieldset class="OtherReleases">
+	<legend><a href="http://dev.ceon.net/web/zen-cart/cardsave-direct?doc=zc-bisn" target="_blank">Cardsave Direct</a></legend>
+	<p><img src="_images/cardsave-logo-w150.png" alt="Cardsave" class="RightImage" /><a href="http://dev.ceon.net/web/zen-cart/cardsave-direct/sign-up?doc=zc-bisn" target="_blank">Cardsave</a> run one of the best value payment gateways in the UK.</p>
+	<p>For a small monthly fee they'll provide a payment gateway account and a <strong>FREE</strong> merchant account with Streamline. There are <strong>no setup fees</strong> and the Streamline account offers <strong>competitive card charges</strong>!</p>
+	<p>Our Cardsave Direct module for Zen Cart has been carefully written to be extremely easy to install and fully comprehensive. The customer remains on the store's website; they are not redirected to an external site to enter their details as with many other payment solutions, making this as professional a payment solution as you could possibly use with Zen Cart!</p>
+	<p>The whole checkout process is completely streamlined, allowing store owners to have a store which works just as well as any of the large e-commerce websites!</p>
+	
+	<h1 class="ExtraEmphasis NoMarginBottom">Get a FREE merchant account!</h1>
+	
+	<p class="NoMarginBottom">If you haven't already got a merchant account, <strong><a href="http://dev.ceon.net/web/zen-cart/cardsave-direct/sign-up?doc=zc-bisn" target="_blank">sign up with Cardsave now</a></strong> and get a <strong>FREE</strong> merchant account with your Cardsave payment gateway account!</p>
+</fieldset>
+
+
+<fieldset class="OtherReleases">
+	<legend><a href="http://dev.ceon.net/web/zen-cart/paymentsense-direct?doc=zc-bisn" target="_blank">PaymentSense Direct</a></legend>
+	<p><img src="_images/paymentsense-logo-w150.png" alt="PaymentSense" class="RightImage" /><a href="http://dev.ceon.net/web/zen-cart/paymentsense-direct/sign-up?doc=zc-bisn" target="_blank">PaymentSense</a> guarantee the lowest cost for a payment gateway in the UK.</p>
+	<p>They can also provide a merchant services account. And they do this faster than any other UK provider.</p>
+	<p>PaymentSense <strong>guarantee unbeatable prices</strong> along with the highest levels of security and reliability.</p>
+	<p>Our PaymentSense Direct module for Zen Cart has been carefully written to be extremely easy to install and fully comprehensive. The customer remains on the store's website; they are not redirected to an external site to enter their details as with many other payment solutions, making this as professional a payment solution as you could possibly use with Zen Cart!</p>
+	<p>The whole checkout process is completely streamlined, allowing store owners to have a store which works just as well as any of the large e-commerce websites!</p>
+	
+	<h1 class="ExtraEmphasis NoMarginBottom">Get the lowest cost payment gateway service in the UK</h1>
+	
+	<p class="NoMarginBottom"><strong><a href="http://dev.ceon.net/web/zen-cart/paymentsense-direct/sign-up?doc=zc-bisn" target="_blank">Sign up now</a></strong> and <strong>start accepting cards</strong> with PaymentSense <strong>within a few days</strong>!</p>
+</fieldset>
+
+
+<fieldset class="OtherReleases">
+	<legend><a href="http://dev.ceon.net/web/zen-cart/iridium-direct?doc=zc-bisn" target="_blank">Iridium Direct</a></legend>
+	<p><img src="_images/iridium-logo-w150.png" alt="Iridium" class="RightImage" /><a href="https://mms.iridiumcorp.net/Pages/PublicPages/RegisterMerchantReseller.aspx?ResellerID=7A68EA5F-46A5-49F7-A4DD-04CAECCED404" target="_blank">Iridium</a> run one of the best value payment gateways in the UK.</p>
+	<p>Set-up for the gateway is free and there are no charges for trying out their systems. Registration is required but it doesn't commit you to a contract or incur any initial cost. You can even <a href="https://mms.iridiumcorp.net/Pages/PublicPages/RegisterMerchantReseller.aspx?ResellerID=7A68EA5F-46A5-49F7-A4DD-04CAECCED404" target="_blank">get a UK Merchant Account</a> through them with <strong>no setup fees (normally &pound;250!)</strong>.</p>
+	<p>Our Iridium Direct module for Zen Cart has been carefully written to be extremely easy to install and fully comprehensive. The customer remains on the store's website; they are not redirected to an external site to enter their details as with many other payment solutions, making this as professional a payment solution as you could possibly use with Zen Cart!</p>
+	<p class="NoMarginBottom">The whole checkout process is completely streamlined, allowing store owners to have a store which works just as well as any of the large e-commerce websites!</p>
+</fieldset>
+
+
+<fieldset class="OtherReleases">
+	<legend><a href="http://dev.ceon.net/web/zen-cart/ceon-manual-card?doc=zc-bisn" target="_blank">Ceon Manual Card</a></legend>
+	<p>Ceon Manual Card provides everything a Zen Cart shop owner needs to accept Credit/Debit Card payments over the internet for inputting into a Manual/Offline Card Processing System.</p>
+	<p class="NoMarginBottom">It is reliable, capable and extremely easy to use, but is a very basic way to do business over the internet, and is therefore recommended for use by tiny stores only. Anyone serious about selling on the internet should look towards a professional gateway, such as that supported by our <a href="http://dev.ceon.net/web/zen-cart/sage-pay?doc=zc-bisn" target="_blank">Sage Pay</a> payment modules.</p>
+</fieldset>
+
 <p class="BackToTop"><a href="#top">Back to top</a></p>
 
-<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2012 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
 
 	</div>
 </div>

@@ -1,10 +1,10 @@
-// $Id: inc.js.crossfade.js 708 2011-06-11 14:02:26Z conor $
+// $Id: inc.js.crossfade.js 904 2012-01-01 17:24:17Z conor $
 
 /**
  * @fileoverview Contains crossfade functions, used to fade between a list of HTML elements which
  *               are statically (absolutely) positioned on a page within an identifiable container.
  * @author       Conor Kerr <zen-cart@dev.ceon.net>
- * @copyright    2010-2011 Ceon (http://ceon.net)
+ * @copyright    2010-2012 Ceon (http://ceon.net)
  */
 
 var crossfade_id = 'crossfade'; // The ID of the crossfade list

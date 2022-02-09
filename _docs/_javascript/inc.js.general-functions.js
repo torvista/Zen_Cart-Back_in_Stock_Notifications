@@ -1,4 +1,4 @@
-// $Id: inc.js.general-functions.js 708 2011-06-11 14:02:26Z conor $
+// $Id: inc.js.general-functions.js 904 2012-01-01 17:24:17Z conor $
 
 /**
  * Outputs information passed to the display.
@@ -15,7 +15,7 @@ function d(text)
  * should be run when the page has been loaded.
  *
  * @author      Conor Kerr
- * @copyright   2008-2011 Ceon (http://ceon.net)
+ * @copyright   2008-2012 Ceon (http://ceon.net)
  * @param       func      {string}  The name of a function to run.
  * @param       obj       {object}  An object from which a method should be run.
  * @param       method    {string}  The name of the method within the specified object to run.
@@ -54,7 +54,7 @@ function CeonAddLoadEvent(func, obj, method)
  * should be run when the page has been resized.
  *
  * @author      Conor Kerr
- * @copyright   2008-2011 Ceon (http://ceon.net)
+ * @copyright   2008-2012 Ceon (http://ceon.net)
  * @param       func      {string}   The name of a function to run.
  * @param       obj       {object}   An object from which a method should be run.
  * @param       method    {string}   The name of the method within the specified object to run.

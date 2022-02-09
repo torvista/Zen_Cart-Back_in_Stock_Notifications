@@ -36,8 +36,8 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 <h1 class="Title">Back In Stock Notifications</h1>
 <div class="TitleByLineWrapper">&nbsp;
 	<div id="crossfade">
-		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
-		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank">Click here to get more great software from Ceon</a></p>
 	</div>
 </div>
 <ul class="MainMenu">
@@ -60,23 +60,37 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		<th>Release Information</th>
 	</tr>
 	<tr>
-		<td class="NoWrap">14th August 2010</td>
-		<td>3.0.2</td>
+		<td class="NoWrap">24th February 2012</td>
+		<td>3.2.0</td>
 		<td>
-			<p class="RevisionHistoryEntry">[ADDED] Sample modified template files for Zen Cart 1.5.0beta added.</p>
-			<p class="RevisionHistoryEntry">[UPDATED] Link to products page no longer uses SSL, as admin page links don't use SSL.</p>
-			<p class="RevisionHistoryEntry">[BUGFIX] SQL queries were being run in lowercase in the Admin utility, which resulted in errors if a store uses a table prefix with capital letters in it.</p>
+			<p class="RevisionHistoryEntry">[ADDED] Automatic database creation and configuration checking functionality added. The software will now automatically create the database table and add the configuration options. There is no longer any need to run an SQL script when installing the software!</p>
+			<p class="RevisionHistoryEntry">[ADDED] Full support for Zen Cart 1.5.0 added.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] When building a link to a product's info page, Ceon Back In Stock Notifications now builds the appropriate link for the product's type. Previously the software built all product info page links for the general product type.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] All links to the product pages are now built using the current page's request type. Zen Cart uses NONSSL as standard but some templates use SSL for all links, so this change prevents any problems with mixed request types, which would otherwise show in the browser as SSL certificate/mixed content errors.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] Admin utility interface significantly updated with a much better look, now being similar in appearance to Ceon's other software for Zen Cart.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] On a product's info page, the number_of_uploads parameter is now removed from the link to the Back In Stock Notification form on that page. This should prevent the page being regenerated/reloaded because the browser thinks a different page is being loaded when the user really just wants to move down the page, saving the user time and avoiding the needless waste of server resources!</p>
+			<p class="RevisionHistoryEntry">[UPDATED] On the back in stock subscription page, the number_of_uploads parameter is now removed from the links, simply to make the links nicer.</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[BUGFIX] Only the sample file for the standard product type had the necessary code in it to allow overriding it using the standard Zen Cart template system. The sample files for all the supported product types now have this useful code.</p>
 		</td>
 	</tr>
 	<tr>
-		<td class="NoWrap">13th June 2010</td>
+		<td class="NoWrap">14th August 2011</td>
+		<td>3.0.2</td>
+		<td>
+			<p class="RevisionHistoryEntry">[ADDED] Sample modified files for Zen Cart 1.5.0beta added.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] Link to products page no longer uses SSL, as admin page links don't use SSL.</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[BUGFIX] SQL queries were being run in lowercase in the Admin utility, which resulted in errors if a store uses a table prefix with capital letters in it.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">13th June 2011</td>
 		<td>3.0.1</td>
 		<td>
 			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[ADDED] Sample modified template files for Zen Cart 1.3.9h added.</p>
 		</td>
 	</tr>
 	<tr>
-		<td class="NoWrap">12th June 2010</td>
+		<td class="NoWrap">12th June 2011</td>
 		<td>3.0.0</td>
 		<td>
 			<p class="RevisionHistoryEntry">[ADDED] The names of the products now link directly to the product's page in the Back In Stock Notification subscriptions section of the customer account area.</p>
@@ -182,7 +196,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 
 <p class="BackToTop"><a href="#top">Back to top</a></p>
 
-<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2012 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
 
 	</div>
 </div>

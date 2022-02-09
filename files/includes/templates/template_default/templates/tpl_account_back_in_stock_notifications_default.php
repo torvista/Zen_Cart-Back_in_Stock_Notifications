@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Zen Cart : Back In Stock Notification
+ * Ceon Back In Stock Notifications Account Back In Stock Notifications Page Template.
  *
  * Allows users to see their subscriptions to "Back In Stock" notification lists for particular
  * products and remove themselves if desired.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: tpl_account_back_in_stock_notifications_default.php 711 2011-06-12 17:37:26Z conor $
+ * @version     $Id: tpl_account_back_in_stock_notifications_default.php 937 2012-02-10 11:42:20Z conor $
  */
 
 ?>
@@ -48,6 +48,7 @@ $back_in_stock_notifications->setXHTMLSource(
 $form_start_tag = zen_draw_form('back_in_stock_notifications',
 	zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, zen_get_all_get_params(), 'SSL'),
 	'post');
+
 $back_in_stock_notifications->setVariable('form_start_tag', $form_start_tag);
 
 // Build back button
@@ -74,13 +75,16 @@ $back_in_stock_notifications->setVariable('overview_title',
 if (isset($intro1)) {
 	$back_in_stock_notifications->setVariable('intro1', $intro1);
 	$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
+	
 } else if (isset($intro_none_selected)) {
 	$back_in_stock_notifications->setVariable('intro_none_selected', $intro_none_selected);
 	$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
+	
 } else if (isset($intro_success)) {
 	$back_in_stock_notifications->setVariable('intro_success', $intro_success);
 	$back_in_stock_notifications->setVariable('intro_unsubscribed_products',
 		$intro_unsubscribed_products);
+	
 	if ($intro_instructions != '') {
 		$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
 	}
@@ -89,6 +93,7 @@ if (isset($intro1)) {
 if (sizeof($subscribed_notification_lists) == 0) {
 	// User isn't subscribed to any Back In Stock Notification Lists
 	$no_subscriptions_message = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NOT_SUBSCRIBED;
+	
 	$back_in_stock_notifications->setVariable('no_subscriptions_message',
 		$no_subscriptions_message);
 } else {
@@ -122,6 +127,7 @@ if (sizeof($subscribed_notification_lists) == 0) {
 	$placement_marker_key = $listbox_template_prefix . '_ITEM1';
 	
 	for ($i = 0, $n = sizeof($subscribed_notification_lists); $i < $n; $i++) {
+		
 		$back_in_stock_notifications_item = new CeonXHTMLHiTemplate();
 		
 		// Check if template exists, otherwise rewind back to first (Column/rows created by template!)
@@ -157,15 +163,10 @@ if (sizeof($subscribed_notification_lists) == 0) {
 		
 		
 		// Add a link to the product's page
-		$product_info_page_filename = @constant('FILENAME_' .
-			strtoupper(zen_get_info_page($subscribed_notification_lists[$i]['id'])));
+		$product_page = zen_get_info_page($subscribed_notification_lists[$i]['id']);
 		
-		if (is_null($product_info_page_filename)) {
-			$product_info_page_filename = FILENAME_PRODUCT_INFO;
-		}
-		
-		$product_info_page_link = zen_href_link($product_info_page_filename,
-			'products_id=' . $subscribed_notification_lists[$i]['id']);
+		$product_info_page_link = zen_href_link($product_page,
+			'products_id=' . $subscribed_notification_lists[$i]['id'], $request_type);
 			
 		$back_in_stock_notifications_item->setVariable('product_info_page_link',
 			$product_info_page_link);  

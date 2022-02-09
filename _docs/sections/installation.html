@@ -36,8 +36,8 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 <h1 class="Title">Back In Stock Notifications</h1>
 <div class="TitleByLineWrapper">&nbsp;
 	<div id="crossfade">
-		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
-		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank">Click here to get more great software from Ceon</a></p>
 	</div>
 </div>
 <ul class="MainMenu">
@@ -54,14 +54,14 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 
 <h2><a name="installation" id="installation"></a>Installation</h2>
 <p>Installation of the module has been made as simple as possible and shouldn't take long for any stores which have not already modified any of the template files which this module has to modify.</p>
-<p>If any of the template files this distribution have already been modified (because of another third party module being installed) then the changes for the respective files should be applied manually by copying across the appropriate sections of code required for the Back In Stock Notifications module. These sections are clearly marked (with &ldquo;// BEGIN&rdquo; and &ldquo;// END&rdquo; comments) within the sample files provided in this distribution.</p>
+<p>If any of the template files this distribution uses have already been modified (because of another third party module being installed), then the changes for the respective files should be applied manually, by copying across the appropriate sections of code required for the Ceon Back In Stock Notifications module. These sections are clearly marked (with &ldquo;// BEGIN&rdquo; and &ldquo;// END&rdquo; comments) within the sample files provided in this distribution.</p>
 
 <h3>Installation Overview</h3>
 <ol id="installation-overview">
 	<li>Copy the new files from the distribution into the Zen Cart installation.</li>
-	<li>Copy the updated core file from the distribution into the Zen Cart installation or modify the respective core file.</li>
-	<li>Copy the updated template files from the distribution into the Zen Cart installation or modify their equivalents in the store's existing template files.</li>
-	<li>Create the database table &amp; add the admin configuration options by running the provided SQL script.</li>
+	<li>Copy the updated core file from the distribution into the Zen Cart installation, or modify the respective core file.</li>
+	<li>Copy the updated template files from the distribution into the Zen Cart installation, or modify their equivalents in the store's existing template files.</li>
+	<li>Create the database table &amp; add the admin configuration options, by running the provided SQL script.</li>
 	<li>Copy the e-mail templates to a directory, for <strong>each</strong> language the store uses.</li>
 	<li>[<em>Optional but <strong>Recommended</strong></em>] Prevent the module's files from being indexed by search engines.</li>
 </ol>
@@ -73,6 +73,9 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<p>These are the files which make up this module. Copy them all into their respective folders in the Zen Cart installation.</p>
 		
+		<p>Most files are used by all Zen Cart versions.</p>
+		<p>There is an additional file which is used only by Zen Cart 1.3.x; if the store uses Zen Cart 1.3.x, be sure to copy this extra file across from the folder <span class="FileName">files/additional_file_for_1.3.x</span>.</p>
+		
 		<h5>New files for the Admin directory</h5>
 		
 		<p>Most Zen Cart stores have their admin directory renamed from the default of &ldquo;admin&rdquo;.</p>
@@ -82,14 +85,25 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<ul class="Steps">
 			<li>admin/images/ceon-button-logo.png</li>
-			<li>admin/includes/boxes/extra_boxes/back_in_stock_notifications_catalog_dhtml.php</li>
-			<li>admin/includes/extra_datafiles/back_in_stock_notifications_filenames.php</li>
+			<li>admin/images/ceon-tab-background-selected.png</li>
+			<li>admin/includes/classes/class.CeonBISNInstallOrUpgrade.php</li>
 			<li>admin/includes/extra_datafiles/back_in_stock_notifications_database_tables.php</li>
+			<li>admin/includes/extra_datafiles/back_in_stock_notifications_filenames.php</li>
+			<li>admin/includes/functions/extra_functions/back_in_stock_notifications_admin_page_reg.php</li>
 			<li>admin/includes/functions/back_in_stock_notifications_functions.php</li>
 			<li>admin/includes/languages/english/extra_definitions/back_in_stock_notifications.php</li>
 			<li>admin/includes/languages/english/back_in_stock_notifications.php</li>
 			<li class="NoMarginBottom">admin/back_in_stock_notifications.php</li>
 		</ul>
+		
+		<h6><a name="additional-file-for-zc-1-3-x" id="additional-file-for-zc-1-3-x"></a>Additional File for Zen Cart 1.3.x</h6>
+		
+		<p>Copy the file from the <span class="FileName">files/additional_file_for_1.3.x/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
+		
+		<ul class="Steps">
+			<li class="NoMarginBottom">admin/includes/boxes/extra_boxes/back_in_stock_notifications_catalog_dhtml.php</li>
+		</ul>
+		
 		
 		<h5>New files for the main store directory</h5>
 		
@@ -110,8 +124,8 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 			<li>includes/classes/observers/class.back_in_stock_notificationsProductInfo.php</li>
 			<li>includes/classes/class.CeonEmailValidation.php</li>
 			<li>includes/classes/class.CeonXHTMLHiTemplate.php</li>
-			<li>includes/extra_datafiles/back_in_stock_notifications_filenames.php</li>
 			<li>includes/extra_datafiles/back_in_stock_notifications_database_tables.php</li>
+			<li>includes/extra_datafiles/back_in_stock_notifications_filenames.php</li>
 			<li>includes/languages/english/extra_definitions/back_in_stock_notifications.php</li>
 			<li>includes/languages/english/account_back_in_stock_notifications.php</li>
 			<li>includes/languages/english/back_in_stock_notification_subscribe.php</li>
@@ -134,12 +148,19 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		
 		<ul class="BulletedList">
 			<li>
-				<p>It is likely that this file hasn't been modified for the store already, in which case the pre-modified sample file from this distribution, for the version of Zen Cart being used by the store, should simply be copied over the existing version of the file.</p>
+				<p>It is possible that this file <em class="Underlined FontStyleNormal">has already been modified</em> for the store, in which case the change within the sample file, included in this distribution for the store's Zen Cart version, must be applied to the previously modified core file.</p>
+				<p>The change is clearly marked within the sample file in the distribution and should be easy enough to copy across, especially if a &ldquo;diff&rdquo; software package (such as the free WinMerge software or the excellent, commercial Beyond Compare software) is used.</p>
+				<p>The change begins with a comment:</p>
+				<p><code>// BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 1</code></p>
+				<p>And ends with a comment:</p>
+				<p><code>// END CEON BACK IN STOCK NOTIFICATIONS 1 of 1</code></p>
+				<ul class="Steps">
+					<li class="NoMarginBottom">The change should be copied and pasted into <span class="FileName">functions_general.php</span> <strong>at the exact same place</strong> it is present within the respective sample file.</li>
+				</ul>
 			</li>
 			<li>
-				<p>However, if this core file <strong>has</strong> already been modified for the store, the changes within the sample file included in this distribution must be applied to the previously modified version of <span class="FileName">functions_general.php</span>.</p>
-				<p>The changes are clearly marked within the sample file in the distribution and should be easy enough to copy across, especially if a &ldquo;diff&rdquo; software package (such as the free WinMerge or the excellent, commercial, Beyond Compare) is used.</p>
-				<p>Instructions on how to copy across the modifications necessary for this module - to a version of <span class="FileName">functions_general.php</span> which has previously been modified - can be found <a href="faqs.html#modifying-core-files">in this FAQ</a>.</p>
+				<p>If this file has <em class="Underlined FontStyleNormal">not</em> already been modified for the store, the pre-modified sample file from this distribution, for the version of Zen Cart being used by the store, can simply be copied over the store's existing version of the file.</p>
+				<p>As with the new files, the store's admin directory may have been <em class="Underlined FontStyleNormal">renamed</em> from the default of &ldquo;admin&rdquo;, so be careful to copy the file into the correct folder!</p>
 			</li>
 		</ul>
 		
@@ -153,7 +174,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>
 		<h4>Template Files For Zen Cart 1.3.x</h4>
 		
-		<p>Several of the standard Zen Cart template files require modifications to work with this module and there are some new files which must be placed in the store template's <span class="FileName">css</span> &amp; <span class="FileName">templates</span> folders.</p>
+		<p>Several of the standard Zen Cart template files require modifications to work with this module, and there are some new files which must be placed in the store template's <span class="FileName">css</span> &amp; <span class="FileName">templates</span> folders.</p>
 		<p>Modifications have been made to &ldquo;clean&rdquo; copies of the template files from a &ldquo;fresh&rdquo; installation of Zen Cart and are included as &ldquo;sample&rdquo; files in this distribution.</p>
 		
 		<ul class="BulletedList">
@@ -161,7 +182,8 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 				<p>If any of these template files <strong>haven't</strong> already been modified for the store, the sample files included in this distribution can be copied into the store's template directory and will then override the standard versions of the files included in the Zen Cart distribution.</p>
 			</li>
 			<li>
-				<p>If any of these template files <strong>have</strong> already been modified for the store, then the changes necessary for the Back In Stock Notifications module to function must be made to the store's modified file(s). The changes are clearly marked within the sample files in the distribution and should be easy enough to copy across, especially if a &ldquo;diff&rdquo; software package (such as the free WinMerge or the excellent, commercial, Beyond Compare) is used.</p>
+				<p>If any of these template files <strong>have</strong> already been modified for the store, then the changes necessary for the Back In Stock Notifications module to function must be made to the store's modified file(s).</p>
+				<p>The changes are clearly marked within the sample files in the distribution and should be easy enough to copy across, especially if a &ldquo;diff&rdquo; software package (such as the free WinMerge or the excellent, commercial, Beyond Compare) is used.</p>
 				<p>Instructions on how to copy across the modifications necessary for this module - to template files which have previously been modified - can be found <a href="faqs.html#modifying-template-files">in this FAQ</a>.</p>
 			</li>
 		</ul>
@@ -183,14 +205,13 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>
 		<h4>Create the Database Table &amp; Add the Admin Configuration Options</h4>
 		
-		<p>An SQL script, <span class="FileName">mysql.sql</span>, is provided with this module to create the database table in which the module stores subscriptions, and to add the configuration options for the module in the Zen Cart admin.</p>
+		<p>This software comes with some intelligent installation and error checking functionality, which makes it easy to install the module and to keep the database and configuration up to date.</p>
+		
+		<p>This installation/upgrade functionality runs automatically when the admin utility is accessed. (In the future, if the module is being upgraded, the admin utility should also be accessed then.)</p>
 		
 		<ul class="Steps">
-			<li>
-				<p>The easiest option is to go to <em>Tools &gt; Install SQL Patches</em> in the Zen Cart Admin, select <em>Browse...</em>, find and select the file <span class="FileName">mysql.sql</span> on your computer, then click <em>Upload</em>.</p>
-			</li>
 			<li class="NoMarginBottom">
-				<p class="NoMarginBottom">Or software such as PHPMyAdmin can be used to run the SQL script (Care must be taken to check the name of the tables. If the store uses a prefix for the table names it is essential that this prefix is put in front of the table names). If using this method please note that some double backslashes may need to be removed in the source.</p>
+				<p class="NoMarginBottom">Simply go to <em>Catalog</em> &gt; <em>Ceon Back In Stock Notifications</em> in the Admin and the database table and configuration settings will be automatically created.</p>
 			</li>
 		</ul>
 	</li>
@@ -224,7 +245,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>
 		<h4>[OPTIONAL but RECOMMENDED] Prevent the module's files from being indexed by search engines.</h4>
 		
-		<p>It's unlikely that anyone would want a search engine (web robot) indexing the subscription/unsubscription pages as it could allow people to subscribe to a Back In Stock Notification List for a product that is actually back in stock.</p>
+		<p>It's unlikely that anyone would want a search engine (web robot) indexing the subscription/unsubscription pages, as it could allow people to subscribe to a Back In Stock Notification List for a product that is actually back in stock.</p>
 		<p>This is easily avoided by using Zen Cart's &ldquo;<code>ROBOTS_PAGES_TO_SKIP</code>&rdquo; <code>define</code>:</p>
 		
 		<ul class="Steps">
@@ -237,7 +258,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 
 <p class="BackToTop"><a href="#top">Back to top</a></p>
 
-<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2012 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
 
 	</div>
 </div>

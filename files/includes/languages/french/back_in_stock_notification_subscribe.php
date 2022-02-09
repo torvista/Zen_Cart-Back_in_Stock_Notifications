@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Back In Stock Notifications Subscribe Language Definitions.
+ * Ceon Back In Stock Notifications Subscribe Language Definitions.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @author      Marie-Amelie Masnou <murimari@murimari.com>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notification_subscribe.php 711 2011-06-12 17:37:26Z conor $
+ * @version     $Id: back_in_stock_notification_subscribe.php 935 2012-02-06 14:08:25Z conor $
  */
 
 define('BACK_IN_STOCK_NOTIFICATION_NAVBAR_TITLE', 'Notification de réapprovisionnement');

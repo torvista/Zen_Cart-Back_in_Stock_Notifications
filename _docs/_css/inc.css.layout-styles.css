@@ -58,6 +58,12 @@ ul.MainMenu li.PlaceHolder {
 }
 
 
+/* =Documentation Navigation
+--------------------------------------------------------------------------------------------------*/
+.TOCLink { text-align: center; margin-top: 4em; }
+.PrevLink { float: left; }
+.NextLink { text-align: right; }
+
 /* =Footer
 --------------------------------------------------------------------------------------------------*/
 #footer {

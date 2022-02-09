@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Back In Stock Notifications Admin Language Definitions.
+ * Ceon Back In Stock Notifications Admin Language Definitions.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @author      Claudio
  * @author      Tony Niemann <tony@loosechicken.com>
- * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 711 2011-06-12 17:37:26Z conor $
+ * @version     $Id: back_in_stock_notifications.php 937 2012-02-10 11:42:20Z conor $
  */
 
 define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Back In Stock Notifications');
@@ -20,10 +20,13 @@ define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Back In Stock Notifications
 define('TEXT_ACTION_TO_PERFORM', 'Operazione da eseguire:');
 
 define('TEXT_LIST_ALL_SUBSCRIBED_PRODUCTS', 'Elenco di tutti i prodotti con sottoscrizione');
-define('TEXT_LIST_ALL_SUBSCRIPTIONS', 'Elenco sottoscrizioni,ordinati per prodotto e data di sottoscrizione');
+define('TEXT_LIST_ALL_SUBSCRIPTIONS', 'Elenco sottoscrizioni, ordinati per prodotto e data di sottoscrizione');
 define('TEXT_PREVIEW_NOTIFICATION_EMAILS', 'Eseguire un test di notifica da inviare tramite email');
 define('TEXT_SEND_NOTIFICATION_EMAILS', 'Inviare notifiche via e-mail per tutti i prodotti sottoscritti, che sono tornati in magazzino');
 define('TEXT_REMOVE_DELETED_PRODUCTS', 'Rimuovere sottoscrizioni per i prodotti eliminati dal database');
+
+define('TEXT_PRODUCTS_WITH_SUBSCRIPTIONS', 'Prodotti con sottoscrizione');
+define('TEXT_ALL_SUBSCRIPTIONS', 'Ordinati per prodotto e data di sottoscrizione');
 
 define('TABLE_HEADING_PRODUCT_NAME', 'Nome del Prodotto');
 define('TABLE_HEADING_PRODUCT_CATEGORY', 'Categoria');

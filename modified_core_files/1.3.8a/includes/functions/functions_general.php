@@ -1205,7 +1205,7 @@ if (!defined('IS_ADMIN_FLAG')) {
             
             $product_back_in_stock_notification_form_link = sprintf(
               BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK,
-              zen_href_link(FILENAME_PRODUCT_INFO, $params, 'NONSSL') .
+              zen_href_link(zen_get_info_page($product_id), $params, 'NONSSL') .
               '#back_in_stock_notification_form');
           }
           

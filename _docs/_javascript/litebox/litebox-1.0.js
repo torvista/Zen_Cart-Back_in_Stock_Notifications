@@ -10,14 +10,14 @@
  * @author       Peter-Paul Koch - http://quirksmode.org
  * @author       Thomas Fuchs - http://mir.aculo.us
  * @license      Creative Commons Attribution 2.5 - http://creativecommons.org/licenses/by/2.5/
- * @version      $Id: litebox-1.0.js 708 2011-06-11 14:02:26Z conor $
+ * @version      $Id: litebox-1.0.js 931 2012-02-05 20:13:15Z conor $
  */
 
 //
 //	Configuration
 //
 var litebox_images_prefix = (document.location.href.match(/sections/) ? '../_' : '_');
-var fileLoadingImage = litebox_images_prefix + 'images/litebox/loading.gif';
+var fileLoadingImage = litebox_images_prefix + 'images/litebox/ceon-star-loading.gif';
 var fileBottomNavCloseImage = litebox_images_prefix + 'images/litebox/closelabel.gif';
 var resizeSpeed = 6;	// controls the speed of the image resizing (1=slowest and 10=fastest)
 var borderSize = 8;	//if you adjust the padding in the CSS, you will need to update this variable

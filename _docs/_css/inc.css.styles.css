@@ -209,6 +209,9 @@ table p {
 .DoubleSpaceBelow {
 	margin-bottom: 2em;
 }
+.SpaceAbove {
+	margin-top: 1em;
+}
 .ExtraMarginLeft {
 	margin-left: 2em;
 }
@@ -253,8 +256,6 @@ h1.Title { float: left; line-height: 1em; padding-bottom: 0; }
 }
 
 .OtherZenCartReleasesIntroBox {
-	width: 48%;
-	float: left;
 	background: #fafafa;
 	border: 1px solid #999;
 }
@@ -298,9 +299,14 @@ ul.OtherCeonReleasesMenu {
 	clear: left;
 	list-style: disc;
 	margin-left: 1em;
-	margin-top: 1.2em;
+	margin-top: 0.9em;
 	font-weight: bold;
-	padding: 0 0.65em 0 0.65em; /* 0.5em x 1.3 */
+	padding: 0 0.65em 0.5em 0.65em; /* 0.5em x 1.3 */
+}
+ul.OtherCeonReleasesMenu li {
+	font-size: 1em;
+	line-height: 1.3;
+	margin: 0 0 0.55em 0;
 }
 
 h3.OtherReleasesSectionTitle {
@@ -328,6 +334,9 @@ fieldset.OtherReleases .Example, fieldset.ModuleOverview .Example {
 	border-top: 3px solid #d8d8e8;
 	background: #efefff;
 }
+fieldset.OtherReleases ul h1 {
+	margin-bottom: 0.2em;
+}
 
 .JavaScriptAndPrintOutput {
 	display: none;
@@ -349,6 +358,15 @@ ul.Steps { list-style: none; }
 ul.SystemRequirements li, ul.TighterList li { margin-bottom: 0.5em; }
 ul ul.NoBullets { list-style: none }
 
+ol#configuration-submenu { margin-left: 2em; margin-bottom: 0.8em; margin-top: 0.8em; }
+ol#configuration-submenu li { margin-bottom: 0.5em; }
+
+ol#configuration-submenu ul { list-style: none; margin-left: 2em; margin-bottom: 0.5em; margin-top: 0.5em; }
+ol#configuration-submenu ul li { margin-top: 0em; margin-bottom: 0.5em; }
+
+ol#configuration-submenu ol { margin-bottom: 0.5em; margin-top: 0.4em; }
+ol#configuration-submenu ol li { margin-top: 0em; margin-bottom: 0.25em; }
+
 ol.TableOfContents { margin-left: 2em; margin-bottom: 2.5em; margin-top: 0.8em; }
 ol.TableOfContents li { margin-bottom: 0.5em; }
 
@@ -359,7 +377,7 @@ ol#installation-overview { margin-left: 2em; padding-left: 0em; }
 ol#installation-overview li, ol.IntegrationOverview li { margin-bottom: 0.5em; }
 
 ol.InstallationSteps { margin-left: 2em; padding-left: 0em; }
-ol.InstallationSteps li { margin-bottom: 1.3em; }
+ol.InstallationSteps li { margin-bottom: 2.1em; }
 
 ol.InstallationSteps ul.Steps { margin-left: 1em; }
 ol.InstallationSteps ul.Steps li, ol.InstallationSteps ul.BulletedList li { margin-bottom: 0.5em; }
@@ -384,16 +402,6 @@ p.BackToTableOfContents { font-size: 0.9em; clear: both; margin: 1em 0 2.5em 0; 
 .FileName { font-style: italic; padding: 0 0.4em; }
 
 .NewFeature { color: #3399ff; }
-
-.InstallationStepZenCart12x { display: none; }
-.InstallationStepZenCartEarly13x { display: none; }
-.InstallationStepZenCart12xEarly13x { display: none; }
-
-.InfoZenCart12x { background: #86d7d8; }
-.InfoBlockZenCart12x { display: none; background: transparent; }
-.InfoZenCart13x { background: #c1c4e3; }
-.InfoBlockZenCart13x { display: block; background: transparent; }
-.InfoZenCart13xNot12x { display: list-item; }
 
 .Steps, .Note {
 	background: #eee;
@@ -449,7 +457,7 @@ li.Example { list-style: none; margin-top: 0.4em; margin-bottom: 0.4em; }
 
 .Testimonial blockquote {
 	font-family: georgia, times, serif;
-	font-style: italic
+	font-style: italic;
 }
 
 code { font-family: "Courier New", Courier, monospace; line-height: 1.3; }
@@ -483,6 +491,15 @@ img.ExampleScreenshot { margin: 0.8em 0; border: 1px solid #999; }
 }
 h1.ExtraEmphasis {
 	letter-spacing: -0.40mm;
+}
+h2.ExtraEmphasis {
+	font-family : arial, helvetica, sans-serif;
+	font-size: 170%;
+	color: #12b040;
+	letter-spacing: -0.38mm;
+	margin-top: 0.9em;
+	margin-bottom: 0.5em;
+	line-height: 1.2;
 }
 
 .FeatureTitle {
