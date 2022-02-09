@@ -527,8 +527,9 @@ if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
 		
 		$count_text = TEXT_DISPLAY_NUMBER_OF_PRODUCTS;
 	} else {
+          if (isset($subscriptions_split)) {
 		$split_object = $subscriptions_split;
-		
+           }
 		$count_text = TEXT_DISPLAY_NUMBER_OF_BACK_IN_STOCK_NOTIFICATIONS;
 	}
 	
