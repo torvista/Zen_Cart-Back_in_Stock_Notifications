@@ -3,15 +3,14 @@
  * functions_general.php
  * General functions used throughout Zen Cart
  *
- * @package functions
- * @copyright Copyright 2003-2018 Zen Cart Development Team
+ * @copyright Copyright 2003-2020 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Drbyte Mon Nov 12 15:55:25 2018 -0500 Modified in v1.5.6 $
+ * @version $Id: lat9 2020 Oct 27 Modified in v1.5.7a $
  */
 /**
- * Stop from parsing any further PHP code
-*/
+ * Stop execution completely
+ */
   function zen_exit() {
    session_write_close();
    exit();
@@ -59,75 +58,6 @@
     return strtr(trim($data), $parse);
   }
 
-/**
- * Returns a string with conversions for security.
- * @param string The string to be parsed
- * @param string contains a string to be translated, otherwise just quote is translated
- * @param boolean Do we run htmlspecialchars over the string
-*/
-  function zen_output_string($string, $translate = false, $protected = false) {
-    if ($protected == true) {
-      return htmlspecialchars($string, ENT_COMPAT, CHARSET, TRUE);
-    } else {
-      if ($translate === false) {
-        return zen_parse_input_field_data($string, array('"' => '&quot;'));
-      } else {
-        return zen_parse_input_field_data($string, $translate);
-      }
-    }
-  }
-
-/**
- * Returns a string with conversions for security.
- *
- * Simply calls the zen_output_string function
- * with parameters that run htmlspecialchars over the string
- * and converts quotes to html entities
- *
- * @param string The string to be parsed
-*/
-  function zen_output_string_protected($string) {
-    return zen_output_string($string, false, true);
-  }
-
-/**
- * Returns a string with conversions for security.
- *
- * @param string The string to be parsed
-*/
-
-  function zen_sanitize_string($string) {
-    $string = preg_replace('/ +/', ' ', $string);
-    return preg_replace("/[<>]/", '_', $string);
-  }
-
-
-/**
- * Break a word in a string if it is longer than a specified length ($len)
- *
- * @param string The string to be broken up
- * @param int The maximum length allowed
- * @param string The character to use at the end of the broken line
-*/
-  function zen_break_string($string, $len, $break_char = '-') {
-    $l = 0;
-    $output = '';
-    for ($i=0, $n=strlen($string); $i<$n; $i++) {
-      $char = substr($string, $i, 1);
-      if ($char != ' ') {
-        $l++;
-      } else {
-        $l = 0;
-      }
-      if ($l > $len) {
-        $l = 1;
-        $output .= $break_char;
-      }
-      $output .= $char;
-    }
-
-    return $output;
-  }
 
 /**
  * Return all HTTP GET variables, except those passed as a parameter
@@ -205,16 +135,8 @@
 ////
 // Returns the clients browser
   function zen_browser_detect($component) {
+    if (!isset($_SERVER['HTTP_USER_AGENT'])) return '';
     return stristr($_SERVER['HTTP_USER_AGENT'], $component);
-  }
-
-
-////
-// Wrapper function for round()
-  function zen_round($value, $precision) {
-    $value =  round($value *pow(10,$precision),0);
-    $value = $value/pow(10,$precision);
-    return $value;
   }
 
 
@@ -268,8 +190,8 @@
   }
 
 ////
-// Parse search string into indivual objects
-  function zen_parse_search_string($search_str = '', &$objects) {
+// Parse search string into individual objects
+  function zen_parse_search_string($search_str = '', &$objects = array()) {
     $search_str = trim(strtolower($search_str));
 
 // Break up $search_str on whitespace; quoted string will be reconstructed later
@@ -552,43 +474,6 @@
   }
 
 
-
-/**
- * Return a product ID with attributes hash
- * @param string|int $prid
- * @param array|string $params
- * @return string
- */
-  function zen_get_uprid($prid, $params) {
-    $uprid = $prid;
-    if ( !is_array($params) || strstr($prid, ':')) return $prid;
-
-    foreach($params as $option => $value) {
-      if (is_array($value)) {
-        foreach($value as $opt => $val) {
-          $uprid = $uprid . '{' . $option . '}' . trim($opt);
-        }
-      } else {
-        $uprid = $uprid . '{' . $option . '}' . trim($value);
-      }
-    }
-
-    $md_uprid = md5($uprid);
-    return $prid . ':' . $md_uprid;
-  }
-
-/**
- * Return a product ID from a product ID with attributes
- * Alternate: simply (int) the product id
- * @param string $uprid   ie: '11:abcdef12345'
- * @return mixed
- */
-  function zen_get_prid($uprid) {
-    $pieces = explode(':', $uprid);
-    return (int)$pieces[0];
-  }
-
-
 ////
 // Get the number of times a word/character is present in a string
   function zen_word_count($string, $needle) {
@@ -647,20 +532,6 @@
     return $get_string;
   }
 
-////
-  function zen_not_null($value) {
-    if (null === $value) {
-        return false;
-    }
-    if (is_array($value)) {
-      return count($value) > 0;
-    }
-    if (is_a($value, 'queryFactoryResult')) {
-      return count($value->result) > 0;
-    }
-    return trim($value) !== '' && $value != 'NULL';
-  }
-
 
 ////
 // Checks to see if the currency code exists as a currency
@@ -669,13 +540,13 @@
     global $db;
     $code = zen_db_prepare_input($code);
 
-    $currency_code = "select code
-                      from " . TABLE_CURRENCIES . "
-                      where code = '" . zen_db_input($code) . "' LIMIT 1";
+    $currency_code = "SELECT code
+                      FROM " . TABLE_CURRENCIES . "
+                      WHERE code = '" . zen_db_input($code) . "' LIMIT 1";
 
-    $currency_first = "select code
-                      from " . TABLE_CURRENCIES . "
-                      order by value ASC LIMIT 1";
+    $currency_first = "SELECT code
+                      FROM " . TABLE_CURRENCIES . "
+                      ORDER BY value ASC LIMIT 1";
 
     $currency = $db->Execute(($getFirstDefault == false) ? $currency_code : $currency_first);
 
@@ -683,11 +554,6 @@
       return strtoupper($currency->fields['code']);
     }
     return false;
-  }
-
-////
-  function zen_string_to_int($string) {
-    return (int)$string;
   }
 
 ////
@@ -709,36 +575,6 @@
     } else {
       return mt_rand();
     }
-  }
-
-////
-  function zen_get_top_level_domain($url) {
-    if (strpos($url, '://')) {
-      $url = parse_url($url);
-      $url = $url['host'];
-    }
-    $domain_array = explode('.', $url);
-    $domain_size = sizeof($domain_array);
-    if ($domain_size > 1) {
-      if (SESSION_USE_FQDN == 'True') return $url;
-      if (is_numeric($domain_array[$domain_size-2]) && is_numeric($domain_array[$domain_size-1])) {
-        return false;
-      } else {
-        $tld = "";
-        foreach ($domain_array as $dPart)
-        {
-          if ($dPart != "www") $tld = $tld . "." . $dPart;
-        }
-        return substr($tld, 1);
-      }
-    } else {
-      return false;
-    }
-  }
-
-////
-  function zen_setcookie($name, $value = '', $expire = 0, $path = '/', $domain = '', $secure = 0) {
-    setcookie($name, $value, $expire, $path, $domain, $secure);
   }
 
   /**
@@ -781,12 +617,16 @@
     /**
      * sanitize for validity as an IPv4 or IPv6 address
      */
-    $ip = preg_replace('~[^a-fA-F0-9.:%/,]~', '', $ip);
+    $original_ip = $ip;
+    $ip = filter_var((string)$ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_IPV4);
 
     /**
-     *  if it's still blank, set to a single dot
+     *  If it's an invalid IP, set the value to a single dot and issue a notification.
      */
-    if (trim($ip) == '') $ip = '.';
+    if ($ip === false) {
+        $ip = '.';
+        $GLOBALS['zco_notifier']->notify('NOTIFY_ZEN_INVALID_IP_DETECTED', $original_ip);
+    }
 
     return $ip;
   }
@@ -887,139 +727,27 @@
   }
 
 /**
- * Alias to $db->prepareInput() for sanitizing db inserts
- * @param string $string
+ * return the size and maxlength settings in the form size="blah" maxlength="blah" based on maximum size being 70
+ * uses $tbl = table name, $fld = field name
+ * example: zen_set_field_length(TABLE_CATEGORIES_DESCRIPTION, 'categories_name')
+ * @param string $tbl
+ * @param string $fld
+ * @param int $max
  * @return string
  */
-  function zen_db_input($string) {
-    global $db;
-    return $db->prepareInput($string);
-  }
-
-////
-  function zen_db_prepare_input($string) {
-    if (is_string($string)) {
-      return trim(zen_sanitize_string(stripslashes($string)));
-    } elseif (is_array($string)) {
-      foreach($string as $key => $value) {
-        $string[$key] = zen_db_prepare_input($value);
-      }
-    }
-    return $string;
-  }
-
-////
-  function zen_db_perform($table, $data, $action = 'insert', $parameters = '') {
-    global $db;
-    if (strtolower($action) == 'insert') {
-      $query = 'INSERT INTO ' . $table . ' (';
-      foreach($data as $columns => $value) {
-        $query .= $columns . ', ';
-      }
-      $query = substr($query, 0, -2) . ') VALUES (';
-      foreach($data as $value) {
-        switch ((string)$value) {
-          case 'now()':
-            $query .= 'now(), ';
-            break;
-          case 'NULL':
-            $query .= 'null, ';
-            break;
-          default:
-            $query .= '\'' . zen_db_input($value) . '\', ';
-            break;
-        }
-      }
-      $query = substr($query, 0, -2) . ')';
-    } elseif (strtolower($action) == 'update') {
-      $query = 'UPDATE ' . $table . ' SET ';
-      foreach($data as $columns => $value) {
-        switch ((string)$value) {
-          case 'now()':
-            $query .= $columns . ' = now(), ';
-            break;
-          case 'NULL':
-            $query .= $columns . ' = null, ';
-            break;
-          default:
-            $query .= $columns . ' = \'' . zen_db_input($value) . '\', ';
-            break;
-        }
-      }
-      $query = substr($query, 0, -2) . ' WHERE ' . $parameters;
-    }
-
-    return $db->Execute($query);
-  }
-
-////
-  function zen_db_output($string) {
-    return htmlspecialchars($string);
-  }
-
-/**
- * Get a shortened filename to fit within the db field constraints
- *
- * @param string $filename (could also be a URL)
- * @param string $table_name
- * @param string $field_name
- * @param string $extension String to denote the extension. The right-most "." is used as a fallback.
- * @return string
- */
-  function zen_limit_image_filename($filename, $table_name, $field_name, $extension = '.') {
-      if ($filename === 'none') return $filename;
-
-      $max_length = zen_field_length($table_name, $field_name);
-      $filename_length = function_exists('mb_strlen') ? mb_strlen($filename) : strlen($filename);
-
-      if ($filename_length <= $max_length) return $filename;
-      $divider_position = function_exists('mb_strrpos') ? mb_strrpos($filename, $extension) : strrpos($filename, $extension);
-      $base = substr($filename, 0, $divider_position);
-      $original_suffix = substr($filename, $divider_position);
-      $suffix_length = function_exists('mb_strlen') ? mb_strlen($original_suffix) : strlen($original_suffix);
-      $chop_length = $filename_length - $max_length;
-      $shorter_length = $filename_length - $suffix_length - $chop_length;
-      $shorter_base = substr($base, 0, $shorter_length);
-
-      return $shorter_base . $original_suffix;
-  }
-
-// function to return field type
-// uses $tbl = table name, $fld = field name
-
-  function zen_field_type($tbl, $fld) {
-    global $db;
-    $rs = $db->MetaColumns($tbl);
-    $type = $rs[strtoupper($fld)]->type;
-    return $type;
-  }
-
-// function to return field length
-// uses $tbl = table name, $fld = field name
-  function zen_field_length($tbl, $fld) {
-    global $db;
-    $rs = $db->MetaColumns($tbl);
-    $length = $rs[strtoupper($fld)]->max_length;
-    return $length;
-  }
-
-////
-// return the size and maxlength settings in the form size="blah" maxlength="blah" based on maximum size being 70
-// uses $tbl = table name, $fld = field name
-// example: zen_set_field_length(TABLE_CATEGORIES_DESCRIPTION, 'categories_name')
-  function zen_set_field_length($tbl, $fld, $max=70) {
-    $field_length= zen_field_length($tbl, $fld);
+function zen_set_field_length($tbl, $fld, $max = 70)
+{
+    $field_length = zen_field_length($tbl, $fld);
     switch (true) {
-      case ($field_length > $max):
-        $length= 'size = "' . ($max+1) . '" maxlength= "' . $field_length . '"';
-        break;
-      default:
-        $length= 'size = "' . ($field_length+1) . '" maxlength = "' . $field_length . '"';
-        break;
+        case ($field_length > $max):
+            $length = 'size="' . ($max + 1) . '" maxlength="' . $field_length . '"';
+            break;
+        default:
+            $length = 'size="' . ($field_length + 1) . '" maxlength="' . $field_length . '"';
+            break;
     }
     return $length;
-  }
-
+}
 
 ////
 // Set back button
@@ -1061,38 +789,6 @@
 
 
 ////
-// Truncate a string
-  function zen_trunc_string($str = "", $len = 150, $more = 'true') {
-    if ($str == "") return $str;
-    if (is_array($str)) return $str;
-    $str = trim($str);
-    $len = (int)$len;
-    if ($len == 0) return '';
-    // if it's les than the size given, then return it
-    if (strlen($str) <= $len) return $str;
-    // else get that size of text
-    $str = substr($str, 0, $len);
-    // backtrack to the end of a word
-    if ($str != "") {
-      // check to see if there are any spaces left
-      if (!substr_count($str , " ")) {
-        if ($more == 'true') $str .= "...";
-        return $str;
-      }
-      // backtrack
-      while(strlen($str) && ($str[strlen($str)-1] != " ")) {
-        $str = substr($str, 0, -1);
-      }
-      $str = substr($str, 0, -1);
-      if ($more == 'true') $str .= "...";
-      if ($more != 'true' and $more != 'false') $str .= $more;
-    }
-    return $str;
-  }
-
-
-
-////
 // set current box id
   function zen_get_box_id($box_id) {
     $box_id = str_replace('_', '', $box_id);
@@ -1106,7 +802,7 @@
   function zen_get_buy_now_button($product_id, $link, $additional_link = false) {
     global $db;
 
-// show case only superceeds all other settings
+// show case only supercedes all other settings
     if (STORE_STATUS != '0') {
       return '<a href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' .  TEXT_SHOWCASE_ONLY . '</a>';
     }
@@ -1116,12 +812,12 @@
 // 2 = Can browse but no prices
     // verify display of prices
       switch (true) {
-        case (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == ''):
+        case (CUSTOMERS_APPROVAL == '1' && !zen_is_logged_in()):
         // customer must be logged in to browse
         $login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE . '</a>';
         return $login_for_price;
         break;
-        case (CUSTOMERS_APPROVAL == '2' and $_SESSION['customer_id'] == ''):
+        case (CUSTOMERS_APPROVAL == '2' && !zen_is_logged_in()):
         if (TEXT_LOGIN_FOR_PRICE_PRICE == '') {
           // show room only
           return TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE;
@@ -1136,17 +832,17 @@
           $login_for_price = TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM;
           return $login_for_price;
         break;
-        case ((CUSTOMERS_APPROVAL_AUTHORIZATION != '0' and CUSTOMERS_APPROVAL_AUTHORIZATION != '3') and $_SESSION['customer_id'] == ''):
+        case (CUSTOMERS_APPROVAL_AUTHORIZATION != '0' && CUSTOMERS_APPROVAL_AUTHORIZATION != '3' && !zen_is_logged_in()):
         // customer must be logged in to browse
         $login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
         return $login_for_price;
         break;
-        case ((CUSTOMERS_APPROVAL_AUTHORIZATION == '3') and $_SESSION['customer_id'] == ''):
+        case (CUSTOMERS_APPROVAL_AUTHORIZATION == '3' && !zen_is_logged_in()):
         // customer must be logged in and approved to add to cart
         $login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_TO_SHOP_BUTTON_REPLACE . '</a>';
         return $login_for_price;
         break;
-        case (CUSTOMERS_APPROVAL_AUTHORIZATION != '0' and $_SESSION['customers_authorization'] > '0'):
+        case (CUSTOMERS_APPROVAL_AUTHORIZATION != '0' && isset($_SESSION['customers_authorization']) && (int)$_SESSION['customers_authorization'] > 0):
         // customer must be logged in to browse
         $login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
         return $login_for_price;
@@ -1161,7 +857,7 @@
         break;
       }
 
-    $button_check = $db->Execute("select product_is_call, products_quantity from " . TABLE_PRODUCTS . " where products_id = '" . (int)$product_id . "'");
+    $button_check = $db->Execute("SELECT product_is_call, products_quantity FROM " . TABLE_PRODUCTS . " WHERE products_id = " . (int)$product_id);
     switch (true) {
 // cannot be added to the cart
     case (zen_get_products_allow_add_to_cart($product_id) == 'N'):
@@ -1175,12 +871,12 @@
         $return_button = zen_image_button(BUTTON_IMAGE_SOLD_OUT, BUTTON_SOLD_OUT_ALT);
       } else {
         $return_button = zen_image_button(BUTTON_IMAGE_SOLD_OUT_SMALL, BUTTON_SOLD_OUT_SMALL_ALT);
+      }
         // BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 1
         if (BACK_IN_STOCK_REQUIRES_LOGIN != '1') {
            require 'includes/modules/ceon_bis_form.php'; 
         }
         // END CEON BACK IN STOCK NOTIFICATIONS 1 of 1
-      }
       break;
     default:
       $return_button = $link;
@@ -1327,27 +1023,21 @@
     }
   }
 
-
-////
-// find template or default file
-  function zen_get_file_directory($check_directory, $check_file, $dir_only = 'false') {
+  function zen_get_module_sidebox_directory($check_file) { 
     global $template_dir;
 
     $zv_filename = $check_file;
     if (!strstr($zv_filename, '.php')) $zv_filename .= '.php';
 
-    if (file_exists($check_directory . $template_dir . '/' . $zv_filename)) {
-      $zv_directory = $check_directory . $template_dir . '/';
+    if (file_exists(DIR_WS_MODULES . 'sideboxes/' . $template_dir . '/' . $zv_filename)) {
+      $template_dir_select = 'sideboxes/' . $template_dir . '/';
     } else {
-      $zv_directory = $check_directory;
+      $template_dir_select = 'sideboxes/';
     }
 
-    if ($dir_only == 'true') {
-      return $zv_directory;
-    } else {
-      return $zv_directory . $zv_filename;
-    }
+    return $template_dir_select . $zv_filename;
   }
+
 
 /**
  * check to see if database stored GET terms are in the URL as $_GET parameters
@@ -1356,13 +1046,15 @@
  */
   function zen_check_url_get_terms() {
     global $db;
-    $sql = "select * from " . TABLE_GET_TERMS_TO_FILTER;
+    $sql = "SELECT * FROM " . TABLE_GET_TERMS_TO_FILTER;
     $query_result = $db->Execute($sql);
-    $retVal = false;
+
     foreach ($query_result as $row) {
-      if (isset($_GET[$row['get_term_name']]) && zen_not_null($_GET[$row['get_term_name']])) $retVal = true;
+      if (isset($_GET[$row['get_term_name']]) && zen_not_null($_GET[$row['get_term_name']])) {
+        return true;
+      }
     }
-    return $retVal;
+    return false;
   }
 
 
@@ -1382,7 +1074,7 @@
 
 ////
 // return truncated paragraph
-  function zen_truncate_paragraph($paragraph, $size = 100, $word = ' ') {
+  function zen_truncate_paragraph($paragraph, $size = 100) {
     $zv_paragraph = "";
     $word = explode(" ", $paragraph);
     $zv_total = count($word);
@@ -1408,10 +1100,10 @@
   function zen_get_country_zones($country_id) {
     global $db;
     $zones_array = array();
-    $zones = $db->Execute("select zone_id, zone_name
-                           from " . TABLE_ZONES . "
-                           where zone_country_id = " . (int)$country_id . "
-                           order by zone_name");
+    $zones = $db->Execute("SELECT zone_id, zone_name
+                           FROM " . TABLE_ZONES . "
+                           WHERE zone_country_id = " . (int)$country_id . "
+                           ORDER BY zone_name");
     foreach ($zones as $zone) {
       $zones_array[] = array('id' => $zone['zone_id'], 'text' => $zone['zone_name']);
     }
@@ -1455,9 +1147,9 @@
  */
   function zen_js_zone_list($country, $form, $field) {
     global $db;
-    $countries = $db->Execute("select distinct zone_country_id
-                               from " . TABLE_ZONES . "
-                               order by zone_country_id");
+    $countries = $db->Execute("SELECT DISTINCT zone_country_id
+                               FROM " . TABLE_ZONES . "
+                               ORDER BY zone_country_id");
     $num_country = 1;
     $output_string = '';
     while (!$countries->EOF) {
@@ -1467,13 +1159,13 @@
         $output_string .= '  } else if (' . $country . ' == "' . $countries->fields['zone_country_id'] . '") {' . "\n";
       }
 
-      $states = $db->Execute("select zone_name, zone_id
-                              from " . TABLE_ZONES . "
-                              where zone_country_id = '" . $countries->fields['zone_country_id'] . "'
+      $states = $db->Execute("SELECT zone_name, zone_id
+                              FROM " . TABLE_ZONES . "
+                              WHERE zone_country_id = '" . $countries->fields['zone_country_id'] . "'
                               order by zone_name");
       $num_state = 1;
       while (!$states->EOF) {
-        if ($num_state == '1') $output_string .= '    ' . $form . '.' . $field . '.options[0] = new Option("' . PLEASE_SELECT . '", "");' . "\n";
+        if ($num_state == 1) $output_string .= '    ' . $form . '.' . $field . '.options[0] = new Option("' . PLEASE_SELECT . '", "");' . "\n";
         $output_string .= '    ' . $form . '.' . $field . '.options[' . $num_state . '] = new Option("' . $states->fields['zone_name'] . '", "' . $states->fields['zone_id'] . '");' . "\n";
         $num_state++;
         $states->MoveNext();
@@ -1655,28 +1347,6 @@
   }
 
 /**
- * function to override PHP's is_writable() which can occasionally be unreliable due to O/S and F/S differences
- * attempts to open the specified file for writing. Returns true if successful, false if not.
- * if a directory is specified, uses PHP's is_writable() anyway
- *
- * @var string
- * @return boolean
- */
-  function is__writeable($filepath, $make_unwritable = true) {
-    if (is_dir($filepath)) return is_writable($filepath);
-    $fp = @fopen($filepath, 'a');
-    if ($fp) {
-      @fclose($fp);
-      if ($make_unwritable) set_unwritable($filepath);
-      $fp = @fopen($filepath, 'a');
-      if ($fp) {
-        @fclose($fp);
-        return true;
-      }
-    }
-    return false;
-  }
-/**
  * attempts to make the specified file read-only
  *
  * @var string
@@ -1745,7 +1415,7 @@
   function zen_update_music_artist_clicked($artistId, $languageId)
   {
     global $db;
-    $sql = "UPDATE " . TABLE_RECORD_ARTISTS_INFO . " set url_clicked = url_clicked +1, date_last_click = NOW() WHERE artists_id = :artistId: AND languages_id = :languageId:";
+    $sql = "UPDATE " . TABLE_RECORD_ARTISTS_INFO . " SET url_clicked = url_clicked +1, date_last_click = NOW() WHERE artists_id = :artistId: AND languages_id = :languageId:";
     $sql = $db->bindVars($sql, ':artistId:', $artistId, 'integer');
     $sql = $db->bindVars($sql, ':languageId:', $languageId, 'integer');
     $db->execute($sql);
@@ -1753,25 +1423,10 @@
   function zen_update_record_company_clicked($recordCompanyId, $languageId)
   {
     global $db;
-    $sql = "UPDATE " . TABLE_RECORD_COMPANY_INFO . " set url_clicked = url_clicked +1, date_last_click = NOW() WHERE record_company_id = :rcId: AND languages_id = :languageId:";
+    $sql = "UPDATE " . TABLE_RECORD_COMPANY_INFO . " SET url_clicked = url_clicked +1, date_last_click = NOW() WHERE record_company_id = :rcId: AND languages_id = :languageId:";
     $sql = $db->bindVars($sql, ':rcId:', $recordCompanyId, 'integer');
     $sql = $db->bindVars($sql, ':languageId:', $languageId, 'integer');
     $db->execute($sql);
-  }
-
-  /**
-   * function issetorArray
-   *
-   * returns an array[key] or default value if key does not exist
-   *
-   * @param array $array
-   * @param $key
-   * @param null $default
-   * @return mixed
-   */
-  function issetorArray(array $array, $key, $default = null)
-  {
-    return isset($array[$key]) ? $array[$key] : $default;
   }
 
   /////////////////////////////////////////////

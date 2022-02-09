@@ -48,7 +48,7 @@ class CeonXHTMLHiTemplate
 	 * @param   string   $file_name  The path of the file to open
 	 * @return  object   A new CeonXHTMLHiTemplate object.
 	 */
-	function CeonXHTMLHiTemplate($file_name = '')
+	function __construct($file_name = '')
 	{
 		if ($file_name != '') {
 			if (!$this->xhtml_source = @file_get_contents($file_name)) {

@@ -77,7 +77,7 @@ class CeonBISNInstallOrUpgrade
 	 * 
 	 * @access  public
 	 */
-	function CeonBISNInstallOrUpgrade()
+	function __construct()
 	{
 		$this->_checkCreateDatabase();
 		

@@ -27,6 +27,7 @@ define('TEXT_REMOVE_DELETED_PRODUCTS', 'Remove subscriptions for deleted product
 define('TEXT_PRODUCTS_WITH_SUBSCRIPTIONS', 'Products with subscriptions');
 define('TEXT_ALL_SUBSCRIPTIONS', 'All subscriptions');
 
+define('TABLE_HEADING_PRODUCT_ID', 'ID');
 define('TABLE_HEADING_PRODUCT_NAME', 'Product Name');
 define('TABLE_HEADING_PRODUCT_CATEGORY', 'Category');
 define('TABLE_HEADING_NUM_SUBSCRIBERS', 'Num Subscribers');

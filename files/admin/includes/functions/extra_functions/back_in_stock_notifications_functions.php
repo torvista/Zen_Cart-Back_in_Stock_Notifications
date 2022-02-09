@@ -268,7 +268,7 @@ function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB()
 	$delete_subscriptions_result = $db->Execute($delete_subscriptions_query);
 	
 	$messageStack->add(sprintf(TEXT_DELETED_PRODUCTS_SUBSCRIPTIONS_REMOVED,
-		mysql_affected_rows($db->link)), 'back_in_stock_notifications');
+		mysqli_affected_rows($db->link)), 'back_in_stock_notifications');
 }
 
 // }}}

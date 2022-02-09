@@ -10,3 +10,9 @@ $PRODUCTS_DETAIL_TITLE
 --------------------------------------------------
 $PRODUCTS_DETAIL
 --------------------------------------------------
+
+<p>$URL_INTRO</p>
+
+<p><a href="$URL_VALUE">$URL_VALUE</a></p>
+
+

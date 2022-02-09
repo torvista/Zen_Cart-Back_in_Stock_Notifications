@@ -29,7 +29,7 @@
 class back_in_stock_notificationsAccount extends base
 {
 	
-	function back_in_stock_notificationsAccount()
+	function __construct()
 	{
 		global $zco_notifier;
 		

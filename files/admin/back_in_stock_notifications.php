@@ -136,7 +136,7 @@ switch($_GET['option']){
 		// Get accurate value for the number of rows
 		$num_rows_query = "
 			SELECT
-				bisns.id
+				distinct(product_id) 
 			FROM
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
 			WHERE
@@ -584,6 +584,7 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
 			TABLE_HEADING_PRODUCT_CATEGORY . '</a></th>';
 	}
 	
+	echo '<th>' . TABLE_HEADING_PRODUCT_ID . '</th>';
 	if ($sort_column == 'product') {
 		echo '<th>' . TABLE_HEADING_PRODUCT_NAME . '</th>';
 	} else {
@@ -625,6 +626,9 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
 				<tr class="dataTableRow">
 					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
 						<?php echo $product_subscriptions_info->fields['categories_name'];?>
+					</td>
+					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
+<?php echo $product_subscriptions_info->fields['product_id']; ?>
 					</td>
 					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
 						<?php echo buildLinkToProductAdminPage(
@@ -671,6 +675,7 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
 			TABLE_HEADING_PRODUCT_CATEGORY . '</a></th>';
 	}
 	
+   echo '<th>' . TABLE_HEADING_PRODUCT_ID . '</th>';
 	if ($sort_column == 'product') {
 		echo '<th>' . TABLE_HEADING_PRODUCT_NAME . '</th>';
 	} else {
@@ -722,6 +727,9 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
 				<tr class="dataTableRow">
 					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
 						<?php echo $subscriptions_info->fields['categories_name'];?>
+					</td>
+					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
+<?php echo $subscriptions_info->fields['product_id']; ?>
 					</td>
 					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
 						<?php echo buildLinkToProductAdminPage(
