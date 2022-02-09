@@ -6,10 +6,10 @@
  * Ported from Ceon Site Engine to Zen Cart (inc backporting to PHP4 from PHP5).
  *
  * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2008 Ceon
+ * @copyright  Copyright 2004-2009 Ceon
  * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
  * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.CeonEmailValidation.php 676 2008-07-02 20:24:46Z conor $
+ * @version    $Id: class.CeonEmailValidation.php 279 2009-01-13 18:21:43Z Bob $
  */
 class CeonEmailValidation {
 

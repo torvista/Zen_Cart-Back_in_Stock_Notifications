@@ -9,7 +9,7 @@
  * @copyright Copyright 2003-2005 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: tpl_account_default.php 4086 2006-08-07 02:06:18Z ajeh $
+ * @version $Id: tpl_account_default.php 279 2009-01-13 18:21:43Z Bob $
  */
 ?>
 
@@ -63,7 +63,15 @@
 
 
 <?php
+// BEGIN BACK_IN_STOCK_NOTIFICATIONS 1 of 3
+  if (SHOW_NEWSLETTER_UNSUBSCRIBE_LINK !='false' or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0' ||
+    BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
+/*
+// END BACK_IN_STOCK_NOTIFICATIONS 1 of 3
   if (SHOW_NEWSLETTER_UNSUBSCRIBE_LINK !='false' or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0') {
+// BEGIN BACK_IN_STOCK_NOTIFICATIONS 2 of 3
+*/
+// END BACK_IN_STOCK_NOTIFICATIONS 2 of 3
 ?>
 <h2><?php echo EMAIL_NOTIFICATIONS_TITLE; ?></h2>
 <ul id="myAccountNotify" class="list">
@@ -74,7 +82,7 @@
 <?php } //endif newsletter unsubscribe ?>
 <?php
 
-// BEGIN BACK_IN_STOCK_NOTIFICATIONS 1 of 1
+// BEGIN BACK_IN_STOCK_NOTIFICATIONS 3 of 3
   if (BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
       if ($subscribed_to_notification_lists) {
           echo '<li><a href="' . zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS . '</a></li>';
@@ -82,7 +90,7 @@
           echo '<li>' . EMAIL_NOTIFICATIONS_NO_BACK_IN_STOCK_NOTIFICATIONS . '</li>';
       }
   }
-// END BACK_IN_STOCK_NOTIFICATIONS 1 of 1
+// END BACK_IN_STOCK_NOTIFICATIONS 3 of 3
 
   if (CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS == '1') {
 ?>

@@ -56,63 +56,78 @@ var restrict_width = new CeonRestrictWidth(360, 900);
 	<li><a href="support.html">Support</a></li>
 </ul>
 
-<h2><a name="upgrading" id="upgrading"></a>Upgrading to Version 2.2.2 from Version 2.2.1</h2>
+<h2><a name="upgrading" id="upgrading"></a>Upgrading to Version 2.2.3 from Version 2.2.2/2.2.1</h2>
 <p>The changes between these versions are minor and easy to make:</p>
 <ol class="InstallationSteps">
 	<li>
 		<h4>Copy the new files across</h4>
-		<p>Overwrite all existing files with the updated/new files from version 2.2.2.</p>
+		<p>Overwrite all existing files with the updated/new files from version 2.2.3.</p>
 	</li>
-</ol>
-
-
-<h2>Upgrading to Version 2.2.2 from Version 2.2.0</h2>
-<p>The changes between these versions are minor and easy to make:</p>
-<ol class="InstallationSteps">
-	<li>
-		<h4>Copy the new files across</h4>
-		<p>Overwrite all existing files with the updated/new files from version 2.2.2.</p>
-	</li>
-	
 	<li>
 		<h4>Adjust a custom template file</h4>
-		<p>If you have modified the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_product_info_display.php</span>, it must be updated with the code from the sample file in 2.2.2.</p>
+		<p>If you have modified the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_account_default.php</span> for the template you are using, it must be updated with the code from the sample file in 2.2.3.</p>
 		<ul class="Steps">
 			<li>
 				<p>Copy the relevant updated source to your modified version.</p>
 			</li>
 		</ul>
-		<p>If you haven't modified this file, you can simply overwrite the file with the file from the <span class="FileName">template_override_files</span> folder in the distribution.</p>
+		<p>If you haven't modified this file, you can simply overwrite the file for the template you are using with the file from the <span class="FileName">template_override_files</span> folder in the distribution.</p>
 		<ul class="Steps">
+			<li>includes/templates/YOUR_TEMPLATE/templates/tpl_account_default.php</li>
+		</ul>
+	</li>
+</ol>
+
+
+<h2>Upgrading to Version 2.2.3 from Version 2.2.0</h2>
+<p>The changes between these versions are minor and easy to make:</p>
+<ol class="InstallationSteps">
+	<li>
+		<h4>Copy the new files across</h4>
+		<p>Overwrite all existing files with the updated/new files from version 2.2.3.</p>
+	</li>
+	
+	<li>
+		<h4>Adjust two custom template files</h4>
+		<p>If you have modified the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_account_default.php</span> or the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_product_info_display.php</span> for the template you are using, either/both must be updated with the code from the sample files in 2.2.3.</p>
+		<ul class="Steps">
+			<li>
+				<p>Copy the relevant updated source to your modified version of either/both files.</p>
+			</li>
+		</ul>
+		<p>If you haven't modified one (or either) of these files, you can simply overwrite the appropriate file(s) for the template you are using with the respective file from the <span class="FileName">template_override_files</span> folder in the distribution:</p>
+		<ul class="Steps">
+			<li>includes/templates/YOUR_TEMPLATE/templates/tpl_account_default.php</li>
 			<li>includes/templates/YOUR_TEMPLATE/templates/tpl_product_info_display.php</li>
 		</ul>
 	</li>
 </ol>
 
-<h2>Upgrading to Version 2.2.2 from Version 2.0.0</h2>
+<h2>Upgrading to Version 2.2.3 from Version 2.0.0</h2>
 <p>The changes between these versions are significant but easy to make:</p>
 <ol class="InstallationSteps">
 	<li>
 		<h4>Copy the new files across</h4>
-		<p>Overwrite all existing files with the updated/new files from version 2.2.2.</p>
+		<p>Overwrite all existing files with the updated/new files from version 2.2.3.</p>
 	</li>
 	
 	<li>
-		<h4>Adjust a custom template file</h4>
-		<p>If you have modified the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_product_info_display.php</span>, it must be updated with the code from the sample file in 2.2.2.</p>
+		<h4>Adjust two custom template files</h4>
+		<p>If you have modified the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_account_default.php</span> or the file <span class="FileName">includes/templates/YOUR_TEMPLATE/templates/tpl_product_info_display.php</span> for the template you are using, either/both must be updated with the code from the sample files in 2.2.3.</p>
 		<ul class="Steps">
 			<li>
-				<p>Copy the relevant updated source to your modified version.</p>
+				<p>Copy the relevant updated source to your modified version of either/both files.</p>
 			</li>
 		</ul>
-		<p>If you haven't modified this file, you can simply overwrite the file with the file from the <span class="FileName">template_override_files</span> folder in the distribution.</p>
+		<p>If you haven't modified one (or either) of these files, you can simply overwrite the appropriate file(s) for the template you are using with the respective file from the <span class="FileName">template_override_files</span> folder in the distribution:</p>
 		<ul class="Steps">
+			<li>includes/templates/YOUR_TEMPLATE/templates/tpl_account_default.php</li>
 			<li>includes/templates/YOUR_TEMPLATE/templates/tpl_product_info_display.php</li>
 		</ul>
 	</li>
 
 	<li><h4>[OPTIONAL] Adjust another custom template file</h4>
-		<p>If you have modified the file <span class="FileName">includes/templates/template_default/templates/tpl_back_in_stock_notification_subscribe_default.php</span>, it must be updated with the new additions in 2.2.2.</p>
+		<p>If you have modified the file <span class="FileName">includes/templates/template_default/templates/tpl_back_in_stock_notification_subscribe_default.php</span>, it must be updated with the new additions in 2.2.3.</p>
 		<ul class="Steps">
 			<li>
 				<p>Copy the relevant updated source to your modified version.</p>
@@ -122,7 +137,7 @@ var restrict_width = new CeonRestrictWidth(360, 900);
 </ol>
 <p class="BackToTop"><a href="#top">Back to top</a></p>
 
-<p id="footer"><img src="_images/ceon_button_logo.png" alt="Ceon" id="ceon_button_logo" />Module &amp; Documentation &copy; Copyright 2004-2008 <a href="http://ceon.net">Ceon</a></p>
+<p id="footer"><a href="http://ceon.net" target="_blank"><img src="_images/ceon_button_logo.png" alt="Ceon" id="ceon_button_logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2009 <a href="http://ceon.net">Ceon</a></p>
 
 	</div>
 </div>

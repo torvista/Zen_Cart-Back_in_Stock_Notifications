@@ -50,6 +50,7 @@ var restrict_width = new CeonRestrictWidth(360, 900);
 	<li>Copy the new files from the distribution into your Zen Cart installation.</li>
 	<li>Copy the updated template files from the distribution into your Zen Cart installation or modify their equivalents in the store's existing template files.</li>
 	<li>Create the database table &amp; add the admin configuration options by running the provided SQL script.</li>
+	<li>[<em>Optional but <strong>Recommended</strong></em>] Prevent the module's files from being indexed by search engines.</li>
 </ol>
 
 <h3>Installation Steps</h3>
@@ -120,10 +121,22 @@ var restrict_width = new CeonRestrictWidth(360, 900);
 			</li>
 		</ul>
 	</li>
+	
+	<li>
+		<h4>[OPTIONAL but RECOMMENDED] Prevent the module's files from being indexed by search engines.</h4>
+		<p>It's unlikely that you'd want a search engine (web robot) indexing your subscription/unsubscription pages as it could allow people to subscribe to a Back In Stock Notification List for a product that is actually back in stock.</p>
+		<p>This is easily avoided by using Zen Cart's &ldquo;<code>ROBOTS_PAGES_TO_SKIP</code>&rdquo; <code>define</code>:</p>
+		<ul class="Steps">
+			<li>Add the following two &ldquo;page names&rdquo; to the <code>define</code> for <code>ROBOTS_PAGES_TO_SKIP</code> in the file <span class="FileName">includes/languages/YOUR_LANGUAGE/meta_tags.php</span> (for each language your site uses):</li>
+			<li><code>back_in_stock_notification_subscribe,back_in_stock_notification_unsubscribe</code></li>
+			<li>Don't forget to add a comma before &ldquo;<code>back_in_stock_notification_subscribe</code>&rdquo; within the <code>define</code>!</li>
+		</ul>
+	</li>
 </ol>
 <p class="BackToTop"><a href="#top">Back to top</a></p>
 
-<p id="footer"><img src="_images/ceon_button_logo.png" alt="Ceon" id="ceon_button_logo" />Module &amp; Documentation &copy; Copyright 2004-2008 <a href="http://ceon.net">Ceon</a></p>
+<p id="footer"><a href="http://ceon.net" target="_blank"><img src="_images/ceon_button_logo.png" alt="Ceon" id="ceon_button_logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2009 <a href="http://ceon.net">Ceon</a></p>
+
 
 	</div>
 </div>

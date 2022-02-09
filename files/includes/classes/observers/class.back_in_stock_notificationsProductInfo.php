@@ -4,12 +4,12 @@
  * Back In Stock Notifications Product Info Page Notification Form Display
  *
  * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2007-2008 Ceon
+ * @copyright  Copyright 2007-2009 Ceon
  * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright  Portions Copyright 2003 osCommerce
  * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
  * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.back_in_stock_notificationsProductInfo.php 717 2008-07-21 23:49:02Z conor $
+ * @version    $Id: class.back_in_stock_notificationsProductInfo.php 279 2009-01-13 18:21:43Z Bob $
  */
 
 // {{{ class back_in_stock_notificationsProductInfo
@@ -18,12 +18,12 @@
  * Checks if the current user is subscribed to any Back In Stock Notification lists.
  *
  * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2007-2008 Ceon
+ * @copyright  Copyright 2007-2009 Ceon
  * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright  Portions Copyright 2003 osCommerce
  * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
  * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.back_in_stock_notificationsProductInfo.php 717 2008-07-21 23:49:02Z conor $
+ * @version    $Id: class.back_in_stock_notificationsProductInfo.php 279 2009-01-13 18:21:43Z Bob $
  */
 class back_in_stock_notificationsProductInfo extends base
 {
@@ -53,7 +53,7 @@ class back_in_stock_notificationsProductInfo extends base
 		
 		// Check if customer should be offered the option to be notified when this product is back
 		// in stock
-		if ($products_quantity == 0 && BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
+		if ($products_quantity <= 0 && BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
 			$product_back_in_stock_notification_form_link = '';
 			$back_in_stock_notification_build_form = true;
 			
