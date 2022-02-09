@@ -533,7 +533,7 @@ if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
 		$count_text = TEXT_DISPLAY_NUMBER_OF_BACK_IN_STOCK_NOTIFICATIONS;
 	}
 	
-	if ($_GET['page'] != -1) {
+	if (isset($_GET['page']) && $_GET['page'] != -1) {
 		// Page is to be split according to the maximum rows per page
 		$pagination_columns .= '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
 			'<tr><td class="BISNPageCount">' .
