@@ -126,7 +126,7 @@ switch($_GET['option']){
 		$products_query_raw = str_replace("\r", ' ', $products_query_raw);
 		$products_query_raw = str_replace("\t", ' ', $products_query_raw);
 		
-		if ($_GET['page'] != -1) {
+		if (isset($_GET['page']) && $_GET['page'] != -1) {
 			$products_split = new splitPageResults($_GET['page'],
 				MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $products_query_raw, $num_rows);
 		}
