@@ -300,7 +300,7 @@ if (isset($back_in_stock_notification_build_form) && $back_in_stock_notification
     $back_in_stock_notification_form_customer_name);
   $back_in_stock_notification_form->setVariable('email',
     $back_in_stock_notification_form_customer_email);
-  $back_in_stock_notification_form->setVariable('email_confirmation',
+  $back_in_stock_notification_form->setVariable('cofnospam',
     $back_in_stock_notification_form_customer_email_confirmation);
   
   print $back_in_stock_notification_form->getXHTMLSource();

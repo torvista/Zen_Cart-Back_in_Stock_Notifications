@@ -12,7 +12,7 @@
  * @copyright  Copyright 2004-2008 Ceon
  * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
  * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.CeonXHTMLHiTemplate.php 676 2008-07-02 20:24:46Z conor $
+ * @version    $Id: class.CeonXHTMLHiTemplate.php 739 2008-08-31 11:41:56Z conor $
  */
 class CeonXHTMLHiTemplate
 {
@@ -136,7 +136,8 @@ class CeonXHTMLHiTemplate
 	 * @access public
 	 * @param  string $variable_name       The name of the variable to be replaced.
 	 * @param  reference(string) $source   A reference to the source to replace the variable with.
-	 * @return integer  The number of times the variable was set in the source.
+	 * @return integer  The number of times the variable was set in the source (or a rough estimate
+	 *                  of this value for PHP4).
 	 */
 	function setVariable($variable_name, &$source)
 	{
@@ -144,10 +145,19 @@ class CeonXHTMLHiTemplate
 		$method_set_count = 0;
 		
 		// Replace bracketed replacement tags (e.g. {content})
-		$this->xhtml_source = str_replace('{' . $variable_name . '}', $source, $this->xhtml_source,
-			$method_set_count);
-		
-		$set_count += $method_set_count;
+		$bracketed_tag = '{' . $variable_name . '}';
+		if (PHP_VERSION >= '5') {
+			$this->xhtml_source = str_replace($bracketed_tag, $source, $this->xhtml_source,
+				$method_set_count);
+			
+			$set_count += $method_set_count;
+		} else {
+			if (strpos($this->xhtml_source, $bracketed_tag) !== false) {
+				$this->xhtml_source = str_replace($bracketed_tag, $source, $this->xhtml_source);
+				
+				$set_count += 1;
+			}
+		}
 		
 		// Enable <ceon:if blocks
 		do {
@@ -204,10 +214,19 @@ class CeonXHTMLHiTemplate
 		
 		$num_matches = count($matches);
 		for ($i = 0; $i < $num_matches; $i++) {
-			$this->xhtml_source = str_replace($matches[$i][0], $source, $this->xhtml_source,
-				$method_set_count);
-		
-			$set_count += $method_set_count;
+			if (PHP_VERSION >= '5') {
+				$this->xhtml_source = str_replace($matches[$i][0], $source, $this->xhtml_source,
+					$method_set_count);
+				
+				$set_count += $method_set_count;
+			} else {
+				if (strpos($this->xhtml_source, $matches[$i][0]) !== false) {
+					$this->xhtml_source = str_replace($matches[$i][0], $source,
+						$this->xhtml_source);
+					
+					$set_count += 1;
+				}
+			}
 		}
 		
 		// Replace ceon:variable inline type tags
@@ -217,10 +236,19 @@ class CeonXHTMLHiTemplate
 		
 		$num_matches = count($matches);
 		for ($i = 0; $i < $num_matches; $i++) {
-			$this->xhtml_source = str_replace($matches[$i][0], $source, $this->xhtml_source,
-				$method_set_count);
-			
-			$set_count += $method_set_count;
+			if (PHP_VERSION >= '5') {
+				$this->xhtml_source = str_replace($matches[$i][0], $source, $this->xhtml_source,
+					$method_set_count);
+				
+				$set_count += $method_set_count;
+			} else {
+				if (strpos($this->xhtml_source, $matches[$i][0]) !== false) {
+					$this->xhtml_source = str_replace($matches[$i][0], $source,
+						$this->xhtml_source);
+					
+					$set_count += 1;
+				}
+			}
 		}
 		
 		return $set_count;
@@ -679,7 +707,9 @@ class CeonXHTMLHiTemplate
 								'" />', $template);
 						}
 					} else {
-						throw new Exception("Couldn't find start tag for $part_name");
+						$extract_more_parts = false;
+						printf("Couldn't find start tag for %s!\n", $part_name);
+						//throw new Exception("Couldn't find start tag for $part_name");
 					}
 					
 					// Reset pointer to start of the newly updated template source
