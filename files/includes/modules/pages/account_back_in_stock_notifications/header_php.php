@@ -10,7 +10,7 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 715 2011-06-12 20:06:27Z conor $
+ * @version     $Id: header_php.php 719 2011-06-13 18:00:43Z conor $
  */
 
 if (!$_SESSION['customer_id']) {

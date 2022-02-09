@@ -7,7 +7,7 @@
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @copyright   Copyright 2004-2011 Ceon
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications_catalog_dhtml.php 715 2011-06-12 20:06:27Z conor $
+ * @version     $Id: back_in_stock_notifications_catalog_dhtml.php 719 2011-06-13 18:00:43Z conor $
  */
 
 $za_contents[] = array(

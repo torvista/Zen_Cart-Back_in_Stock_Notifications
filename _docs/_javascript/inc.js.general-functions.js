@@ -1,4 +1,4 @@
-// $Id: inc.js.general-functions.js 715 2011-06-12 20:06:27Z conor $
+// $Id: inc.js.general-functions.js 719 2011-06-13 18:00:43Z conor $
 
 /**
  * Outputs information passed to the display.

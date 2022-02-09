@@ -78,7 +78,7 @@
 <div class="centerColumn" id="productBookDisplay">
 
 <!--bof Form start-->
-<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product'), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
+<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product', $request_type), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
 <!--eof Form start-->
 
 <?php if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>

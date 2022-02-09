@@ -11,7 +11,7 @@
  * @copyright   Copyright 2004-2011 Ceon
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: tpl_account_back_in_stock_notifications_default.php 715 2011-06-12 20:06:27Z conor $
+ * @version     $Id: tpl_account_back_in_stock_notifications_default.php 719 2011-06-13 18:00:43Z conor $
  */
 
 ?>

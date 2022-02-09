@@ -10,7 +10,7 @@
  * @author       Peter-Paul Koch - http://quirksmode.org
  * @author       Thomas Fuchs - http://mir.aculo.us
  * @license      Creative Commons Attribution 2.5 - http://creativecommons.org/licenses/by/2.5/
- * @version      $Id: litebox-1.0.js 715 2011-06-12 20:06:27Z conor $
+ * @version      $Id: litebox-1.0.js 719 2011-06-13 18:00:43Z conor $
  */
 
 //
