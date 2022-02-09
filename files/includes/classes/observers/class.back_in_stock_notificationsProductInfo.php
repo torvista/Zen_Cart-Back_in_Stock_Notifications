@@ -56,7 +56,18 @@ class back_in_stock_notificationsProductInfo extends base
 		
 		$product_back_in_stock_notification_form_link = null;
 		$back_in_stock_notification_build_form = false;
-		
+
+      // check product id
+      $prid_ok = true;
+      if (empty($_GET['products_id'])) {
+         $prid_ok = false;
+      } else {
+         if (!zen_products_id_valid($_GET['products_id'])) {
+            $prid_ok = false;
+         }
+      }
+      if (!$prid_ok) return; 
+
 		// Check if customer should be offered the option to be notified when this product is back
 		// in stock
 		if ($products_quantity <= 0 && BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
@@ -119,11 +130,19 @@ class back_in_stock_notificationsProductInfo extends base
 			
 			if ($product_back_in_stock_notification_form_link == '') {
 				// Build link to form
+            if (BACK_IN_STOCK_REQUIRES_LOGIN != '1') {
 				$product_back_in_stock_notification_form_link = sprintf(
 					BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
 					zen_href_link(zen_get_info_page((int) $_GET['products_id']),
 					zen_get_all_get_params(array('number_of_uploads')), $request_type) .
 					'#back_in_stock_notification_form');
+
+            } else {
+              $product_back_in_stock_notification_form_link = sprintf(
+                 BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK, 
+                zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
+                'products_id='.(int) $_GET['products_id'], 'NONSSL')); 
+            }
 			}
 		}
 	}

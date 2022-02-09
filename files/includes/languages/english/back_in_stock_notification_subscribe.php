@@ -37,7 +37,7 @@ define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT', 'Back In Stock N
 define('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT', '[BACK IN STOCK NOTIFICATION SUBSCRIPTION] Subscription for %s');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_GREETING', 'Dear');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO1', 'You have successfully subscribed to the Back In Stock Notification List for:');
-define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO2', 'We shall send you an e-mail when it is back in stock!');
+define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO2', 'We will send you an e-mail when it is back in stock!');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO', 'If you did not request to be subscribed to this list or have simply changed your mind and don\'t want to be informed when this product is back in stock, please log into your Account and unsubscribe yourself:');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT', 'Go to My Account');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_INTRO', 'If you did not request to be subscribed to this list or have simply changed your mind and don\'t want to be informed when this product is back in stock, please log in using the following link to unsubscribe yourself:');

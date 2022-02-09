@@ -110,7 +110,7 @@ function sendBackInStockNotifications($test_mode = false)
 			
 			$plain_text_msg = '';
 			$html_msg = '';
-			
+
 			// Record the names of the products which have come back in stock since this user
 			// joined their back in stock notification list(s)
 			$products = array();
@@ -351,9 +351,11 @@ function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_
 	$html_msg_parts['EMAIL_DISCLAIMER'] = sprintf(EMAIL_DISCLAIMER, '<a href="mailto:' .
 		STORE_OWNER_EMAIL_ADDRESS . '">'. STORE_OWNER_EMAIL_ADDRESS .' </a>');
 	
+   $test_mode_subj = ''; 
 	if ($test_mode) {
 		// Only send e-mails to store owner when in test mode
-		$email = EMAIL_FROM;
+      $email = EMAIL_FROM;
+      $test_mode_subj = ' - TEST MODE'; 
 	}
 	
 	// Create the text version of the e-mail for Zen Cart's e-mail functionality
@@ -377,7 +379,7 @@ function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_
 		$text_msg_source = str_replace('$' . $key, $value, $text_msg_source);
 	}
 	
-	$error = zen_mail($name, $email, EMAIL_BACK_IN_STOCK_NOTIFICATIONS_SUBJECT, $text_msg_source,
+	$error = zen_mail($name, $email, EMAIL_BACK_IN_STOCK_NOTIFICATIONS_SUBJECT . $test_mode_subj, $text_msg_source,
 		STORE_NAME, EMAIL_FROM, $html_msg_parts, 'back_in_stock_notification');
 	
 	if ($error != '') {
@@ -423,4 +425,4 @@ function buildLinkToProductAdminPage($name, $id, $products_type)
 
 // }}}
 
-?>
+

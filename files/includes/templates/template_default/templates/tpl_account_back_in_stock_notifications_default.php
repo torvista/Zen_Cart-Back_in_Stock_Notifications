@@ -62,6 +62,7 @@ if (file_exists($image_src)) {
 	$back_button_source = '<input type="submit" name="back" value="' . BUTTON_BACK_ALT .'" />';
 }
 
+$back_button_source = ''; 
 $back_in_stock_notifications->setVariable('back_button', $back_button_source);
 
 // Add the title to the subscriptions overview box
@@ -163,10 +164,10 @@ if (sizeof($subscribed_notification_lists) == 0) {
 		
 		
 		// Add a link to the product's page
-		$product_page = zen_get_info_page($subscribed_notification_lists[$i]['id']);
+		$product_page = zen_get_info_page($subscribed_notification_lists[$i]['product_id']);
 		
 		$product_info_page_link = zen_href_link($product_page,
-			'products_id=' . $subscribed_notification_lists[$i]['id'], $request_type);
+			'products_id=' . $subscribed_notification_lists[$i]['product_id'], $request_type);
 			
 		$back_in_stock_notifications_item->setVariable('product_info_page_link',
 			$product_info_page_link);  

@@ -22,10 +22,6 @@ if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
 
-// This file should normally only need to be run once, but if the user hasn't installed the software
-// properly it may need to be run again. Flag tracks the situation
-$can_autodelete = true;
-
 if (function_exists('zen_register_admin_page')) {
 	if (!zen_page_key_exists('ceon_bisn')) {
 		// Register the Ceon Back In Stock Notifications Admin Utility with the Zen Cart admin
@@ -38,7 +34,6 @@ if (function_exists('zen_register_admin_page')) {
 				' Please check that the file ' . DIR_WS_INCLUDES . 'extra_datafiles/' .
 				'back_in_stock_notifications_filenames.php has been uploaded.';
 			
-			$can_autodelete = false;
 			
 		}
 		
@@ -57,11 +52,3 @@ if (function_exists('zen_register_admin_page')) {
 	}
 }
 
-if ($can_autodelete) {
-	// Either the admin utility file has been registered, or it doesn't need to be. Can stop the
-	// wasteful process of having this script run again by having it delete itself
-	@unlink(DIR_WS_INCLUDES .
-		'functions/extra_functions/back_in_stock_notifications_admin_page_reg.php');
-}
-
-?>

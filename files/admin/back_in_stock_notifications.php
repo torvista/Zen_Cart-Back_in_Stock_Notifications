@@ -30,7 +30,7 @@ $table_exists_query = 'SHOW TABLES LIKE "' .
 $table_exists_result = $db->Execute($table_exists_query);
 
 if ($table_exists_result->EOF ||
-		!defined('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO') ||
+		!defined('BACK_IN_STOCK_REQUIRES_LOGIN') ||
 		isset($_GET['check-config'])) {
 	// Instantiate and run the installation/upgrade class
 	require_once(DIR_WS_CLASSES . 'class.CeonBISNInstallOrUpgrade.php');
@@ -48,8 +48,6 @@ if ($table_exists_result->EOF ||
 		exit;
 	}
 }
-
-require_once(DIR_WS_FUNCTIONS . 'back_in_stock_notifications_functions.php');
 
 $bisn_options = array (
 	0 => array(

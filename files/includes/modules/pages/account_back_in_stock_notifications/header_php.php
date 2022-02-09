@@ -43,28 +43,17 @@ if (isset($_POST['back']) || isset($_POST['back_x'])) {
 function getSubscribedBackInStockNotificationLists($customer_id)
 {
 	global $db;
-	
 	$subscribed_notification_lists = array();
-	
+   $customer_email = zen_db_input(get_customers_email()); 	
 	$subscribed_notification_lists_query = "
 		SELECT
-			bisns.id, bisns.product_id, pd.products_name, bisns.date_subscribed
+			bisns.id, bisns.product_id, bisns.date_subscribed
 		FROM
 			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
-		LEFT JOIN
-			" . TABLE_PRODUCTS_DESCRIPTION . " pd
-		ON
-			bisns.product_id = pd.products_id
-		LEFT JOIN
-			" . TABLE_CUSTOMERS . " c
-		ON
-			c.customers_id = bisns.customer_id
 		WHERE
-			(bisns.customer_id = '" . (int) $customer_id . "'
+			(bisns.customer_id = " . (int) $customer_id . " 
 		OR
-			c.customers_email_address = bisns.email_address)
-		AND
-			pd.language_id = '" . (int)$_SESSION['languages_id'] . "';";
+			bisns.email_address = '" . $customer_email . "')"; 
 	
 	$subscribed_notification_lists_result = $db->Execute($subscribed_notification_lists_query);
 	
@@ -75,10 +64,11 @@ function getSubscribedBackInStockNotificationLists($customer_id)
 		// Build the list of notification lists to which this user is subscribed
 		while (!$subscribed_notification_lists_result->EOF) {
 			
+		   $name = zen_get_products_name($subscribed_notification_lists_result->fields['product_id']); 
 			$subscribed_notification_lists[] = array(
 				'id' => $subscribed_notification_lists_result->fields['id'],
 				'product_id' => $subscribed_notification_lists_result->fields['product_id'],
-				'product_name' => $subscribed_notification_lists_result->fields['products_name'],
+				'product_name' => $name, 
 				'date' => $subscribed_notification_lists_result->fields['date_subscribed']
 				);
 			

@@ -20,14 +20,21 @@
  * Note that the link is added in place of %s, %s must be present for the link to work!
  */
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_ALREADY_SUBSCRIBED', '<br />You have requested to be notified when this product is back in stock.');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br />To be notified when this product is back in stock please <a href="%s">click here</a>.');
-
+if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
+  define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br />To be notified when this product is back in stock please <a href="%s">click here</a>. (Requires account)');
+} else {
+  define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br />To be notified when this product is back in stock please <a href="%s">click here</a>.');
+}
 
 /**
  * Text/HTML for other pages.
  */
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
+if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
+  define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>. (Requires account)');
+} else {
+  define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
+}
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE', 'Let us notify you when this product is back in stock!');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO', 'Simply enter your details below and we will send you an e-mail when &ldquo;%s&rdquo; is back in stock!');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE', 'We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!');
@@ -47,4 +54,6 @@ if (!defined('BUTTON_IMAGE_NOTIFY_ME')) {
 define('EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS', 'Unsubscribe from Back In Stock Notification Lists.');
 define('EMAIL_NOTIFICATIONS_NO_BACK_IN_STOCK_NOTIFICATIONS', 'You are not currently subscribed to any Back In Stock Notification Lists.');
 
-?>
+define('EMAIL_TEXT_HEADER',' ');
+define('EMAIL_TEXT_FROM',' ');
+

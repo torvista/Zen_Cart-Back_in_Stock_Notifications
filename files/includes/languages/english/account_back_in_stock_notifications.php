@@ -19,7 +19,7 @@ define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_2', 'Back In Stock Noti
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Back In Stock Notifications');
 
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO1', 'Below is a list of the Back In Stock Notification Lists to which you are subscribed.');
-define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO2', 'To unsubscribe from a list simply uncheck (clear) the box beside the appropriate product and click &ldquo;Update&rdquo;. If you don\'t want to unsubscribe from any lists, simply click &ldquo;Back&rdquo;.');
+define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO2', 'To unsubscribe from a list, uncheck (clear) the box beside the appropriate product and click &ldquo;Update&rdquo;.');
 
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_OVERVIEW_TITLE', 'Your current Back In Stock Notification Subscription(s)');
 

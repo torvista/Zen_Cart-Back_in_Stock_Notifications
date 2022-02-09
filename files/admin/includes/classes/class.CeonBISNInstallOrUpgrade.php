@@ -117,7 +117,7 @@ class CeonBISNInstallOrUpgrade
 					`subscription_code` VARCHAR(10) DEFAULT NULL,
 					`name` varchar(64) NOT NULL DEFAULT '',
 					`email_address` VARCHAR(96) DEFAULT NULL,
-					`date_subscribed` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+					`date_subscribed` DATETIME NOT NULL DEFAULT '0001-01-01 00:00:00',
 					PRIMARY KEY  (`id`)
 					);";
 			
@@ -341,6 +341,65 @@ class CeonBISNInstallOrUpgrade
 			$add_config_option_result = $db->Execute($add_config_option_sql);
 			
 			$messageStack->add('Send Copy of Subscription E-mails configuration group option' .
+				' added.', 'success');
+		}
+
+		$check_config_option_exists_sql = "
+			SELECT
+				configuration_group_id
+			FROM
+				" . TABLE_CONFIGURATION . "
+			WHERE
+				configuration_key =
+					'BACK_IN_STOCK_REQUIRES_LOGIN';";
+		
+		$check_config_option_exists_result = $db->Execute($check_config_option_exists_sql);
+		
+		if (!$check_config_option_exists_result->EOF) {
+			// Make sure the option is assigned to the correct group
+			if ($check_config_option_exists_result->fields['configuration_group_id'] !=
+					$configuration_group_id) {
+				
+				$set_group_id_sql = "
+					UPDATE
+						" . TABLE_CONFIGURATION . "
+					SET
+						configuration_group_id = '" . $configuration_group_id . "'
+					WHERE
+						configuration_key =
+							'BACK_IN_STOCK_REQUIRES_LOGIN';";
+				
+				$set_group_id_result = $db->Execute($set_group_id_sql);
+			}
+		} else {
+			$add_config_option_sql = "
+				INSERT INTO
+					" . TABLE_CONFIGURATION . "
+					(
+					`configuration_title`,
+					`configuration_key`,
+					`configuration_value`,
+					`configuration_description`,
+					`configuration_group_id`,
+					`sort_order`,
+					`set_function`,
+					`date_added`
+					)
+				VALUES
+					(
+					'Back in Stock requires login',
+					'BACK_IN_STOCK_REQUIRES_LOGIN',
+					'1',
+					'<br />If enabled, only logged in customers may use the Back in Stock notification system<br /><br />0 = off <br />1 = on',
+					'" . $configuration_group_id . "',
+					'1',
+					'zen_cfg_select_option(array(''0'', ''1''), ',
+					NOW()
+					);";
+			
+			$add_config_option_result = $db->Execute($add_config_option_sql);
+			
+			$messageStack->add('Back in Stock requires login' . 
 				' added.', 'success');
 		}
 		

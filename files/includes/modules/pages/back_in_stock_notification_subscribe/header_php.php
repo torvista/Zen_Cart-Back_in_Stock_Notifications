@@ -15,6 +15,14 @@
  * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
  */
 
+if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
+   if (!$_SESSION['customer_id']) {
+   	$_SESSION['navigation']->set_snapshot();
+   	
+   	zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
+   }
+}
+
 /**
  * Load in the language file
  */
@@ -24,7 +32,7 @@ $breadcrumb->add(BACK_IN_STOCK_NOTIFICATION_NAVBAR_TITLE);
 
 // Make sure that product id was supplied
 if (!isset($_GET['products_id'])) {
-	
+   die("No such product"); // should never happen 	
 }
 
 /**
@@ -50,13 +58,19 @@ $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
 if ($product_name_result->RecordCount() == 0) {
-	
+   die("No such product"); // should never happen 	
 } else {
 	$product_name = $product_name_result->fields['products_name'];
 }
 
 // Check if the form has been submitted
 $form_errors = array();
+
+if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
+  $_POST['notify_me'] = 1; 
+  $_POST['email'] = get_customers_email(); 
+  $_POST['name'] = $_SESSION['customer_first_name'] . ' ' . $_SESSION['customer_last_name']; 
+}
 
 if (isset($_POST['notify_me'])) {
 	// Check that a valid e-mail address has been supplied
@@ -104,22 +118,28 @@ if (isset($_POST['notify_me'])) {
 		
 		$email_address = $_POST['email'];
 		
+      $cid = -1; 
+      // See if there's a customer with this email, if so, capture $cid.
+      $cust_query = $db->Execute("SELECT customers_id FROM " . TABLE_CUSTOMERS . " WHERE customers_email_address = '" . zen_db_input($email_address) . "'"); 
+      if (!$cust_query->EOF) {
+         $cid = $cust_query->fields['customers_id']; 
+      }
+      
 		// Check if the user is already subscribed to the notification list for this product
 		$check_notification_subscription_query = "
 			SELECT
 				id
 			FROM
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
-			LEFT JOIN
-				" . TABLE_CUSTOMERS . " c
-			ON
-				c.customers_id = bisns.customer_id
 			WHERE
-				bisns.product_id = '" . (int) $_GET['products_id'] . "'
-			AND
-				(bisns.email_address = '" . zen_db_prepare_input($email_address) . "'
-			OR
-				c.customers_email_address = '" . zen_db_prepare_input($email_address) . "');";
+				bisns.product_id = " . (int) $_GET['products_id'] . " "; 
+         $check_notification_subscription_query .= " AND ("; 
+         $check_notification_subscription_query .= " bisns.email_address = '" . zen_db_prepare_input($email_address) . "'"; 
+
+         if ($cid != -1) { 
+            $check_notification_subscription_query .= " OR bisns.customer_id = $cid"; 
+         }
+         $check_notification_subscription_query .= ")"; 
 		$check_notification_subscription = $db->Execute($check_notification_subscription_query);
 		
 		if ($check_notification_subscription->RecordCount() > 0) {
