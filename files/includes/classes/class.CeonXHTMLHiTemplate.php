@@ -12,7 +12,7 @@
  * @copyright  Copyright 2004-2009 Ceon
  * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
  * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.CeonXHTMLHiTemplate.php 279 2009-01-13 18:21:43Z Bob $
+ * @version    $Id: class.CeonXHTMLHiTemplate.php 317 2009-02-23 12:01:47Z Bob $
  */
 class CeonXHTMLHiTemplate
 {

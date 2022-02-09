@@ -1,4 +1,4 @@
-// $Id: inc.js.restrict_width.js 279 2009-01-13 18:21:43Z Bob $
+// $Id: inc.js.restrict_width.js 317 2009-02-23 12:01:47Z Bob $
 
 /**
  * @fileoverview Contains CeonRestrictWidth class, which can be used to restrict the width of a

@@ -1,4 +1,4 @@
-// $Id: inc.js.css_functions.js 279 2009-01-13 18:21:43Z Bob $
+// $Id: inc.js.css_functions.js 317 2009-02-23 12:01:47Z Bob $
 
 /**
  * Looks for the very last occurrence (and therefore most significant) of a specified CSS style in
