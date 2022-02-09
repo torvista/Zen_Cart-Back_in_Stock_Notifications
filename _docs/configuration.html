@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>.:: Ceon :: Zen Cart :: Module  :: back_in_stock_notifications ::.</title>
+	<style type="text/css">
+	/*<![CDATA[*/
+	@import url(inc.css.layout_styles.css);
+	@import url(inc.css.styles.css);
+	/*]]>*/
+	</style>
+	<link href="inc.css.layout_styles_print.css" type="text/css" media="print" />
+	<script src="inc.js.general_functions.js" type="text/javascript"></script>
+	<script src="inc.js.css_functions.js" type="text/javascript"></script>
+	<script src="inc.js.restrict_width.js" language="javascript" type="text/javascript"></script>
+</head>
+
+<body>
+
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+// Script resizes main div if client window is larger than a predefined variable
+var restrict_width = new CeonRestrictWidth(360, 900);
+// -->
+</script>
+
+<div id="grad_horiz_left">
+	<div id="grad_horiz_right">
+
+<a name="top" id="top"></a>
+<h1 class="Title">back_in_stock_notifications</h1>
+<p class="TitleByLine">probably the best Zen Cart Back In Stock Notifications Module in the world! ...ever!</p>
+<ul class="MainMenu">
+	<li><a href="index.html">Essential Info</a><span> | </span></li>
+	<li><a href="features.html">Features</a><span> | </span></li>
+	<li><a href="revision_history.html">Revision History</a><span> | </span></li>
+	<li><a href="installation.html">Installation</a><span> | </span></li>
+	<li><a href="configuration.html">Configuration/Usage</a><span> | </span></li>
+	<li><a href="upgrading.html">Upgrading</a><span> | </span></li>
+	<li><a href="faqs.html">FAQs</a><span> | </span></li>
+	<li><a href="support.html">Support</a></li>
+</ul>
+
+<h2><a name="configuration" id="configuration"></a>Configuration</h2>
+<p>The module can be configured through the Zen Cart admin.</p>
+<ul class="Steps">
+	<li>Go to <em>Configuration</em> &gt; <em>Back In Stock Notifications</em>.</li>
+	<li>The only options are to enable/disable the functionality and to set an optional e-mail address to which copies of any Back In Stock Notifications should be sent.</li>
+</ul>
+
+<h3>Modifying the E-mail Templates</h3>
+<p>The e-mail templates use basic HTML and can be found in the <span class="FileName">email</span> folder in the store. The additional email template files ending in <span class="FileName">.txt</span> are used as the basis of the plain text version of the e-mails and so can be customised separately!</p>
+
+<h3>Modifying the Catalog Templates</h3>
+<p>The Catalog Templates, for the most part, don't use the standard Zen Cart templating methodology.</p>
+<p>This module was originally part of an original version of Ceon's Site Engine system and makes use of our own, we believe (of course), far-superior templating system. Since it is released as a free gift to the Zen Cart community, it was deemed that it wasn't worthwhile downgrading the code to using Zen Cart's templating system.</p>
+<ul class="BulletedList">
+	<li>
+		<p>To modify the look/layout of the code produced by this module you can simply open up the file:</p>
+		<p><span class="FileName">includes/templates/template_default/templates/inc.html.back_in_stock_notifications.html</span></p>
+	</li>
+	<li>
+		<p>This is a standard HTML file which has various &ldquo;Template Parts&rdquo; defined within.</p>
+	</li>
+	<li>
+		<p>Simply modify the HTML within this file and the changes will be instantly used by the module within the site.</p>
+	</li>
+	<li>
+		<p>Looking at the source, it can be seen that the template system uses tags to wrap blocks of source code which will be replaced with &ldquo;live&rdquo; values when the module is run and the template is used. It should be fairly obvious to anyone familiar with HTML how this can be used. Some hints follow:</p>
+		<ul class="Note" style="margin-top: 1em; padding-left: 2em;">
+			<li>Dynamic variables replace the contents of &lt;ceon:variable name=&quot;<em>variable_name</em>&quot;&gt; &lt;/ceon:variable&gt; tags. The names of the variables which will replace the contents of these tags should make their purpose obvious.</li>
+			<li style="margin-top: 1em;">Entire sections of the source can be displayed or not, depending on whether or not a variable is set by the template. These sections are marked by  &lt;ceon:if isset=&quot;<em>variable_name</em>&quot;&gt; &lt;/ceon:if&gt; tags.</li>
+			<li style="margin-top: 1em;">All unused tags in the &ldquo;ceon&rdquo; namespace, and all unused &ldquo;bracketed&rdquo; tags (&lsquo;{ }&rsquo;) are stripped from the source before it is finalised - so there's nothing wrong with leaving lots of them in!</li>
+			<li style="margin-top: 1em;">Any thoughts or feedback on the templating system is very welcome: <a href="http://dev.ceon.net/contact_us" target="_blank">Please get in contact</a>!</li>
+		</ul>
+	</li>
+</ul>
+
+
+<h2><a name="usage" id="usage"></a>Usage</h2>
+<p>The module comes with a handy Zen Cart admin utility.</p>
+<ul class="Steps">
+	<li>Go to <em>Catalog</em> &gt; <em>Back In Stock Notifications</em>.</li>
+</ul>
+<p>As mentioned in the list of features, various options are available in this utility:</p>
+<ul class="BulletedList">
+	<li>The current list of products with subscriptions can be viewed. This allows the store owner to quickly and easily see which products customers are interested in as well as the current stock level for each of these products.</li>
+	<li>The current list of products with subscriptions can also be viewed with additional information about the customers subscribed and when they subscribed.</li>
+	<li>
+		A &ldquo;Test Run&rdquo; of the subscription notification mailing can be run. This will let the store owner see who would have been e-mailed, and about which product(s). The first e-mail that would have been sent is sent to the store owner so that they check if the e-mail is formatted correctly before the actual run!<ul class="Note" style="list-style: none; margin-top: 1em;">
+			<li><strong>Notifications are a one-time only action</strong> so this helps avoids problems of sending illegible notification e-mails or to catch out errors in the e-mail (formatting mistakes, spelling mistakes etc).</li>
+		</ul>
+	</li>
+	<li>The actual, real run of the subscription notification mailing can be run.
+		<ul class="Note" style="list-style: none; margin-top: 1em;">
+			<li><strong>Once the notifications have been sent for real the subscriptions are permanently deleted!</strong></li>
+		</ul>
+	</li>
+</ul>
+
+<p id="footer"><img src="_images/ceon_button_logo.png" alt="Ceon" id="ceon_button_logo" />Module &amp; Documentation &copy; Copyright 2004-2008 <a href="http://ceon.net">Ceon</a></p>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+<!-- // Output resizeable div end tag
+restrict_width.outputClosingTag();
+// -->
+</script>
+
+</body>
+</html>

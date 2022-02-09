@@ -1,0 +1,304 @@
+/**
+ * Main CSS Stylesheet
+ */
+
+/* =General
+--------------------------------------------------------------------------------------------------*/
+
+/* Put margin back on certain elements */
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, fieldset, table, ul {
+	margin: 1em 0;
+}
+ul, ol { padding-left: 1.5em; margin-top: 0.8em; margin-bottom: 0.8em; }
+ul li { margin-bottom: 0.3em; }
+
+/* Class for clearing floats */
+.Clear {
+	clear: both;
+}
+
+/* Remove border around linked images */
+a img {
+	border: 0;
+}
+
+hr { 
+	border: 0;
+	color: #777;
+	background-color: #777;
+	height: 2px;
+	margin-top: 0.7em;
+	margin-bottom: 0.7em;
+}
+
+
+/* =Forms
+--------------------------------------------------------------------------------------------------*/
+
+form {
+	margin: 0;
+}
+
+fieldset {
+	background: #f6f6f8;
+	padding: 0.5em 0.5em 0.6em 0.5em;
+	margin: 0 0 1em 0;
+	border: 1px solid #ccc;
+}
+
+legend {
+	font-family : arial, helvetica, sans-serif;
+	font-weight: bold;
+}
+
+
+
+/* =Typography - General
+--------------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: arial, helvetica, sans-serif;
+	font-size: 85%;
+	line-height: 1.25;
+}
+p {
+	margin-bottom: 0.8em;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul ul {
+	list-style: disc;
+	margin-left: 3em;
+}
+ul li {
+	margin: 0;
+	padding: 0;
+	margin-bottom: 1em;
+	padding-bottom: 0;
+}
+ul li ul li {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	padding-top: 0.2em;
+} 
+
+
+/* =Headings - General
+--------------------------------------------------------------------------------------------------*/
+h1 {
+	letter-spacing : -0.5mm;
+	font-size: 170%;
+	color : #999999;
+	font-weight: bold;
+	margin-top: 0;
+	margin-bottom: 0.8em;
+}
+h2 {
+	font-size: 1.3em;
+	margin-top: 1.4em;
+	margin-bottom: 0.3em;
+}
+h3 {
+	font-size: 1.2em;
+	margin-top: 1.5em;
+	margin-bottom: 0.2em;
+	padding: 0;
+}
+h4 {
+	font-size: 1.1em; margin-top: 1.3em; margin-bottom: 0.2em;
+}
+h5 {
+	font-size: 1.00em;
+	margin-bottom: 0.2em;
+}
+
+
+/* =Links
+--------------------------------------------------------------------------------------------------*/
+a:link {
+	text-decoration: none;
+	color: #1240b0;
+}
+
+a:visited {
+	text-decoration: none;
+	color: #1240b0;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #12b040;
+}
+
+a:active {
+	text-decoration: none;
+	color: #1240b0;
+}
+
+
+/* =Layout - Tables
+--------------------------------------------------------------------------------------------------*/
+table {
+	border: 1px solid #999;
+	border-bottom: none;
+	border-right: none;
+	margin-bottom: 0.8em;
+}
+th {
+	text-align: left;
+	font-weight: normal;
+	font-size: 1.1em;
+	background: #ccc;
+}
+td {
+	vertical-align: top;
+}
+th, td {
+	padding: 0.3em;
+	border: 1px solid #999;
+	margin: 0;
+	border-left: none;
+	border-top: none;
+}
+table p {
+	margin-top: 0;
+}
+
+
+/* =Typography - General II
+--------------------------------------------------------------------------------------------------*/
+.FloatLeft { float: left; }
+.FloatRight { float: right; }
+.ClearBoth { clear: both; }
+.ClearRight { clear: right; }
+.NoWrap { white-space: nowrap; }
+.NoMarginTop { margin-top: 0; }
+.WeightNormal { font-weight: normal; }
+
+h1.Title { float: left; line-height: 1em; padding-bottom: 0; }
+p.TitleByLine { text-align: right; line-height: 1.5em; padding-bottom: 0.5em; border-bottom: 1px solid #999; margin-bottom: 0.5em; }
+
+fieldset.OtherReleases {
+	margin: 0 0 1.5em 0;
+}
+fieldset.OtherReleases legend {
+	font-size: 1.4em;
+}
+fieldset.OtherReleases p {
+	margin-top: 0;
+}
+fieldset.OtherReleases h3.Top {
+	margin-top: 0;
+}
+fieldset.OtherReleases h3 {
+	margin-bottom: 0.3em;
+}
+fieldset.OtherReleases .Example {
+	border-top: 3px solid #d8d8e8;
+	background: #efefff;
+}
+
+ul.SystemRequirements, ul.BulletedList { list-style: disc; margin-left: 2em; margin-bottom: 0.8em; }
+ul.SystemRequirements li { margin-bottom: 0.5em; }
+
+ol#installation_overview { margin-left: 2em; padding-left: 0em; }
+ol#installation_overview li { margin-bottom: 0.5em; }
+
+ol.InstallationSteps { margin-left: 2em; padding-left: 0em; }
+ol.InstallationSteps li { margin-bottom: 1.3em; }
+
+ol.InstallationSteps ul.Steps { margin-left: 1em; }
+ol.InstallationSteps ul.Steps li { margin-bottom: 0.5em; }
+
+ul.MerchantAccountsSupported { list-style: circle; padding-left: 2em; }
+
+p.Intro { clear: right; margin-top: 1em; }
+
+p.BackToTop { text-align: left; font-size: 0.9em; clear: both; margin-top: 2em; }
+
+.FileName { font-style: italic; padding: 0 0.4em; }
+
+.NewFeature { color: #3399FF }
+
+.InstallationStepZenCart13x { background: #C1C4E3; }
+.InstallationStepZenCart12x { background: #86D7D8; }
+
+#paypal_donate { float: right; margin: 0.4em 1em 0.4em 1em }
+#paypal_donate2 { float: right; margin: 0 1em 0.4em 1em }
+
+.Steps, .Note {
+	background: #eee;
+	padding: 0.5em 0.5em 0.1em 0.5em;
+	border: 1px solid #999;
+	margin-bottom: 1em;
+}
+.Steps .FileName {
+	background: #e0e0e0;
+}
+.Steps p {
+	margin-top: 0;
+}
+p.Note { padding-bottom: 0.5em; }
+p.FeatureNote { margin-left: 2em; margin-right: 2em; font-size: 0.85em; }
+
+.Tip { margin-left: 2em; }
+
+.Example { background: #f4f4f4; padding: 0.5em 0.5em 0.1em 0.5em; border-top: 3px solid #ddd; margin-bottom: 1em; margin-left: 7em; margin-right: 3.5em; }
+
+.Testimonial {
+	float: right;
+	width: 13em;
+	margin: 0 1em 1em 1.8em;
+	border: 1px solid #999;
+	padding: 0.5em;
+	background: #f4f4f4;
+}
+
+.Testimonial p, .Testimonial blockquote {
+	margin: 0;
+}
+.Testimonial p.TestimonialAuthor { margin-top: 0.4em; }
+
+.Testimonial blockquote {
+	font-family: georgia, times, serif;
+	font-style: italic
+}
+
+code { font-family: "Courier New", Courier, monospace; line-height: 1.3; }
+
+.CodeDifference { color: red; }
+
+img.ScreenShot { background: #eee; padding: 0.5em; border: 1px solid #999; margin-bottom: 1em; margin-left: 1em; }
+
+img.RightImage { float: right; margin: 0 0 1em 1em; clear: right; }
+
+img.ExampleScreenShot { margin: 0.8em 0; border: 1px solid #999; }
+
+#upgrade_older_versions { display: none; }
+
+.ExtraEmphasis {
+	color: #12b040;
+}
+.ExtraEmphasis2 {
+	color: #1240b0;
+}
+
+.UnderlinedTitle {
+	margin-top: 1.3em;
+	margin-bottom: 0.6em;
+	border-bottom: 0.1em solid #ccc;
+}
+em.ConfigurationOption {
+	font-style: italic;
+	font-weight: bold;
+}
+
+@media print 
+{
+	ul.MainMenu {
+		display: none;
+	}
+}

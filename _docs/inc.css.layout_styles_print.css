@@ -1,0 +1,14 @@
+
+/* =Main Layout
+--------------------------------------------------------------------------------------------------*/
+#restrict_width {
+	position: relative;
+	left: 0;
+	top: 0;
+}
+
+#grad_horiz_left,
+#grad_horiz_right {
+	padding: 0;
+	background: none;
+}	
