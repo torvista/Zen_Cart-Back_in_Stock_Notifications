@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>.:: Ceon :: Zen Cart :: Module  :: Back In Stock Notifications ::.</title>
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles-print.css" type="text/css" media="print" />
+	<script src="../_javascript/inc.js.general-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.css-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.restrict-width.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.crossfade.js" language="JavaScript" type="text/javascript"></script>
+	<link rel="stylesheet" href="../_css/litebox.css" type="text/css" media="screen" />
+	<script src="../_javascript/litebox/prototype.lite.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/litebox/moo.fx.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/litebox/litebox-1.0.js" language="JavaScript" type="text/javascript"></script>
+	<noscript>
+		<style type="text/css">
+		body { margin: 0 auto; max-width: 75em; padding-left: 5%; padding-right: 5%; }
+		.CrossFadeText { margin: 0 auto; max-width: 75em; right: auto; padding-left: 20em; }
+		</style>
+	</noscript>
+</head>
+
+<body><a name="top" id="top"></a>
+
+<!--[if gte IE 5]>
+<link rel="stylesheet" href="../_css/litebox-ie.css" type="text/css" media="screen" />
+<![endif]-->
+
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+// Script resizes main div if client window is larger than a predefined variable
+var restrict_width = new CeonRestrictWidth(360, 900);
+
+// Initialise crossfade by hiding crossfade object first
+CeonAddLoadEvent(CeonCrossfadeInit);
+
+CeonAddLoadEvent(initLightbox);
+
+// -->
+</script>
+
+<div id="grad-horiz-left">
+	<div id="grad-horiz-right">
+
+<h1 class="Title">Back In Stock Notifications</h1>
+<div class="TitleByLineWrapper">&nbsp;
+	<div id="crossfade">
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+	</div>
+</div>
+<ul class="MainMenu">
+	<li><a href="../index.html">Overview</a><span> | </span></li>
+	<li><a href="installation.html">Installation</a><span> | </span></li>
+	<li><a href="configuration.html">Configuration/Usage</a><span> | </span></li>
+	<li><a href="faqs.html">FAQs</a><span> | </span></li>
+	<li><a href="support.html">Support</a><span> | </span></li>
+	<li><a href="revision-history.html">Revision History</a><span> | </span></li>
+	<li><a href="upgrading.html">Upgrading</a><span> | </span></li>
+	<li><a href="module-info.html">Module Info</a><span> | </span></li>
+	<li><a href="features.html">Module Features</a></li>
+</ul>
+
+<h2>Configuration/Usage</h2>
+<p>No configuration is necessary with a default installation, but most users would agree that it's a good idea to style the e-mail templates etc. so that they match the store's styling.</p>
+
+<ol class="TableOfContents">
+	<li><a href="#configuration">Configuration</a>
+		<ol>
+			<li><a href="#modifying-e-mail-templates">Modifying the E-mail Templates</a></li>
+			<li><a href="#modifying-html-templates">Modifying the HTML Templates used by the BISN functionality</a></li>
+			<li><a href="#modifiying-product-listing-link-format">Modifying the Format of the Product Listing Pages Subscription Links</a></li>
+		</ol>
+	</li>
+	<li><a href="#usage">Usage</a></li>
+</ol>
+
+
+<h2><a name="configuration" id="configuration"></a>Configuration</h2>
+<p>The module can be configured through the Zen Cart admin.</p>
+<ul class="Steps">
+	<li>Go to <em>Configuration</em> &gt; <em>Back In Stock Notifications</em>.</li>
+	<li class="NoMarginBottom">The only options are to enable/disable the functionality and to set an optional e-mail address to which copies of any Back In Stock Notifications should be sent.</li>
+</ul>
+
+
+<h3><a name="modifying-e-mail-templates" id="modifying-e-mail-templates"></a>Modifying the Plaintext E-mail Templates</h3>
+<p>The e-mail templates use basic HTML and can be found in the <span class="FileName">email</span> folder in the store.</p>
+<ul class="BulletedList">
+	<li>Aside from the default language, each language the store uses should have its own folder within this folder, <a href="#copying-e-mail-templates-for-languages">as described</a> in the installation/upgrading instructions.</li>
+	<li>There are HTML templates for each e-mail. ending in <span class="FileName">.html</span>.</li>
+	<li>There are also additional e-mail template files ending in <span class="FileName">.txt</span>, which are used as the basis of the plain text version of the e-mails and so can be customised separately!</li>
+</ul>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+
+<h3><a name="modifying-html-e-mail-templates" id="modifying-html-e-mail-templates"></a>Modifying the HTML Templates used by the BISN functionality</h3>
+<p>The HTML Templates, for the most part, don't use the standard Zen Cart templating methodology.</p>
+<p>This module was originally part of an original version of Ceon's Site Engine system and makes use of our own, we believe (of course), far-superior templating system. Since it is released as a free gift to the Zen Cart community, it was deemed that it wasn't worthwhile downgrading the code to using Zen Cart's templating system.</p>
+<ul class="BulletedList">
+	<li>
+		<p>To modify the look/layout of the code produced by this module the template file should be copied to the site's template override folder:</p>
+		<p><span class="FileName">includes/templates/template_default/templates/inc.html.back_in_stock_notifications.html</span></p>
+		<p>Should be copied to:</p>
+		<p><span class="FileName">includes/templates/STORE-TEMPLATE/templates/inc.html.back_in_stock_notifications.html</span></p>
+	</li>
+	<li>
+		<p>This is a standard HTML file which has various &ldquo;Template Parts&rdquo; defined within.</p>
+	</li>
+	<li>
+		<p>Simply modify the HTML within this file and the changes will be instantly used by the module within the site.</p>
+	</li>
+	<li>
+		<p>Looking at the source, it can be seen that the template system uses tags to wrap blocks of source code which will be replaced with &ldquo;live&rdquo; values when the module is run and the template is used. It should be fairly obvious to anyone familiar with HTML how this can be used. Some hints follow:</p>
+		<ul class="Note" style="margin-top: 1em; padding-left: 2em;">
+			<li>Dynamic variables replace the contents of &lt;ceon:variable name=&quot;<em>variable_name</em>&quot;&gt; &lt;/ceon:variable&gt; tags. The names of the variables which will replace the contents of these tags should make their purpose obvious.</li>
+			<li style="margin-top: 1em;">Entire sections of the source can be displayed or not, depending on whether or not a variable is set by the template. These sections are marked by  &lt;ceon:if isset=&quot;<em>variable_name</em>&quot;&gt; &lt;/ceon:if&gt; tags.</li>
+			<li style="margin-top: 1em;">All unused tags in the &ldquo;ceon&rdquo; namespace, and all unused &ldquo;bracketed&rdquo; tags (&lsquo;{ceon: }&rsquo;) are stripped from the source before it is finalised - so there's nothing wrong with leaving lots of them in!</li>
+		</ul>
+		<p class="Note NoMarginBottom">We'd really like thoughts or feedback on the templating system: <a href="http://dev.ceon.net/contact_us" target="_blank">Please get in contact and let us know what you think</a>!</li>
+	</li>
+</ul>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+
+<h3><a name="modifiying-product-listing-link-format" id="modifiying-product-listing-link-format"></a>Modifying the Format of the Product Listing Pages Subscription Links</h3>
+
+<p>The HTML for the links to the subscription form on Product Listing pages (category listings, featured product listings etc.) is specified in a define in the language file.</p>
+<p>To change the link's format, a copy of the language definition file for the module must be made for each language the store uses.</p>
+<p>As with all other language definition overrides in Zen Cart, this modified copy should be stored in the template directory for each language.</p>
+
+<ul class="Steps">
+	<li>Copy the file <span class="FileName">includes/languages/english/extra_definitions/back_in_stock_notifications.php</span> to the store's language templates folder. (E.g. <span class="FileName">includes/languages/english/extra_definitions/STORE-TEMPLATE/back_in_stock_notifications.php</span>).</li>
+	<li class="NoMarginBottom">Make the necessary changes to this copy of the file.</li>
+</ul>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+
+<h2><a name="usage" id="usage"></a>Usage</h2>
+
+<p>The module comes with a handy Zen Cart admin utility.</p>
+
+<ul class="Steps">
+	<li class="NoMarginBottom">Go to <em>Catalog</em> &gt; <em>Back In Stock Notifications</em>.</li>
+</ul>
+
+<p>As mentioned in the list of features, various options are available in this utility:</p>
+
+<ul class="BulletedList">
+	<li>The current list of products with subscriptions can be viewed. This allows the store owner to quickly and easily see which products customers are interested in as well as the current stock level for each of these products.</li>
+	<li>The current list of products with subscriptions can also be viewed with additional information about the customers subscribed and when they subscribed.</li>
+	<li>
+		A &ldquo;Test Run&rdquo; of the subscription notification mailing can be run. This will let the store owner see who would have been e-mailed, and about which product(s). The first e-mail that would have been sent is sent to the store owner so that they check if the e-mail is formatted correctly before the actual run!<ul class="Note" style="list-style: none; margin-top: 1em;">
+			<li><strong>Notifications are a one-time only action</strong> so this helps avoids problems of sending illegible notification e-mails or to catch out errors in the e-mail (formatting mistakes, spelling mistakes etc).</li>
+		</ul>
+	</li>
+	<li>The actual, real run of the subscription notification mailing can be run.
+		<ul class="Note" style="list-style: none; margin-top: 1em;">
+			<li class="NoMarginBottom"><strong>Once the notifications have been sent for real the subscriptions are permanently deleted!</strong></li>
+		</ul>
+	</li>
+</ul>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+
+	</div>
+</div>
+
+<script type="text/javascript" language="JavaScript">
+<!-- // Output resizeable div end tag
+restrict_width.outputClosingTag();
+// -->
+</script>
+
+</body>
+</html>

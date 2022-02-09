@@ -8,11 +8,12 @@
  *
  * Ported from Ceon Site Engine to Zen Cart (inc backporting to PHP4 from PHP5).
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.CeonXHTMLHiTemplate.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: class.CeonXHTMLHiTemplate.php 715 2011-06-12 20:06:27Z conor $
  */
 class CeonXHTMLHiTemplate
 {
@@ -22,16 +23,16 @@ class CeonXHTMLHiTemplate
 	 * The XHTML source code for this location. Can be accessed and modified by external routines
 	 * directly!
 	 *
-	 * @var    string
-	 * @access public
+	 * @var     string
+	 * @access  public
 	 */
 	var $xhtml_source = '';
 	
 	/**
-	 * Information about the Browser being used (including its name and rendering capabilities)
+	 * Information about the browser being used (including its name and rendering capabilities).
 	 *
-	 * @var    object(Browser)
-	 * @access protected
+	 * @var     object(Browser)
+	 * @access  protected
 	 */
 	var $_browser = null;
 	
@@ -41,11 +42,11 @@ class CeonXHTMLHiTemplate
 	// {{{ constructor()
 
 	/**
-	 * Create a new CeonXHTMLHiTemplate object
-	 *
-	 * @access public
-	 * @param  string   $file_name  The path of the file to open
-	 * @return object   A new CeonXHTMLHiTemplate object.
+	 * Create a new CeonXHTMLHiTemplate object.
+	 * 
+	 * @access  public
+	 * @param   string   $file_name  The path of the file to open
+	 * @return  object   A new CeonXHTMLHiTemplate object.
 	 */
 	function CeonXHTMLHiTemplate($file_name = '')
 	{
@@ -63,11 +64,11 @@ class CeonXHTMLHiTemplate
 	// {{{ setXHTMLSource()
 	
 	/**
-	 * Set the XHTML source for the template
-	 *
-	 * @access public
-	 * @param  string $source   The XHTML source for the template
-	 * @return none
+	 * Set the XHTML source for the template.
+	 * 
+	 * @access  public
+	 * @param   string    $source   The XHTML source for the template
+	 * @return  none
 	 */
 	function setXHTMLSource($source)
 	{
@@ -76,13 +77,14 @@ class CeonXHTMLHiTemplate
 	
 	// }}}
 	
+	
 	// {{{ getXHTMLSource()
 	
 	/**
 	 * Return the XHTML source code for the template
 	 * 
-	 * @access public
-	 * @return reference(string)  A reference to the XHTML source for the template
+	 * @access  public
+	 * @return  reference(string)   A reference to the XHTML source for the template.
 	 */
 	function &getXHTMLSource()
 	{
@@ -95,11 +97,11 @@ class CeonXHTMLHiTemplate
 	// {{{ setBrowser()
 	
 	/**
-	 * Sets the Browser being used to display/render the template
+	 * Sets the Browser being used to display/render the template.
 	 * 
-	 * @access public
-	 * @param  object(Browser) $browser   The browser object
-	 * @return none
+	 * @access  public
+	 * @param   object(Browser)   $browser   The browser object.
+	 * @return  none
 	 */
 	function setBrowser($browser)
 	{
@@ -114,10 +116,9 @@ class CeonXHTMLHiTemplate
 	/**
 	 * Simply concatenates the current instance's source with the supplied source.
 	 *
-	 * @access public
-	 * @param  reference(string) $source   A reference to the source to add on to that of this
-	 *                                     instance.
-	 * @return none
+	 * @access  public
+	 * @param   string    $source   A reference to the source to add on to that of this instance.
+	 * @return  none
 	 */
 	function appendSource(&$source)
 	{
@@ -133,19 +134,20 @@ class CeonXHTMLHiTemplate
 	/**
 	 * Replaces all occurances of the supplied variable with the supplied source.
 	 *
-	 * @access public
-	 * @param  string $variable_name       The name of the variable to be replaced.
-	 * @param  reference(string) $source   A reference to the source to replace the variable with.
-	 * @return integer  The number of times the variable was set in the source (or a rough estimate
-	 *                  of this value for PHP4).
+	 * @access  public
+	 * @param   string    $variable_name    The name of the variable to be replaced.
+	 * @param   string    $source           A reference to the source to replace the variable with.
+	 * @return  integer   The number of times the variable was set in the source (or a rough
+	 *                    estimate of this value for PHP4).
 	 */
-	function setVariable($variable_name, &$source)
+	function setVariable($variable_name, $source)
 	{
 		$set_count = 0;
 		$method_set_count = 0;
 		
-		// Replace bracketed replacement tags (e.g. {content})
-		$bracketed_tag = '{' . $variable_name . '}';
+		// Replace bracketed replacement tags (e.g. {ceon:content})
+		$bracketed_tag = '{ceon:' . $variable_name . '}';
+		
 		if (PHP_VERSION >= '5') {
 			$this->xhtml_source = str_replace($bracketed_tag, $source, $this->xhtml_source,
 				$method_set_count);
@@ -168,10 +170,10 @@ class CeonXHTMLHiTemplate
 				break;
 			}
 			
-			// Remove ceon:if tags from the source (thereby enabling the part!)
+			// Remove ceon:if tags from the source (thereby enabling the part)
 			$if_block = $updated_source;
 			
-			$pattern = "|<ceon:if [^>]+>|sU"; // U means that this is NOT greedy!
+			$pattern = "|<ceon:if [^>]+>|sU";
 			preg_match($pattern, $if_block, $match);
 			
 			$if_block_enabled = str_replace($match[0], '', $if_block);
@@ -183,7 +185,7 @@ class CeonXHTMLHiTemplate
 			$this->xhtml_source = str_replace($if_block, $if_block_enabled, $this->xhtml_source);
 		} while(1);
 		
-		// Enable {ceon:if blocks
+		// Enable {ceon:if isset=".." blocks
 		do {
 			$updated_source = $this->extractElement($this->xhtml_source, 0, 'ceon:if',
 				' isset="' . $variable_name . '"', true);
@@ -192,10 +194,34 @@ class CeonXHTMLHiTemplate
 				break;
 			}
 			
-			// Remove ceon:if tags from the source (thereby enabling the part!)
+			// Remove ceon:if tags from the source (thereby enabling the part)
 			$if_block = $updated_source;
 			
-			$pattern = "|{ceon:if [^}]+}|sU"; // U means that this is NOT greedy!
+			$pattern = "|{ceon:if [^}]+}|sU";
+			preg_match($pattern, $if_block, $match);
+			
+			$if_block_enabled = str_replace($match[0], '', $if_block);
+			
+			// Remove trailing '{/ceon:if}'
+			$if_block_enabled = substr($if_block_enabled, 0, strlen($if_block_enabled) - 10);
+			
+			// Finally, enable this if block
+			$this->xhtml_source = str_replace($if_block, $if_block_enabled, $this->xhtml_source);
+		} while(1);
+		
+		// Enable {ceon:if isset='..' blocks
+		do {
+			$updated_source = $this->extractElement($this->xhtml_source, 0, 'ceon:if',
+				" isset='" . $variable_name . "'", true);
+			
+			if (!$updated_source) {
+				break;
+			}
+			
+			// Remove ceon:if tags from the source (thereby enabling the part)
+			$if_block = $updated_source;
+			
+			$pattern = "|{ceon:if [^}]+}|sU";
 			preg_match($pattern, $if_block, $match);
 			
 			$if_block_enabled = str_replace($match[0], '', $if_block);
@@ -263,8 +289,8 @@ class CeonXHTMLHiTemplate
 	 * Removes all sections from template which don't apply to the current browser and activates
 	 * any sections which do.
 	 *
-	 * @access public
-	 * @return boolean   The status of the extraction, Boolean true for success, false on failure.
+	 * @access  public
+	 * @return  boolean   The status of the extraction, boolean true for success, false on failure.
 	 */
 	function customiseForBrowser()
 	{
@@ -291,7 +317,7 @@ class CeonXHTMLHiTemplate
 			
 			$if_block = $updated_source;
 			
-			$pattern = "|<ceon:if [^>]+>|sU"; // U means that this is NOT greedy!
+			$pattern = "|<ceon:if [^>]+>|sU";
 			preg_match($pattern, $if_block, $match);
 			
 			$if_block_enabled = str_replace($match[0], '', $if_block);
@@ -329,7 +355,7 @@ class CeonXHTMLHiTemplate
 			// Remove ceon:if tags from the source (thereby enabling the section!)
 			$if_block = $updated_source;
 			
-			$pattern = "|<ceon:if [^>]+>|sU"; // U means that this is NOT greedy!
+			$pattern = "|<ceon:if [^>]+>|sU";
 			preg_match($pattern, $if_block, $match);
 			
 			$if_block_enabled = str_replace($match[0], '', $if_block);
@@ -373,7 +399,7 @@ class CeonXHTMLHiTemplate
 				
 				$if_block = $updated_source;
 				
-				$pattern = "|<ceon:if [^>]+>|sU"; // U means that this is NOT greedy!
+				$pattern = "|<ceon:if [^>]+>|sU";
 				preg_match($pattern, $if_block, $match);
 				
 				$if_block_enabled = str_replace($match[0], '', $if_block);
@@ -413,7 +439,7 @@ class CeonXHTMLHiTemplate
 				
 				$if_block = $updated_source;
 				
-				$pattern = "|<ceon:if [^>]+>|sU"; // U means that this is NOT greedy!
+				$pattern = "|<ceon:if [^>]+>|sU";
 				preg_match($pattern, $if_block, $match);
 				
 				$if_block_enabled = str_replace($match[0], '', $if_block);
@@ -450,11 +476,11 @@ class CeonXHTMLHiTemplate
 	// {{{ cleanSource()
 	
 	/**
-	 * Removes all Ceon Comment tags, Ignored Sections, Template Definitions and Remaining
-	 * Placements from the source.
+	 * Removes all Ceon comment tags, ignored sections, template definitions and remaining
+	 * placements from the source.
 	 *
-	 * @access public
-	 * @return none
+	 * @access  public
+	 * @return  none
 	 */
 	function cleanSource()
 	{
@@ -511,7 +537,7 @@ class CeonXHTMLHiTemplate
 		
 		
 		// Clear ceon:variable inline type tags
-		$pattern = "|<ceon:variable name=[^/>]+/>|sU"; // U means that this is NOT greedy!
+		$pattern = "|<ceon:variable name=[^/>]+/>|sU";
 		
 		preg_match_all($pattern, $this->xhtml_source, $matches, PREG_SET_ORDER);
 		
@@ -532,7 +558,7 @@ class CeonXHTMLHiTemplate
 		}
 		
 		// Clear any remaining bracketed placements from source
-		$this->xhtml_source = preg_replace("|{[ a-zA-Z0-9_-]+}|sU", "", $this->xhtml_source);
+		$this->xhtml_source = preg_replace("|{ceon:[ a-zA-Z0-9_\-]+}|sU", "", $this->xhtml_source);
 		
 		
 		// Clear ceon comment markers from source
@@ -548,15 +574,16 @@ class CeonXHTMLHiTemplate
 	/**
 	 * Extracts a template from the current source, storing it in place of the source.
 	 *
-	 * @access public
-	 * @param  string   $template_name   The name of the template to be extracted from the source.
-	 * @return boolean  The status of the extraction, Boolean true for success, false on failure.
+	 * @access  public
+	 * @param   string    $template_name   The name of the template to be extracted from the 
+	                                       source.
+	 * @return  boolean   The status of the extraction, Boolean true for success, false on failure.
 	 */
 	function extractTemplate($template_name)
 	{
 		// First off, extract the template from the source ///////
-		$template_source = $this->extractElement($this->xhtml_source, 0, 'ceon:template', ' name="' .
-			$template_name . '"');
+		$template_source = $this->extractElement($this->xhtml_source, 0, 'ceon:template',
+			' name="' . $template_name . '"');
 		
 		if (!$template_source) {
 			// Either no source to search or no template found in source
@@ -577,14 +604,14 @@ class CeonXHTMLHiTemplate
 	/**
 	 * Extracts all template parts from the current source or the source passed to it.
 	 *
-	 * @access public
-	 * @param string   $template   The source to be scanned for template parts. If none specified,
-	 *                             template's own source is used.
-	 * @param boolean  $wipe_template_parts_afterwards   Whether or to wipe the template parts found
-	 *                                                   from the source or to replace them with a
-	 *                                                   ceon:variable tag with the same name as the
-	 *                                                   part. 
-	 * @return mixed   The template parts found or Boolean false on failure.
+	 * @access  public
+	 * @param   string    $template   The source to be scanned for template parts. If none
+	 *                                specified, template's own source is used.
+	 * @param   boolean   $wipe_template_parts_afterwards   Whether or to wipe the template parts
+	 *                                                      found from the source or to replace
+	 *                                                      them with a ceon:variable tag with the
+	 *                                                      same name as the part. 
+	 * @return  mixed     The template parts found or boolean false on failure.
 	 */
 	function extractTemplateParts($template = '', $wipe_template_parts_afterwards = true)
 	{
@@ -603,6 +630,7 @@ class CeonXHTMLHiTemplate
 		// Now extract all template parts from the source ///////
 		// Variable holds status of extraction
 		$extract_more_parts = true;
+		
 		// Variable maintains pointer to current place in source
 		$current_source_pos = 0;
 		
@@ -621,10 +649,12 @@ class CeonXHTMLHiTemplate
 				$part_name = '';
 				
 				$current_source_pos = $part_start_tag_pos + 20; // 20 = strlen('<!-- ceon-begin-part')
+				
 				while ($template[$current_source_pos] != '>') {
 					$part_name .= $template[$current_source_pos];
 					$current_source_pos++;
 				}
+				
 				// Now remove ending '--' from name
 				$part_name = substr($part_name, 0, strlen($part_name) - 2);
 				
@@ -692,6 +722,7 @@ class CeonXHTMLHiTemplate
 					// part can take place
 					$part_start_tag_pos = strpos($template, '<!-- ceon-begin-part ' . $part_name .
 						' -->');
+					
 					$part_end_tag_pos = strpos($template, '<!-- ceon-end-part ' . $part_name .
 						' -->');
 					
@@ -736,17 +767,19 @@ class CeonXHTMLHiTemplate
 	 * consideration so that they form part of the source also.
 	 *
 	 * @access  public
-	 * @author  Conor Kerr <back_in_stock_notifications@dev.ceon.net>
-	 * @param   reference(string)    &$source  The source in which to look for the element
-	 * @param   integer $start_pos   The position within the source to begin looking for the element
-	 * @param   string  $tag_name    The name of the tag for this element
-	 * @param   string  $attributes  An optional attribute string which wmay be used to identify an
-	 *                               element uniquely (rather than simply searching for the element
-	 *                               type)
-	 * @param   boolean  $match_brackets   Whether the elements use '<>' or '{}' (true for brackets)
-	 * @return  string|boolean       The source of the element or false if not found.
+	 * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+	 * @param   string    $source       A reference to the source in which to look for the element.
+	 * @param   integer   $start_pos    The position within the source to begin looking for the
+	 *                                  element.
+	 * @param   string    $tag_name     The name of the tag for this element.
+	 * @param   string    $attributes   An optional attribute string which wmay be used to identify
+	 *                                  an element uniquely (rather than simply searching for the
+	 *                                  element type).
+	 * @param   boolean   $match_brackets   Whether the elements use '<>' or '{}' (true for
+	 *                                      brackets).
+	 * @return  string|boolean   The source of the element or false if not found.
 	 */
-	function extractElement(&$source, $start_pos, $tag_name, $attributes = '', $match_brackets = false)
+	function extractElement($source, $start_pos, $tag_name, $attributes = '', $match_brackets = false)
 	{
 		// Build the first test for the start tag
 		if (!$match_brackets) {
@@ -772,13 +805,14 @@ class CeonXHTMLHiTemplate
 		
 		// Find ending tag for this element
 		$tag_source = substr($source, $start_tag_pos, (strlen($source) - $start_tag_pos));
-			
 		
 		$num_open_elements = 1;
+		
 		$current_start_pos = $start_tag_pos + 1; // Add 1 to ensure this tag isn't matched again
 		
 		do {
 			$end_tag_pos = strpos($source, $end_tag, $current_start_pos);
+			
 			if ($end_tag_pos === false) {
 				// Starting tag not closed in source - error, can't extract the element!
 				return false;
@@ -792,9 +826,10 @@ class CeonXHTMLHiTemplate
 				$current_start_pos = strpos($source, $start_tag, $current_start_pos);
 				
 				if ($current_start_pos !== false && $current_start_pos < $end_tag_pos) {
-					// Another element of the same type exists within this element. Must ensure its closing
-					// tag is not taken as the closing tag for this element.
+					// Another element of the same type exists within this element. Must ensure its
+					// closing tag is not taken as the closing tag for this element.
 					$num_open_elements++;
+					
 					$current_start_pos++; // Add 1 to ensure this tag isn't matched again
 				} else {
 					// No (more) encapsulated elements found
@@ -812,7 +847,8 @@ class CeonXHTMLHiTemplate
 			$current_start_pos = $end_tag_pos + 1;
 		} while (1);
 		
-		$tag_source = substr($source, $start_tag_pos, ($end_tag_pos - $start_tag_pos) + strlen($end_tag));
+		$tag_source = substr($source, $start_tag_pos, ($end_tag_pos - $start_tag_pos) +
+			strlen($end_tag));
 		
 		return $tag_source;
 	}

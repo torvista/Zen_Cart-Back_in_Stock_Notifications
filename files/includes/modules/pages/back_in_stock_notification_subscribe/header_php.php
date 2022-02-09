@@ -1,17 +1,18 @@
 <?php
 
 /**
- * Zen Cart : Back In Stock Notification
+ * Zen Cart : Back In Stock Notification Subscription page.
  *
  * Allows users to subscribe to a "Back In Stock" notification list for a given product.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
- * @copyright  Portions Copyright 2003 osCommerce
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: header_php.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
+ * @copyright   Portions Copyright 2003 osCommerce
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: header_php.php 715 2011-06-12 20:06:27Z conor $
  */
 
 /**
@@ -44,6 +45,7 @@ $product_name_query = "
 		products_id = '" . (int) $_GET['products_id'] . "'
 	AND
 		language_id = '" . (int) $_SESSION['languages_id'] . "';";
+		
 $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
@@ -55,6 +57,7 @@ if ($product_name_result->RecordCount() == 0) {
 
 // Check if the form has been submitted
 $form_errors = array();
+
 if (isset($_POST['notify_me'])) {
 	// Check that a valid e-mail address has been supplied
 	if (isset($_POST['email'])) {
@@ -173,7 +176,7 @@ if (isset($_POST['notify_me'])) {
 				
 				$unsubscribe_message =
 					sprintf(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MY_ACCOUNT_MESSAGE,
-					htmlentities($product_name));
+					htmlentities($product_name), ENT_COMPAT, CHARSET);
 			} else {
 				// Subscribe user by email address only
 				
@@ -200,11 +203,11 @@ if (isset($_POST['notify_me'])) {
 				
 				$unsubscribe_message =
 					sprintf(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_LINK_MESSAGE,
-					htmlentities($product_name));
+					htmlentities($product_name, ENT_COMPAT, CHARSET));
 			}
 			
 			$success_message1 = sprintf(BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE1,
-				htmlentities($product_name));
+				htmlentities($product_name, ENT_COMPAT, CHARSET));
 			$success_message2 = BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE2;
 		}	
 	}
@@ -213,7 +216,9 @@ if (isset($_POST['notify_me'])) {
 // Check if the form has to be displayed or if the request was completed
 if ($build_form) {
 	// Store details for form
-	$back_in_stock_notification_form_customer_name = htmlentities($_POST['name']);
+	$back_in_stock_notification_form_customer_name =
+		htmlentities($_POST['name'], ENT_COMPAT, CHARSET);
+	
 	$back_in_stock_notification_form_customer_email = htmlentities($_POST['email']);
 	
 	if (isset($_POST['cofnospam'])) {
@@ -225,15 +230,18 @@ if ($build_form) {
 }
 
 
-function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notification_id, $product_name, $customer_id, $customer_name, $email_address, $subscription_code = '')
+function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notification_id, $product_name,
+	$customer_id, $customer_name, $email_address, $subscription_code = '')
 {
 	$text_msg_part = array();
 	$html_msg = array();
 	
 	//intro area
-	$text_msg_part['EMAIL_TEXT_HEADER']     = EMAIL_TEXT_HEADER;
-	$text_msg_part['EMAIL_TEXT_FROM']       = EMAIL_TEXT_FROM;
-	$text_msg_part['INTRO_STORE_NAME']      = STORE_NAME;
+	$text_msg_part['EMAIL_TEXT_HEADER'] = EMAIL_TEXT_HEADER;
+	$text_msg_part['EMAIL_TEXT_FROM'] = EMAIL_TEXT_FROM;
+	$text_msg_part['INTRO_STORE_NAME'] = STORE_NAME;
+	
+	$text_msg_part['GREETING'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_GREETING;
 	
 	$text_msg_part['CUSTOMER_NAME'] = $customer_name;
 	
@@ -257,9 +265,11 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 			false);
 	}
 	
-	$html_msg['EMAIL_TEXT_HEADER']     = EMAIL_TEXT_HEADER;
-	$html_msg['EMAIL_TEXT_FROM']       = EMAIL_TEXT_FROM;
-	$html_msg['INTRO_STORE_NAME']      = STORE_NAME;
+	$html_msg['EMAIL_TEXT_HEADER'] = EMAIL_TEXT_HEADER;
+	$html_msg['EMAIL_TEXT_FROM'] = EMAIL_TEXT_FROM;
+	$html_msg['INTRO_STORE_NAME'] = STORE_NAME;
+	
+	$html_msg['GREETING'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_GREETING;
 	
 	$html_msg['CUSTOMER_NAME'] = $customer_name;
 	
@@ -286,8 +296,21 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 	$html_msg['EXTRA_INFO'] = '';
 	
 	// Create the text version of the e-mail for Zen Cart's e-mail functionality
-	$text_msg_source = file_get_contents(DIR_FS_EMAIL_TEMPLATES .
-		'email_template_back_in_stock_notification_subscribe.txt');
+	$language_folder_path_part = (strtolower($_SESSION['languages_code']) == 'en') ? '' :
+		strtolower($_SESSION['languages_code']) . '/';
+    
+	$template_file = DIR_FS_EMAIL_TEMPLATES . $language_folder_path_part .
+		'email_template_back_in_stock_notification_subscribe.txt';
+	
+	if (file_exists($template_file)) {
+		// Use template file for current language
+		$text_msg_source = file_get_contents($template_file);
+	} else if ($language_folder_path_part != '') {
+		// Non-english language being used but no template file exist for it, fall back to the
+		// default english template
+		$text_msg_source =
+			file_get_contents(str_replace($language_folder_path_part, '', $template_file));
+	}
 	
 	foreach ($text_msg_part as $key => $value) {
 		$text_msg_source = str_replace('$' . $key, $value, $text_msg_source);

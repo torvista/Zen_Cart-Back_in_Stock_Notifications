@@ -1,15 +1,18 @@
 <?php
+
 /**
  * Zen Cart : Back In Stock Notification
  *
  * Allows users to subscribe to a "Back In Stock" notification list for a given product.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: tpl_back_in_stock_notification_subscribe_default.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: tpl_back_in_stock_notification_subscribe_default.php 715 2011-06-12 20:06:27Z conor $
  */
+
 ?>
 <div class="centerColumn">
 <?php
@@ -20,7 +23,8 @@
 require_once(DIR_FS_CATALOG . DIR_WS_CLASSES . 'class.CeonXHTMLHiTemplate.php');
 
 // Load in and extract the template parts for Back In Stock Notification functionality
-$bisn_template_filename = DIR_FS_CATALOG . DIR_WS_TEMPLATES . 'template_default/templates/' .
+$bisn_template_filename = $template->get_template_dir('inc.html.back_in_stock_notifications.html',
+	DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/' .
 	'inc.html.back_in_stock_notifications.html';
 
 $bisn_template = new CeonXHTMLHiTemplate($bisn_template_filename);
@@ -41,7 +45,8 @@ if ($build_form) {
 	// Add the form action, titles, labels and button
 	$form_start_tag = zen_draw_form('back_in_stock_notification',
 		zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE, zen_get_all_get_params(),
-		'NONSSL'), 'POST');
+		'NONSSL'), 'post');
+	
 	$back_in_stock_notification_form->setVariable('back_in_stock_notification_form_start_tag',
 		$form_start_tag);
 
@@ -62,7 +67,8 @@ if ($build_form) {
 	$back_in_stock_notification_form->setVariable('submit_button', $submit_button);
 	
 	// Add in the introductory text
-	$intro_text = sprintf(BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO, htmlentities($product_name));
+	$intro_text = sprintf(BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO, htmlentities($product_name,
+		ENT_COMPAT, CHARSET));
 	$notice_text = BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE;
 	$back_in_stock_notification_form->setVariable('intro', $intro_text);
 	$back_in_stock_notification_form->setVariable('notice', $notice_text);
@@ -111,7 +117,7 @@ if ($build_form) {
 	
 	// Add the message
 	$already_subscribed_message = sprintf(BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED_MESSAGE,
-		htmlentities($product_name));
+		htmlentities($product_name, ENT_COMPAT, CHARSET));
 	$back_in_stock_notification_already_subscribed->setVariable('message',
 		$already_subscribed_message);
 	

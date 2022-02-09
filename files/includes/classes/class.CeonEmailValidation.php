@@ -1,18 +1,19 @@
 <?php
 
 /**
- * Class for validating E-mail Addresses and Headers
+ * Class for validating E-mail Addresses and Headers.
  *
  * Ported from Ceon Site Engine to Zen Cart (inc backporting to PHP4 from PHP5).
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.CeonEmailValidation.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: class.CeonEmailValidation.php 715 2011-06-12 20:06:27Z conor $
  */
-class CeonEmailValidation {
-
+class CeonEmailValidation
+{
 	function CeonEmailValidation()
 	{
 	}
@@ -24,14 +25,14 @@ class CeonEmailValidation {
 	 *
 	 * @access  public
 	 * @author  W. Jason Gilmore
-	 * @author  Conor Kerr <back_in_stock_notifications@dev.ceon.net>
-	 * @param   string   E-mail Address to validate
-	 * @return  boolean  Status of validation (true for valid, false for invalid)
+	 * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+	 * @param   string    $email   E-mail Address to validate
+	 * @return  boolean   Status of validation (true for valid, false for invalid).
 	 */
 	function isValid($email)
 	{
-		// Create the syntactical validation regular expression
-		$regexp = "/^([_a-z0-9-]+)(\.[_a-z0-9\+=-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$/i"; // 2-6 includes .uk -> .museum
+		// Create the syntactical validation regular expression (2-6 includes .uk -> .museum)
+		$regexp = "/^([_a-z0-9-]+)(\.[_a-z0-9\+=-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$/i";
 		
 		// Presume that the email is invalid
 		$valid = false;
@@ -50,12 +51,12 @@ class CeonEmailValidation {
 	// {{{ isHeaderInjection()
 	
 	/**
-	 * Checks an E-mail header field to see if an attempt was made to inject code into the header
+	 * Checks an E-mail header field to see if an attempt was made to inject code into the header.
 	 *
 	 * @access  public
-	 * @author  Conor Kerr <back_in_stock_notifications@dev.ceon.net>
-	 * @param   string   E-mail header to check for injection attempt
-	 * @return  boolean  Status of detection (true if Injection Detected, false if None Detected)
+	 * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+	 * @param   string    $header   E-mail header to check for injection attempt
+	 * @return  boolean   Status of detection (true if Injection Detected, false if None Detected)
 	 */
 	function isHeaderInjection($header)
 	{

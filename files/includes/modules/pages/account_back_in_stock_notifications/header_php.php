@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Back In Stock Notifications Account Notifications Management Page
+ * Back In Stock Notifications Account Notifications Management Page.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
- * @copyright  Portions Copyright 2003 osCommerce
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: header_php.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
+ * @copyright   Portions Copyright 2003 osCommerce
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: header_php.php 715 2011-06-12 20:06:27Z conor $
  */
 
 if (!$_SESSION['customer_id']) {
@@ -19,7 +20,8 @@ if (!$_SESSION['customer_id']) {
 
 require(DIR_FS_CATALOG . DIR_WS_MODULES . 'require_languages.php');
 
-$breadcrumb->add(ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_1, zen_href_link(FILENAME_ACCOUNT, '', 'SSL'));
+$breadcrumb->add(ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_1, zen_href_link(FILENAME_ACCOUNT,
+	'', 'SSL'));
 $breadcrumb->add(ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_2);
 
 if (isset($_POST['back']) || isset($_POST['back_x'])) {
@@ -32,9 +34,9 @@ if (isset($_POST['back']) || isset($_POST['back_x'])) {
 /**
  * Gets the list of products for which this user has subscribed to notification lists.
  *
- * @author  Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @param   integer  $customer_id  The customer's ID.
- * @return  array    An associative array with a list of notification lists.
+ * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @param   integer   $customer_id   The customer's ID.
+ * @return  array     An associative array with a list of notification lists.
  */
 function getSubscribedBackInStockNotificationLists($customer_id)
 {
@@ -101,10 +103,12 @@ if (isset($_POST['submit']) || isset($_POST['submit_x'])) {
 	}
 	
 	$number_of_subscriptions = sizeof($subscribed_notification_lists);
+	
 	$number_to_stay = sizeof($stay_subscribed_to);
 	
 	if ($number_to_stay < $number_of_subscriptions) {
 		$unsubscribe_from = array();
+		
 		// User wants to be removed from a few lists, get information about the products
 		for ($i = 0; $i < $number_of_subscriptions; $i++) {
 			if (!in_array($subscribed_notification_lists[$i]['id'], $stay_subscribed_to)) {
@@ -124,18 +128,21 @@ if (isset($_POST['submit']) || isset($_POST['submit_x'])) {
 					" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
 				WHERE
 					id = '" . $unsubscribe_from[$i]['id'] . "';";
+			
 			$db->Execute($unsubscribe_query);
 		}
 		
 		// Let user know that they were successfully unsubscribed
 		if ($num_unsubscribe_from == 1) {
 			$intro_success = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_SUCCESSFULLY_UNSUBSCRIBED_SINGULAR;
-			$intro_unsubscribed_products = htmlentities($unsubscribe_from[0]['product_name']);
+			$intro_unsubscribed_products =
+				htmlentities($unsubscribe_from[0]['product_name'], ENT_COMPAT, CHARSET);
 		} else {
 			$intro_success = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_SUCCESSFULLY_UNSUBSCRIBED_PLURAL;
 			for ($i = 0; $i < $num_unsubscribe_from; $i++) {
 				$intro_unsubscribed_products .=
-					htmlentities($unsubscribe_from[$i]['product_name']) . '<br />';
+					htmlentities($unsubscribe_from[$i]['product_name'], ENT_COMPAT, CHARSET) .
+					'<br />';
 			}
 		}
 		
@@ -144,6 +151,7 @@ if (isset($_POST['submit']) || isset($_POST['submit_x'])) {
 			// Update the list of Current Subscriptions for this user
 			$subscribed_notification_lists =
 				getSubscribedBackInStockNotificationLists($_SESSION['customer_id']);
+			
 			$intro_instructions = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO2;
 		} else {
 			$subscribed_notification_lists = array();

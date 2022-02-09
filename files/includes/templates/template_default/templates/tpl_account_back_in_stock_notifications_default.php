@@ -1,16 +1,19 @@
 <?php
+
 /**
  * Zen Cart : Back In Stock Notification
  *
  * Allows users to see their subscriptions to "Back In Stock" notification lists for particular
  * products and remove themselves if desired.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: tpl_account_back_in_stock_notifications_default.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: tpl_account_back_in_stock_notifications_default.php 715 2011-06-12 20:06:27Z conor $
  */
+
 ?>
 <div class="centerColumn">
 	
@@ -23,7 +26,8 @@
 require_once(DIR_FS_CATALOG . DIR_WS_CLASSES . 'class.CeonXHTMLHiTemplate.php');
 
 // Load in and extract the template parts for Back In Stock Notification functionality
-$bisn_template_filename = DIR_FS_CATALOG . DIR_WS_TEMPLATES . 'template_default/templates/' .
+$bisn_template_filename = $template->get_template_dir('inc.html.back_in_stock_notifications.html',
+	DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/' .
 	'inc.html.back_in_stock_notifications.html';
 
 $bisn_template = new CeonXHTMLHiTemplate($bisn_template_filename);
@@ -43,23 +47,26 @@ $back_in_stock_notifications->setXHTMLSource(
 // Add the form action
 $form_start_tag = zen_draw_form('back_in_stock_notifications',
 	zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, zen_get_all_get_params(), 'SSL'),
-	'POST');
+	'post');
 $back_in_stock_notifications->setVariable('form_start_tag', $form_start_tag);
 
 // Build back button
 // Check if image exists
 $image_src = zen_output_string($template->get_template_dir(BUTTON_IMAGE_BACK, DIR_WS_TEMPLATE,
 	$current_page_base, 'buttons/' . $_SESSION['language'] . '/') . $image);
+
 if (file_exists($image_src)) {
 	$back_button_source = zen_image_submit(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT, 'name="back"');
 } else {
 	$back_button_source = '<input type="submit" name="back" value="' . BUTTON_BACK_ALT .'" />';
 }
+
 $back_in_stock_notifications->setVariable('back_button', $back_button_source);
 
 // Add the title to the subscriptions overview box
 $product_back_in_stock_notifications_overview_title =
 	ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_OVERVIEW_TITLE;
+	
 $back_in_stock_notifications->setVariable('overview_title',
 	$product_back_in_stock_notifications_overview_title);
 
@@ -95,12 +102,14 @@ if (sizeof($subscribed_notification_lists) == 0) {
 	// Add the table headers and update button
 	$product_back_in_stock_notifications_table_title =
 		ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_TITLE;
+		
 	$back_in_stock_notifications_table->setVariable('table_title',
 		$product_back_in_stock_notifications_table_title);
 	
 	$header_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_SUBSCRIBED;
 	$header_product = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_PRODUCT;
 	$header_date_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_DATE_SUBSCRIBED;
+	
 	$back_in_stock_notifications_table->setVariable('header_subscribed', $header_subscribed);
 	$back_in_stock_notifications_table->setVariable('header_product', $header_product);
 	$back_in_stock_notifications_table->setVariable('header_date_subscribed',
@@ -109,7 +118,9 @@ if (sizeof($subscribed_notification_lists) == 0) {
 	// Build the list of subscriptions
 	$listbox_template_prefix = 'ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS';
 	$listbox_item_index = 1;
+	
 	$placement_marker_key = $listbox_template_prefix . '_ITEM1';
+	
 	for ($i = 0, $n = sizeof($subscribed_notification_lists); $i < $n; $i++) {
 		$back_in_stock_notifications_item = new CeonXHTMLHiTemplate();
 		
@@ -121,23 +132,54 @@ if (sizeof($subscribed_notification_lists) == 0) {
 		
 		$back_in_stock_notifications_item->setXHTMLSource(
 			$bisn_template_parts[$listbox_template_prefix . '_ITEM' . $listbox_item_index]);
+		
 		$listbox_item_index++;
 		
 		// Add the checkbox
 		$checkbox = '<input type="checkbox" name="stay_subscribed_to[]" value="' .
 			$subscribed_notification_lists[$i]['id'] . '" checked="checked" />';
+			
 		$back_in_stock_notifications_item->setVariable('checkbox', $checkbox);
 		
+		
 		// Add the product's name
-		$product_name = htmlentities($subscribed_notification_lists[$i]['product_name']);
+		$product_name =
+			htmlentities($subscribed_notification_lists[$i]['product_name'], ENT_COMPAT, CHARSET);
+			
 		$back_in_stock_notifications_item->setVariable('product_name', $product_name);
+		
+		
+		// Add the product's model
+		$product_model =
+			htmlentities($subscribed_notification_lists[$i]['product_model'], ENT_COMPAT, CHARSET);
+			
+		$back_in_stock_notifications_item->setVariable('product_model', $product_model);
+		
+		
+		// Add a link to the product's page
+		$product_info_page_filename = @constant('FILENAME_' .
+			strtoupper(zen_get_info_page($subscribed_notification_lists[$i]['id'])));
+		
+		if (is_null($product_info_page_filename)) {
+			$product_info_page_filename = FILENAME_PRODUCT_INFO;
+		}
+		
+		$product_info_page_link = zen_href_link($product_info_page_filename,
+			'products_id=' . $subscribed_notification_lists[$i]['id']);
+			
+		$back_in_stock_notifications_item->setVariable('product_info_page_link',
+			$product_info_page_link);  
+		
 		
 		// Add the date subscribed
 		$date = zen_date_long($subscribed_notification_lists[$i]['date']);
+		
 		$back_in_stock_notifications_item->setVariable('date_subscribed', $date);
 		
+		
 		// Append a placement for the next product after this one
-		$placement_marker = '{' . $placement_marker_key . '}';
+		$placement_marker = '{ceon:' . $placement_marker_key . '}';
+		
 		$back_in_stock_notifications_item->appendSource($placement_marker);
 		
 		// Add the current product to the table
@@ -153,6 +195,7 @@ if (sizeof($subscribed_notification_lists) == 0) {
 	// Check if image exists
 	$image_src = zen_output_string($template->get_template_dir(BUTTON_IMAGE_UPDATE, DIR_WS_TEMPLATE,
 		$current_page_base, 'buttons/' . $_SESSION['language'] . '/') . $image);
+	
 	if (file_exists($image_src)) {
 		$update_button_source = zen_image_submit(BUTTON_IMAGE_UPDATE, BUTTON_UPDATE_ALT,
 			'name="submit"');
@@ -168,3 +211,4 @@ $back_in_stock_notifications->cleanSource();
 print $back_in_stock_notifications->getXHTMLSource();
 
 ?>
+</div>

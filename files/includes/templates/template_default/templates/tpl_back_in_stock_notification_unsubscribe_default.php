@@ -1,15 +1,18 @@
 <?php
+
 /**
  * Zen Cart : Back In Stock Notification Unsubscribe
  *
  * Allows users to unsubscribe from a "Back In Stock" notification list for a given product.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: tpl_back_in_stock_notification_unsubscribe_default.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: tpl_back_in_stock_notification_unsubscribe_default.php 715 2011-06-12 20:06:27Z conor $
  */
+
 ?>
 <div class="centerColumn">
 	
@@ -22,7 +25,8 @@
 require_once(DIR_FS_CATALOG . DIR_WS_CLASSES . 'class.CeonXHTMLHiTemplate.php');
 
 // Load in and extract the template parts for Back In Stock Notification functionality
-$bisn_template_filename = DIR_FS_CATALOG . DIR_WS_TEMPLATES . 'template_default/templates/' .
+$bisn_template_filename = $template->get_template_dir('inc.html.back_in_stock_notifications.html',
+	DIR_WS_TEMPLATE, $current_page_base, 'templates') . '/' .
 	'inc.html.back_in_stock_notifications.html';
 
 $bisn_template = new CeonXHTMLHiTemplate($bisn_template_filename);
@@ -58,7 +62,8 @@ if ($action == 'display_details') {
 	
 	// Add in the introductory text
 	$message_text = sprintf(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_FORM_MESSAGE,
-		htmlentities($product_name), htmlentities(BUTTON_UNSUBSCRIBE));
+		htmlentities($product_name, ENT_COMPAT, CHARSET), htmlentities(BUTTON_UNSUBSCRIBE,
+		ENT_COMPAT, CHARSET));
 	$back_in_stock_notification_unsubscribe_form->setVariable('message', $message_text);
 	
 	// Add in the data about the notification to be unsubscribed from!

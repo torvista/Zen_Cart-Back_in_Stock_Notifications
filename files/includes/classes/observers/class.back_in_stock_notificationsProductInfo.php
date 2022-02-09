@@ -3,13 +3,14 @@
 /**
  * Back In Stock Notifications Product Info Page Notification Form Display
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2007-2009 Ceon
- * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
- * @copyright  Portions Copyright 2003 osCommerce
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.back_in_stock_notificationsProductInfo.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
+ * @copyright   Portions Copyright 2003 osCommerce
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: class.back_in_stock_notificationsProductInfo.php 715 2011-06-12 20:06:27Z conor $
  */
 
 // {{{ class back_in_stock_notificationsProductInfo
@@ -17,13 +18,14 @@
 /**
  * Checks if the current user is subscribed to any Back In Stock Notification lists.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2007-2009 Ceon
- * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
- * @copyright  Portions Copyright 2003 osCommerce
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: class.back_in_stock_notificationsProductInfo.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
+ * @copyright   Portions Copyright 2003 osCommerce
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: class.back_in_stock_notificationsProductInfo.php 715 2011-06-12 20:06:27Z conor $
  */
 class back_in_stock_notificationsProductInfo extends base
 {
@@ -34,12 +36,17 @@ class back_in_stock_notificationsProductInfo extends base
 		
 		$zco_notifier->attach($this,
 			array(
-				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_INFO'
+				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_DOCUMENT_GENERAL_INFO',
+				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_DOCUMENT_PRODUCT_INFO',
+				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_BOOK_INFO',
+				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_FREE_SHIPPING_INFO',
+				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_INFO',
+				'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_MUSIC_INFO'
 				)
 			);
 	}
 	
-	function update(&$callingClass, $notifier, $paramsArray)
+	function update($callingClass, $notifier, $paramsArray)
 	{
 		global $db, $products_quantity,
 			$product_back_in_stock_notification_form_link,
@@ -58,7 +65,7 @@ class back_in_stock_notificationsProductInfo extends base
 			$back_in_stock_notification_build_form = true;
 			
 			// Update the source with the details of the customer (if available)
-			if ($_SESSION['customer_id']) {
+			if (isset($_SESSION['customer_id']) && $_SESSION['customer_id']) {
 				// Check if this user has already requested to be notified when this product is back
 				// in stock
 				$customer_details_query = "
@@ -82,7 +89,8 @@ class back_in_stock_notificationsProductInfo extends base
 						(
 							customer_id = '"  . (int) $_SESSION['customer_id'] . "'
 						OR
-							email_address = '" . $customer_details->fields['customers_email_address'] . "'
+							email_address = '" .
+								$customer_details->fields['customers_email_address'] . "'
 						);";
 				
 				$already_to_be_notified = $db->Execute($already_to_be_notified_query);
@@ -97,7 +105,7 @@ class back_in_stock_notificationsProductInfo extends base
 					// request form
 					$back_in_stock_notification_form_customer_name = htmlentities(
 						$customer_details->fields['customers_firstname'] . ' ' .
-						$customer_details->fields['customers_lastname']);
+						$customer_details->fields['customers_lastname'], ENT_COMPAT, CHARSET);
 					$back_in_stock_notification_form_customer_email = htmlentities(
 						$customer_details->fields['customers_email_address']);
 					$back_in_stock_notification_form_customer_email_confirmation = htmlentities(

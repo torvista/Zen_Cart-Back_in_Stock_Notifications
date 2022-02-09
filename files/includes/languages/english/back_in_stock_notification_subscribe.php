@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Back In Stock Notification Language Definitions
+ * Back In Stock Notifications Subscribe Language Definitions.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
- * @copyright  Portions Copyright 2003 osCommerce
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: back_in_stock_notification_subscribe.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
+ * @copyright   Portions Copyright 2003 osCommerce
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: back_in_stock_notification_subscribe.php 715 2011-06-12 20:06:27Z conor $
  */
 
 define('BACK_IN_STOCK_NOTIFICATION_NAVBAR_TITLE', 'Back In Stock Notification');
@@ -34,12 +35,12 @@ define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_LINK_MESSAGE', 'If, for any reaso
 
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT', 'Back In Stock Notification Subscription for %s');
 define('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT', '[BACK IN STOCK NOTIFICATION SUBSCRIPTION] Subscription for %s');
+define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_GREETING', 'Dear');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO1', 'You have successfully subscribed to the Back In Stock Notification List for:');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO2', 'We shall send you an e-mail when it is back in stock!');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO', 'If you did not request to be subscribed to this list or have simply changed your mind and don\'t want to be informed when this product is back in stock, please log into your Account and unsubscribe yourself:');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT', 'Go to My Account');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_INTRO', 'If you did not request to be subscribed to this list or have simply changed your mind and don\'t want to be informed when this product is back in stock, please log in using the following link to unsubscribe yourself:');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_TEXT', 'Unsubscribe Me!');
-
 
 ?>

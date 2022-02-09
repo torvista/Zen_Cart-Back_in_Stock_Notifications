@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>.:: Ceon :: Zen Cart :: Module  :: Back In Stock Notifications ::.</title>
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles-print.css" type="text/css" media="print" />
+	<script src="../_javascript/inc.js.general-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.css-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.restrict-width.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.crossfade.js" language="JavaScript" type="text/javascript"></script>
+	<noscript>
+		<style type="text/css">
+		body { margin: 0 auto; max-width: 75em; padding-left: 5%; padding-right: 5%; }
+		.CrossFadeText { margin: 0 auto; max-width: 75em; right: auto; padding-left: 20em; }
+		</style>
+	</noscript>
+</head>
+
+<body><a name="top" id="top"></a>
+
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+// Script resizes main div if client window is larger than a predefined variable
+var restrict_width = new CeonRestrictWidth(360, 900);
+
+// Initialise crossfade by hiding crossfade object first
+CeonAddLoadEvent(CeonCrossfadeInit);
+// -->
+</script>
+
+<div id="grad-horiz-left">
+	<div id="grad-horiz-right">
+
+<h1 class="Title">Back In Stock Notifications</h1>
+<div class="TitleByLineWrapper">&nbsp;
+	<div id="crossfade">
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+	</div>
+</div>
+<ul class="MainMenu">
+	<li><a href="../index.html">Overview</a><span> | </span></li>
+	<li><a href="installation.html">Installation</a><span> | </span></li>
+	<li><a href="configuration.html">Configuration/Usage</a><span> | </span></li>
+	<li><a href="faqs.html">FAQs</a><span> | </span></li>
+	<li><a href="support.html">Support</a><span> | </span></li>
+	<li><a href="revision-history.html">Revision History</a><span> | </span></li>
+	<li><a href="upgrading.html">Upgrading</a><span> | </span></li>
+	<li><a href="module-info.html">Module Info</a><span> | </span></li>
+	<li><a href="features.html">Module Features</a></li>
+</ul>
+
+<h2><a name="installation" id="installation"></a>Installation</h2>
+<p>Installation of the module has been made as simple as possible and shouldn't take long for any stores which have not already modified any of the template files which this module has to modify.</p>
+<p>If any of the template files this distribution have already been modified (because of another third party module being installed) then the changes for the respective files should be applied manually by copying across the appropriate sections of code required for the Back In Stock Notifications module. These sections are clearly marked (with &ldquo;// BEGIN&rdquo; and &ldquo;// END&rdquo; comments) within the sample files provided in this distribution.</p>
+
+<h3>Installation Overview</h3>
+<ol id="installation-overview">
+	<li>Copy the new files from the distribution into the Zen Cart installation.</li>
+	<li>Copy the updated core file from the distribution into the Zen Cart installation or modify the respective core file.</li>
+	<li>Copy the updated template files from the distribution into the Zen Cart installation or modify their equivalents in the store's existing template files.</li>
+	<li>Create the database table &amp; add the admin configuration options by running the provided SQL script.</li>
+	<li>Copy the e-mail templates to a directory, for <strong>each</strong> language the store uses.</li>
+	<li>[<em>Optional but <strong>Recommended</strong></em>] Prevent the module's files from being indexed by search engines.</li>
+</ol>
+
+<h3>Installation Steps</h3>
+<ol class="InstallationSteps">
+	<li>
+		<h4>New Files</h4>
+		
+		<p>These are the files which make up this module. Copy them all into their respective folders in the Zen Cart installation.</p>
+		
+		<h5>New files for the Admin directory</h5>
+		
+		<p>Most Zen Cart stores have their admin directory renamed from the default of &ldquo;admin&rdquo;.</p>
+		<p>Copy all of the folders and files from the <span class="FileName">files/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
+		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folders/files in the <span class="FileName">files/admin</span> folder into the &ldquo;admin&rdquo; directory for the store will put the files in the correct locations.</p>
+		<p><strong>Please do not copy the files individually</strong> - there's simply no need - doing so often results in files being missed out!</p>
+		
+		<ul class="Steps">
+			<li>admin/images/ceon-button-logo.png</li>
+			<li>admin/includes/boxes/extra_boxes/back_in_stock_notifications_catalog_dhtml.php</li>
+			<li>admin/includes/extra_datafiles/back_in_stock_notifications_filenames.php</li>
+			<li>admin/includes/extra_datafiles/back_in_stock_notifications_database_tables.php</li>
+			<li>admin/includes/functions/back_in_stock_notifications_functions.php</li>
+			<li>admin/includes/languages/english/extra_definitions/back_in_stock_notifications.php</li>
+			<li>admin/includes/languages/english/back_in_stock_notifications.php</li>
+			<li class="NoMarginBottom">admin/back_in_stock_notifications.php</li>
+		</ul>
+		
+		<h5>New files for the main store directory</h5>
+		
+		<p>Copy the <span class="FileName">includes</span> folder and the <span class="FileName">email</span> folder from the <span class="FileName">files</span> folder into the store's main directory.</p>
+		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folder into the root directory for the store will put the files in the correct locations.</p>
+		<p><strong>Please do not copy the files individually</strong> - there's simply no need - doing so often results in files being missed out!</p>
+		<p class="Note"><strong>Warning</strong>: Be careful <em class="Underlined FontStyleNormal">NOT</em> to copy the files from the <span class="FileName">files/includes</span> folder into the store's <span class="FileName">admin/includes</span> directory, they go in the <span class="FileName">includes</span> directory which is <strong>alongside, not inside</strong> the store's admin directory.</p>
+		
+		<ul class="Steps">
+			<li>email/email_template_back_in_stock_notification.html</li>
+			<li>email/email_template_back_in_stock_notification.txt</li>
+			<li>email/email_template_back_in_stock_notification_subscribe.html</li>
+			<li>email/email_template_back_in_stock_notification_subscribe.txt</li>
+			<li>email/email_template_back_in_stock_notification_subscribe_extra.html</li>
+			<li>includes/auto_loaders/config.back_in_stock_notificationsAccount.php</li>
+			<li>includes/auto_loaders/config.back_in_stock_notificationsProductInfo.php</li>
+			<li>includes/classes/observers/class.back_in_stock_notificationsAccount.php</li>
+			<li>includes/classes/observers/class.back_in_stock_notificationsProductInfo.php</li>
+			<li>includes/classes/class.CeonEmailValidation.php</li>
+			<li>includes/classes/class.CeonXHTMLHiTemplate.php</li>
+			<li>includes/extra_datafiles/back_in_stock_notifications_filenames.php</li>
+			<li>includes/extra_datafiles/back_in_stock_notifications_database_tables.php</li>
+			<li>includes/languages/english/extra_definitions/back_in_stock_notifications.php</li>
+			<li>includes/languages/english/account_back_in_stock_notifications.php</li>
+			<li>includes/languages/english/back_in_stock_notification_subscribe.php</li>
+			<li>includes/languages/english/back_in_stock_notification_unsubscribe.php</li>
+			<li>includes/modules/pages/account_back_in_stock_notifications/header_php.php</li>
+			<li>includes/modules/pages/back_in_stock_notification_subscribe/header_php.php</li>
+			<li>includes/modules/pages/back_in_stock_notification_unsubscribe/header_php.php</li>
+			<li>includes/templates/template_default/buttons/english/notify_me.png</li>
+			<li>includes/templates/template_default/templates/inc.html.back_in_stock_notifications.html</li>
+			<li>includes/templates/template_default/templates/tpl_account_back_in_stock_notifications_default.php</li>
+			<li>includes/templates/template_default/templates/tpl_back_in_stock_notification_subscribe_default.php</li>
+			<li class="NoMarginBottom">includes/templates/template_default/templates/tpl_back_in_stock_notification_unsubscribe_default.php</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4>Updated Core File</h4>
+		
+		<p>A core Zen Cart file, <span class="FileName">functions_general.php</span>, must be updated to display the Subscription Notification link for sold out products on the various product listing pages.</p>
+		
+		<ul class="BulletedList">
+			<li>
+				<p>It is likely that this file hasn't been modified for the store already, in which case the pre-modified sample file from this distribution, for the version of Zen Cart being used by the store, should simply be copied over the existing version of the file.</p>
+			</li>
+			<li>
+				<p>However, if this core file <strong>has</strong> already been modified for the store, the changes within the sample file included in this distribution must be applied to the previously modified version of <span class="FileName">functions_general.php</span>.</p>
+				<p>The changes are clearly marked within the sample file in the distribution and should be easy enough to copy across, especially if a &ldquo;diff&rdquo; software package (such as the free WinMerge or the excellent, commercial, Beyond Compare) is used.</p>
+				<p>Instructions on how to copy across the modifications necessary for this module - to a version of <span class="FileName">functions_general.php</span> which has previously been modified - can be found <a href="faqs.html#modifying-core-files">in this FAQ</a>.</p>
+			</li>
+		</ul>
+		
+		<p>The modified core file can be found within the <span class="FileName">modified_core_files</span> folder in the distribution:</p>
+		
+		<ul class="Steps">
+			<li class="NoMarginBottom">includes/functions/functions_general.php</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4>Template Files For Zen Cart 1.3.x</h4>
+		
+		<p>Several of the standard Zen Cart template files require modifications to work with this module and there are some new files which must be placed in the store template's <span class="FileName">css</span> &amp; <span class="FileName">templates</span> folders.</p>
+		<p>Modifications have been made to &ldquo;clean&rdquo; copies of the template files from a &ldquo;fresh&rdquo; installation of Zen Cart and are included as &ldquo;sample&rdquo; files in this distribution.</p>
+		
+		<ul class="BulletedList">
+			<li>
+				<p>If any of these template files <strong>haven't</strong> already been modified for the store, the sample files included in this distribution can be copied into the store's template directory and will then override the standard versions of the files included in the Zen Cart distribution.</p>
+			</li>
+			<li>
+				<p>If any of these template files <strong>have</strong> already been modified for the store, then the changes necessary for the Back In Stock Notifications module to function must be made to the store's modified file(s). The changes are clearly marked within the sample files in the distribution and should be easy enough to copy across, especially if a &ldquo;diff&rdquo; software package (such as the free WinMerge or the excellent, commercial, Beyond Compare) is used.</p>
+				<p>Instructions on how to copy across the modifications necessary for this module - to template files which have previously been modified - can be found <a href="faqs.html#modifying-template-files">in this FAQ</a>.</p>
+			</li>
+		</ul>
+		
+		<p>The sample template files can be found within the <span class="FileName">template_override_files</span> folder in the distribution. They are:</p>
+		
+		<ul class="Steps">
+			<li>includes/templates/STORE-TEMPLATE/css/account_back_in_stock_notifications.css</li>
+			<li>includes/templates/STORE-TEMPLATE/templates/tpl_account_default.php</li>
+			<li>includes/templates/STORE-TEMPLATE/templates/tpl_document_general_info_display.php</li>
+			<li>includes/templates/STORE-TEMPLATE/templates/tpl_document_product_info_display.php</li>
+			<li>includes/templates/STORE-TEMPLATE/templates/tpl_product_book_info_display.php</li>
+			<li>includes/templates/STORE-TEMPLATE/templates/tpl_product_free_shipping_info_display.php</li>
+			<li>includes/templates/STORE-TEMPLATE/templates/tpl_product_info_display.php</li>
+			<li class="NoMarginBottom">includes/templates/STORE-TEMPLATE/templates/tpl_product_music_info_display.php</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4>Create the Database Table &amp; Add the Admin Configuration Options</h4>
+		
+		<p>An SQL script, <span class="FileName">mysql.sql</span>, is provided with this module to create the database table in which the module stores subscriptions, and to add the configuration options for the module in the Zen Cart admin.</p>
+		
+		<ul class="Steps">
+			<li>
+				<p>The easiest option is to go to <em>Tools &gt; Install SQL Patches</em> in the Zen Cart Admin, select <em>Browse...</em>, find and select the file <span class="FileName">mysql.sql</span> on your computer, then click <em>Upload</em>.</p>
+			</li>
+			<li class="NoMarginBottom">
+				<p class="NoMarginBottom">Or software such as PHPMyAdmin can be used to run the SQL script (Care must be taken to check the name of the tables. If the store uses a prefix for the table names it is essential that this prefix is put in front of the table names). If using this method please note that some double backslashes may need to be removed in the source.</p>
+			</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4><a name="copying-e-mail-templates-for-languages" id ="copying-e-mail-templates-for-languages"></a>Copy the E-mail Templates to a Folder for <strong class="Underlined">Each</strong> Language the Store Uses</h4>
+		
+		<p>Zen Cart's e-mail functionality requires that there are e-mail template files for <strong>every</strong> language the store uses, in order to create HTML versions of any e-mails being sent.</p>
+		
+		<p>The five Back In Stock Notifications e-mail templates should therefore be copied into a folder for <strong>each</strong> language the store uses.</p>
+		
+		<p><strong>For each language the store uses</strong> carry out the following steps:</p>
+		
+		<ul class="Steps">
+			<li>
+				<p>If one doesn't already exist, create a folder for the language within the e-mail templates folder.</p>
+				<p>The name of the folder is simply the two letter language code for the language.</p>
+				<p>For example, if the store uses Spanish, the language code for which is &ldquo;es&rdquo;, the following folder should be created in the store's e-mail folder:</p>
+				<p><code>email/<strong>es</strong></code></p>
+			</li>
+			<li>
+				<p>Copy the five Back In Stock Notifications e-mail template files from the <em class="FileName">email</em> templates folder to the language's e-mail templates folder.</p>
+				<p>For example, copy <em class="FileName">email/email_template_back_in_stock_notification.html</em> to <em class="FileName">email/es/email_template_back_in_stock_notification.html</em></p>
+			</li>
+			<li class="NoMarginBottom">
+				<p class="NoMarginBottom">The e-mail templates can now be customised for the language if desired, simply by editing the files in the language's e-mail templates folder.</p>
+			</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4>[OPTIONAL but RECOMMENDED] Prevent the module's files from being indexed by search engines.</h4>
+		
+		<p>It's unlikely that anyone would want a search engine (web robot) indexing the subscription/unsubscription pages as it could allow people to subscribe to a Back In Stock Notification List for a product that is actually back in stock.</p>
+		<p>This is easily avoided by using Zen Cart's &ldquo;<code>ROBOTS_PAGES_TO_SKIP</code>&rdquo; <code>define</code>:</p>
+		
+		<ul class="Steps">
+			<li>The following two &ldquo;page names&rdquo; should be added to the <code>define</code> for <code>ROBOTS_PAGES_TO_SKIP</code> in the file <span class="FileName">includes/languages/LANGUAGE/meta_tags.php</span> (for each language the site uses):</li>
+			<li><code>back_in_stock_notification_subscribe,back_in_stock_notification_unsubscribe</code></li>
+			<li class="NoMarginBottom"><strong>Please Note:</strong> A comma should be added before &ldquo;<code>back_in_stock_notification_subscribe</code>&rdquo; within the <code>define</code>!</li>
+		</ul>
+	</li>
+</ol>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+
+	</div>
+</div>
+
+<script type="text/javascript" language="JavaScript">
+<!-- // Output resizeable div end tag
+restrict_width.outputClosingTag();
+// -->
+</script>
+
+</body>
+</html>

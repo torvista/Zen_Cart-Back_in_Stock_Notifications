@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>.:: Ceon :: Zen Cart :: Module  :: Back In Stock Notifications ::.</title>
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles-print.css" type="text/css" media="print" />
+	<script src="../_javascript/inc.js.general-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.css-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.restrict-width.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.crossfade.js" language="JavaScript" type="text/javascript"></script>
+	<noscript>
+		<style type="text/css">
+		body { margin: 0 auto; max-width: 75em; padding-left: 5%; padding-right: 5%; }
+		.CrossFadeText { margin: 0 auto; max-width: 75em; right: auto; padding-left: 20em; }
+		</style>
+	</noscript>
+</head>
+
+<body><a name="top" id="top"></a>
+
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+// Script resizes main div if client window is larger than a predefined variable
+var restrict_width = new CeonRestrictWidth(360, 900);
+
+// Initialise crossfade by hiding crossfade object first
+CeonAddLoadEvent(CeonCrossfadeInit);
+// -->
+</script>
+
+<div id="grad-horiz-left">
+	<div id="grad-horiz-right">
+
+<h1 class="Title">Back In Stock Notifications</h1>
+<div class="TitleByLineWrapper">&nbsp;
+	<div id="crossfade">
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+	</div>
+</div>
+<ul class="MainMenu">
+	<li><a href="../index.html">Overview</a><span> | </span></li>
+	<li><a href="installation.html">Installation</a><span> | </span></li>
+	<li><a href="configuration.html">Configuration/Usage</a><span> | </span></li>
+	<li><a href="faqs.html">FAQs</a><span> | </span></li>
+	<li><a href="support.html">Support</a><span> | </span></li>
+	<li><a href="revision-history.html">Revision History</a><span> | </span></li>
+	<li><a href="upgrading.html">Upgrading</a><span> | </span></li>
+	<li><a href="module-info.html">Module Info</a><span> | </span></li>
+	<li><a href="features.html">Module Features</a></li>
+</ul>
+
+<h2><a name="revision-history" id="revision-history"></a>Revision History</h2>
+<table width="100%" border="0" cellspacing="0" summary="The complete Revision History of this module">
+	<tr>
+		<th>Date</th>
+		<th>Version</th>
+		<th>Release Information</th>
+	</tr>
+	<tr>
+		<td class="NoWrap">12th June 2010</td>
+		<td>3.0.0</td>
+		<td>
+			<p class="RevisionHistoryEntry">[ADDED] The names of the products now link directly to the product's page in the Back In Stock Notification subscriptions section of the customer account area.</p>
+			<p class="RevisionHistoryEntry">[ADDED] Added an option to have the product's model appended to its name in the Back In Stock Notifications section of the customer's account area. Just uncomment the HTML in the template part and/or adjust the template part as desired.</p>
+			<p class="RevisionHistoryEntry">[ADDED] A column listing the category has been added to the products with subscriptions listing in the admin utility. Thanks for the code goes to Tony Niemann &lt;tony AT loosechicken DOT com&gt;.</p>
+			<p class="RevisionHistoryEntry">[ADDED] A column listing the category has been added to the subscriptions listing in the admin utility.</p>
+			<p class="RevisionHistoryEntry">[ADDED] Added an option to view all the products/subscriptions in the listings in the admin utility, instead of having to browse by page. Thanks for the code goes to Tony Niemann &lt;tony AT loosechicken DOT com&gt;.</p>
+			<p class="RevisionHistoryEntry">[ADDED] Spanish translation added for admin and catalog files. Thanks for the translation goes to torvista, Ana Bobes!</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The products/subscriptions listings in the admin utility can now be sorted by column, by clicking on the column headings. Based on code by Tony Niemann &lt;tony AT loosechicken DOT com&gt;.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The links to the products in the notification e-mails now open the link in a new window.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The unsubscription form in My Account didn't work if the submit button had no name, as this meant that the expected submission signal variable wasn't being passed in the form. A hidden variable is now always passed to avoid the possibility of this occurring.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The code to build the links on product listing pages to and out of stock product's subscription form has been updated to remove the sorting parameters found on the listings pages. This should hopefully result in better compatibility with SEO software that builds the links incorrectly.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The number of subscriptions per page displayed in the admin utility now uses the value of the Zen Cart admin &lsquo;Maximum Display of Products on Reports&rdquo; setting instead of the store-side &ldquo;Search Results Per Page&rdquo; setting. Thanks for the suggestion goes to Tony Niemann &lt;tony AT loosechicken DOT com&gt;.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The styling of the tables in the admin utility improved to make the listings clearer.</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] The check on the product listings pages, to determine if a logged-in customer was already subscribed to the Back In Stock Notification list for a product, didn't work because of a code logic error. (Thanks to ArtO on the forum for the heads up).</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] The code to load in the text version of any Back In Stock Notifications e-mails was only ever loading in the standard language's e-mail template. Now each language the store uses can have its own specific e-mail template. If a text e-mail template doesn't exist for a language, the standard language's e-mail template will be used instead.</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] Fixed a problem with the submission of the notification utility form redirecting the user to the admin login page. The admin notification utility's form wasn't passing the session ID, which could cause problems on certain server/store configurations (specifically those that didn't save the session ID in a cookie, as happens with some that run PHP as a CGI).</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] The greeting in the subscription e-mails is no longer hard-coded. Instead, a new language define has been added to the language file(s).</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] The text preceding a link in the text version of notification e-mails is no longer hard-coded. Instead, a new language define has been added to the admin language file(s).</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] The function to build a link to a product's admin page (by RubikIntegration team) didn't work properly, breaking whenever quotes or other special characters were in a product's name.</p>
+			<p class="RevisionHistoryEntry">[ADDED] Sample modified core file and sample modified template files for Zen Cart 1.3.9h added.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] Documentation updated with instructions on how to create a version of the e-mail templates for every language the store uses. This is an essential part of the installation process for the module, other languages can't send HTML versions of the e-mails without it!</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[UPDATED] Documentation updated so that the dynamic functionality works when the documentation is being accessed from a local disk using Google Chrome.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">13th May 2010</td>
+		<td>2.6.0</td>
+		<td>
+			<p class="RevisionHistoryEntry">[UPDATED] Template class updated with latest version of code from Ceon Site Engine/CardPay software. All placement tags now have a &ldquo;ceon&rdquo; namespace - all users must update their version of the main template file inc.html.back_in_stock_notifications.html!</p>
+			<p class="RevisionHistoryEntry">[ADDED] Support for additional product types added: Music Product, Free Shipping Product, Document General, Document Product and Book Product (Multilanguage extended book product type version 4).</p>
+			<p class="RevisionHistoryEntry">[ADDED] Italian translation added for admin and catalog files. Thanks for the translation goes to Claudio!</p>
+			<p class="RevisionHistoryEntry">[ADDED] French translation added for catalog files. Thanks for the translation goes to Marie-Amelie Masnou &lt;murimari AT murimari DOT com&gt; - http://www.murimari.com.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] Template updated to fix XHTML Validation issues (including missing IDs on form elements). Template will now output fully valid XHTML 1.0 Transitional code.</p>
+			<p class="RevisionHistoryEntry">[ADDED] Sample modified core file and sample modified template files for Zen Cart 1.3.9b added.</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[ADDED] Version information and associated version checker added to admin utility file.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">29th April 2009</td>
+		<td>2.4.0</td>
+		<td>
+			<p class="RevisionHistoryEntry">[ADDED] Back In Stock Notification subscription form links are now displayed for sold out products on Product Listing pages (category listings, featured product listings etc). This should encourage a lot more customers to sign up to notification lists as it doesn't require them to click through to the product's page to see the subscription information!</p>
+			<p class="RevisionHistoryEntry">[UPDATED] The template file can now be overridden by creating a copy and placing this copy in the templates folder for the template the store is using.</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] Only ISO-8859-1 characters were being correctly encoded for display. Module updated to use the current character set (UTF-8 etc.) when generating HTML entities.</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[ADDED] Documentation added to the configuration about copying the template file to the store's template directory so that it can be modified.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">23rd February 2009</td>
+		<td>2.2.4</td>
+		<td>
+			<p class="RevisionHistoryEntry">[BUGFIX] SQL script updated to work with MySQL 5.</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[BUGFIX] Typo fixed in back_in_stock_notifications_subscribe.php.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">13th January 2009</td>
+		<td>2.2.3</td>
+		<td>
+			<p class="RevisionHistoryEntry">[UPDATED] Subscription form now displays for stock levels of zero or less (not just products which have a stock level of exactly zero!).</p>
+			<p class="RevisionHistoryEntry">[BUGFIX] Subscription management link is now always displayed in the the account section, when the module is enabled, regardless of whether or not &ldquo;Product Notifications&rdquo; are enabled/disabled for the site.</p>
+			<p class="RevisionHistoryEntry">[UPDATED] Installation documentation updated with information on adding the subscription pages to the index of pages which should not be indexed by search engines (web robots).</p>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[UPDATED] Other minor documentation updates.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">31st August 2008</td>
+		<td>2.2.2</td>
+		<td>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[BUGFIX] The CeonXHTMLHiTemplate class wasn't compatible with PHP4.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">28th August 2008</td>
+		<td>2.2.1</td>
+		<td>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[BUGFIX] The e-mail confirmation field wasn't being auto-populated properly on the Product Info page when a customer was already logged in.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">8th August 2008</td>
+		<td>2.2.0</td>
+		<td>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">[ADDED] E-mail confirmation field added to prevent automated scripts spamming the notification form and therefore avoid useless subscriptions and needless bounced confirmation/notification e-mails.</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">4th July 2008</td>
+		<td>2.0.0</td>
+		<td>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">Initial Public Release!</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="NoWrap">October 2004</td>
+		<td>1.0.0</td>
+		<td>
+			<p class="RevisionHistoryEntry RevisionHistoryLastEntry">Initial Release to private clients.</p>
+		</td>
+	</tr>
+</table>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+
+	</div>
+</div>
+
+<script type="text/javascript" language="JavaScript">
+<!-- // Output resizeable div end tag
+restrict_width.outputClosingTag();
+// -->
+</script>
+
+</body>
+</html>

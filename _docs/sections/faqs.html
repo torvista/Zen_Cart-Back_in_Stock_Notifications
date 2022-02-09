@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>.:: Ceon :: Zen Cart :: Module  :: Back In Stock Notifications ::.</title>
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.styles.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../_css/inc.css.layout-styles-print.css" type="text/css" media="print" />
+	<script src="../_javascript/inc.js.general-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.css-functions.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.restrict-width.js" language="JavaScript" type="text/javascript"></script>
+	<script src="../_javascript/inc.js.crossfade.js" language="JavaScript" type="text/javascript"></script>
+	<noscript>
+		<style type="text/css">
+		body { margin: 0 auto; max-width: 75em; padding-left: 5%; padding-right: 5%; }
+		.CrossFadeText { margin: 0 auto; max-width: 75em; right: auto; padding-left: 20em; }
+		</style>
+	</noscript>
+</head>
+
+<body><a name="top" id="top"></a>
+
+<script language="JavaScript" type="text/javascript"> 
+<!-- 
+// Script resizes main div if client window is larger than a predefined variable
+var restrict_width = new CeonRestrictWidth(360, 900);
+
+// Initialise crossfade by hiding crossfade object first
+CeonAddLoadEvent(CeonCrossfadeInit);
+// -->
+</script>
+
+<div id="grad-horiz-left">
+	<div id="grad-horiz-right">
+
+<h1 class="Title">Back In Stock Notifications</h1>
+<div class="TitleByLineWrapper">&nbsp;
+	<div id="crossfade">
+		<p class="CrossFadeText" id="byline"><a href="http://dev.ceon.net/web?doc=zc-bisn">don't miss any potential sales - bring customers back to the store!</a></p>
+		<p class="CrossFadeText" id="ceon-link"><a href="http://dev.ceon.net/web?doc=zc-bisn">Click here to get more great software from Ceon</a></p>
+	</div>
+</div>
+<ul class="MainMenu">
+	<li><a href="../index.html">Overview</a><span> | </span></li>
+	<li><a href="installation.html">Installation</a><span> | </span></li>
+	<li><a href="configuration.html">Configuration/Usage</a><span> | </span></li>
+	<li><a href="faqs.html">FAQs</a><span> | </span></li>
+	<li><a href="support.html">Support</a><span> | </span></li>
+	<li><a href="revision-history.html">Revision History</a><span> | </span></li>
+	<li><a href="upgrading.html">Upgrading</a><span> | </span></li>
+	<li><a href="module-info.html">Module Info</a><span> | </span></li>
+	<li><a href="features.html">Module Features</a></li>
+</ul>
+
+<h2><a name="faqs" id="faqs"></a>Frequently Asked Questions (FAQs)</h2>
+
+<ol id="faqs-content">
+	<li>
+		<h4><a name="modifying-template-files" id="modifying-template-files"></a>Some of the template files for the store have already been modified. How can the Back In Stock Notifications code be added?</h4>
+		
+		<p>The changes to the template files, which are required for the Back In Stock Notifications module to work, are clearly marked in the sample versions of the files.</p>
+		<p>Changes begin with a comment such as:</p>
+		<p><code>// BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of x</code></p>
+		<p>And end with a comment:</p>
+		<p><code>// END CEON BACK IN STOCK NOTIFICATIONS 1 of x</code></p>
+		<p>Where &lsquo;<em>x</em>&rsquo; is the number of code changes within the current file which must be included for the Back In Stock Notifications module to use that file correctly.</p>
+		<ul class="Steps">
+			<li class="NoMarginBottom">Each change should be copied and pasted into the modified template file <strong>at the exact same place</strong> it is present within the respective sample file.</li>
+		</ul>
+		<ul class="Steps">
+			<li class="NoMarginBottom">Using a &ldquo;diff&rdquo; software package, such as the free WinMerge or the excellent, commercial, Beyond Compare, makes this considerably easier to do without mistakes.</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4><a name="modifying-core-files" id="modifying-core-files"></a>The functions_general.php file has already been modified for the store. How can the Back In Stock Notifications code be added?</h4>
+		
+		<p>The change in the <span class="FileName">functions_general.php</span> file required for the Back In Stock Notification module to work is clearly marked in the sample version(s) of the file.</p>
+		<p>The change begins with a comment:</p>
+		<p><code>// BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 1</code></p>
+		<p>And ends with a comment:</p>
+		<p><code>// END CEON BACK IN STOCK NOTIFICATIONS 1 of 1</code></p>
+		<ul class="Steps">
+			<li class="NoMarginBottom">This change should be copied and pasted into the modified <span class="FileName">functions_general.php</span> file <strong>at the exact same place</strong> it is present within the sample file.</li>
+		</ul>
+		<ul class="Steps">
+			<li class="NoMarginBottom">Using a &ldquo;diff&rdquo; software package, such as the free WinMerge or the excellent, commercial, Beyond Compare, makes this considerably easier to do without mistakes.</li>
+		</ul>
+	</li>
+	
+	<li>
+		<h4>Can we distribute this distribution to our clients?</h4>
+		
+		<p>Yes, the software is GPL. However, the documentation in this distribution is copyrighted to Ceon and must not be distributed in a modified form without our express permission.</p>
+		<p>As long as the documentation isn't modified, it can be freely distributed along with the software.</p>
+		<p>If you'd like to modify the documentation, for example by branding it with your company logo, please <a href="http://dev.ceon.net/contact-us">contact us</a> for permission! A credit acknowledgement to Ceon will <strong>always</strong> be required.</p>
+	</li>
+	
+	<li>
+		<h4>How can I help with the module?</h4>
+		
+		<p>If you have any feedback or a bug report, please <a href="http://dev.ceon.net/contact-us?doc=zc-bisn">send it to us</a>! There's nothing that makes developing more rewarding than feeling that it is appreciated!</p>
+		
+		<ul class="Steps">
+			<li class="NoMarginBottom">
+				<p><a href="https://dev.ceon.net/cardpay/zc-bisn?doc=zc-bisn"><img src="../_images/ceon-donation-button.png" alt="Donate by Credit/Debit Card or PayPal. We accept Visa, MasterCard, Maestro, American Express, Visa Debit, Visa Electron &amp; MasterCard Debit!" title="Donate by Credit/Debit Card or PayPal. We accept Visa, MasterCard, Maestro, American Express, Visa Debit, Visa Electron &amp; MasterCard Debit!" class="RightImage NoMarginBottom" /></a>This module has taken several weeks of work, with none of the time taken being paid for by anyone, so if you find it useful, please support us - just click the donate button.</p>
+				<p>We'll have more time to keep this contribution up-to-date and to support those who need our help if some nice people <a href="https://dev.ceon.net/cardpay/zc-bisn?doc=zc-bisn" title="Donate by Credit/Debit Card or PayPal. We accept Visa, MasterCard, Maestro, American Express, Visa Debit, Visa Electron &amp; MasterCard Debit!" class="RightImage NoMarginBottom">donate</a>.</p>
+				<p class="NoMarginBottom"><strong>Fewer than 1 in 500 people donate towards our software, so it would be greatly appreciated</strong> - Thanks!</p>
+				<div class="SpacerSmall"></div>
+			</li>
+		</ul>
+	</li>
+</ol>
+
+<p class="BackToTop"><a href="#top">Back to top</a></p>
+
+<p id="footer"><a href="http://dev.ceon.net/web?doc=zc-bisn" target="_blank"><img src="../_images/ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &amp; Documentation &copy; Copyright 2004-2011 <a href="http://dev.ceon.net/web?doc=zc-bisn">Ceon</a></p>
+
+	</div>
+</div>
+
+<script type="text/javascript" language="JavaScript">
+<!-- // Output resizeable div end tag
+restrict_width.outputClosingTag();
+// -->
+</script>
+
+</body>
+</html>

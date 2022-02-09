@@ -1,19 +1,31 @@
 <?php
 
 /**
- * Back In Stock Notification Language Definitions - Can be used on main Back In Stock Notification
- * page or on Product Info page. Also used on main account page for info about existing
- * subscriptions.
+ * Back In Stock Notifications Language Definitions - Can be used on main Back In Stock Notification
+ * page, on Product Info page or any of the Product Listing pages. Also used on main Account page
+ * for info about existing subscriptions.
  *
- * @author     Conor Kerr <back_in_stock_notifications@dev.ceon.net>
- * @copyright  Copyright 2004-2009 Ceon
- * @copyright  Portions Copyright 2003-2006 Zen Cart Development Team
- * @copyright  Portions Copyright 2003 osCommerce
- * @link       http://dev.ceon.net/web/zen-cart/back_in_stock_notifications
- * @license    http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version    $Id: back_in_stock_notifications.php 317 2009-02-23 12:01:47Z Bob $
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2011 Ceon
+ * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
+ * @copyright   Portions Copyright 2003 osCommerce
+ * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: back_in_stock_notifications.php 715 2011-06-12 20:06:27Z conor $
  */
 
+/**
+ * HTML for link on Product Listing pages. (Can be used to display a "subscribe" image etc.).
+ * Note that the link is added in place of %s, %s must be present for the link to work!
+ */
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_ALREADY_SUBSCRIBED', '<br />You have requested to be notified when this product is back in stock.');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br />To be notified when this product is back in stock please <a href="%s">click here</a>.');
+
+
+/**
+ * Text/HTML for other pages.
+ */
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE', 'Let us notify you when this product is back in stock!');
@@ -27,6 +39,7 @@ define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_CONFIRM_EMAIL', 'Confirm E-ma
 if (!defined('BUTTON_NOTIFY_ME_ALT')) {
 	define('BUTTON_NOTIFY_ME_ALT', 'Notify Me');
 }
+
 if (!defined('BUTTON_IMAGE_NOTIFY_ME')) {
 	define('BUTTON_IMAGE_NOTIFY_ME', 'notify_me.png');
 }
