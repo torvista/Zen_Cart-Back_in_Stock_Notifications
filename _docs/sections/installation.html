@@ -61,8 +61,8 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>Copy the new files from the distribution into the Zen Cart installation.</li>
 	<li>Copy the updated core file from the distribution into the Zen Cart installation, or modify the respective core file.</li>
 	<li>Copy the updated template files from the distribution into the Zen Cart installation, or modify their equivalents in the store's existing template files.</li>
-	<li>Create the database table &amp; add the admin configuration options, by running the provided SQL script.</li>
 	<li>Copy the e-mail templates to a directory, for <strong>each</strong> language the store uses.</li>
+  <li>Go to Admin-&gt;Catalog-&gt;Ceon Back In Stock Notifications to install the required database changes.</li>
 	<li>[<em>Optional but <strong>Recommended</strong></em>] Prevent the module's files from being indexed by search engines.</li>
 </ol>
 
@@ -74,7 +74,6 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		<p>These are the files which make up this module. Copy them all into their respective folders in the Zen Cart installation.</p>
 		
 		<p>Most files are used by all Zen Cart versions.</p>
-		<p>There is an additional file which is used only by Zen Cart 1.3.x; if the store uses Zen Cart 1.3.x, be sure to copy this extra file across from the folder <span class="FileName">files/additional_file_for_1.3.x</span>.</p>
 		
 		<h5>New files for the Admin directory</h5>
 		
@@ -95,10 +94,6 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 			<li>admin/includes/languages/english/back_in_stock_notifications.php</li>
 			<li class="NoMarginBottom">admin/back_in_stock_notifications.php</li>
 		</ul>
-		
-		<h6><a name="additional-file-for-zc-1-3-x" id="additional-file-for-zc-1-3-x"></a>Additional File for Zen Cart 1.3.x</h6>
-		
-		<p>Copy the file from the <span class="FileName">files/additional_file_for_1.3.x/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
 		
 		<ul class="Steps">
 			<li class="NoMarginBottom">admin/includes/boxes/extra_boxes/back_in_stock_notifications_catalog_dhtml.php</li>
@@ -172,7 +167,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	</li>
 	
 	<li>
-		<h4>Template Files For Zen Cart 1.3.x</h4>
+		<h4>Template Files</h4>
 		
 		<p>Several of the standard Zen Cart template files require modifications to work with this module, and there are some new files which must be placed in the store template's <span class="FileName">css</span> &amp; <span class="FileName">templates</span> folders.</p>
 		<p>Modifications have been made to &ldquo;clean&rdquo; copies of the template files from a &ldquo;fresh&rdquo; installation of Zen Cart and are included as &ldquo;sample&rdquo; files in this distribution.</p>
