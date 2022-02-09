@@ -256,6 +256,8 @@ h1.Title { float: left; line-height: 1em; padding-bottom: 0; }
 }
 
 .OtherZenCartReleasesIntroBox {
+	width: 48%;
+	float: left;
 	background: #fafafa;
 	border: 1px solid #999;
 }
