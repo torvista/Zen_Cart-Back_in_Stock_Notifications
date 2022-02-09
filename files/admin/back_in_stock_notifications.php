@@ -535,7 +535,7 @@ if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
 	
 	if (isset($_GET['page']) && $_GET['page'] != -1) {
 		// Page is to be split according to the maximum rows per page
-		$pagination_columns .= '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
+		$pagination_columns = '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
 			'<tr><td class="BISNPageCount">' .
 			$split_object->display_count($num_rows, MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
 			$_GET['page'], $count_text) . '</td>' . "\n";
@@ -552,7 +552,7 @@ if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
 		$pagination_columns .= '</tr></table>' . "\n";
 	} else {
 		// All results are to be shown regardless of any maximum rows per page setting
-		$pagination_columns .= '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
+		$pagination_columns = '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
 			'<tr><td class="BISNPageCount">' .
 			sprintf($count_text, 1, $num_rows, $num_rows) . '</td>' . "\n";
 		
