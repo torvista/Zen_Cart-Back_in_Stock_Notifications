@@ -104,14 +104,12 @@ if (sizeof($subscribed_notification_lists) == 0) {
 	// Load in the source for the form
 	$back_in_stock_notifications_table->setXHTMLSource(
 		$bisn_template_parts['ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE']);
-	
+
 	// Add the table headers and update button
-	$product_back_in_stock_notifications_table_title =
-		ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_TITLE;
-		
-	$back_in_stock_notifications_table->setVariable('table_title',
-		$product_back_in_stock_notifications_table_title);
-	
+/*	https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications/issues/6
+$product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_TITLE;		
+	$back_in_stock_notifications_table->setVariable('table_title',	$product_back_in_stock_notifications_table_title);
+*/
 	$header_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_SUBSCRIBED;
 	$header_product = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_PRODUCT;
 	$header_date_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_DATE_SUBSCRIBED;
