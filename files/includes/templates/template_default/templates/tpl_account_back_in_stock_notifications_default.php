@@ -52,17 +52,8 @@ $form_start_tag = zen_draw_form('back_in_stock_notifications',
 $back_in_stock_notifications->setVariable('form_start_tag', $form_start_tag);
 
 // Build back button
-// Check if image exists
-$image_src = zen_output_string($template->get_template_dir(BUTTON_IMAGE_BACK, DIR_WS_TEMPLATE,
-	$current_page_base, 'buttons/' . $_SESSION['language'] . '/') . $image);
-
-if (file_exists($image_src)) {
-	$back_button_source = zen_image_submit(BUTTON_IMAGE_BACK, BUTTON_BACK_ALT, 'name="back"');
-} else {
-	$back_button_source = '<input type="submit" name="back" value="' . BUTTON_BACK_ALT .'" />';
-}
-
-$back_button_source = ''; 
+//https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications/issues/7
+$back_button_source = '<div class="buttonRow back"><a href="' . zen_href_link(FILENAME_ACCOUNT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_BACK , BUTTON_BACK_ALT) . '</a></div>'; 
 $back_in_stock_notifications->setVariable('back_button', $back_button_source);
 
 // Add the title to the subscriptions overview box
