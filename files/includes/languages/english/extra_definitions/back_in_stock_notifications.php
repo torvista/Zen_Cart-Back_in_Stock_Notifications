@@ -12,32 +12,20 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 935 2012-02-06 14:08:25Z conor $
+ * @version     $Id: back_in_stock_notifications.php 2022-02-16 torvista
  */
 
-/**
- * HTML for link on Product Listing pages. (Can be used to display a "subscribe" image etc.).
- * Note that the link is added in place of %s, %s must be present for the link to work!
- */
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_ALREADY_SUBSCRIBED', '<br />You have requested to be notified when this product is back in stock.');
-if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
-  define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br />To be notified when this product is back in stock please <a href="%s">click here</a>. (Requires account)');
-} else {
-  define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br />To be notified when this product is back in stock please <a href="%s">click here</a>.');
-}
-
-/**
- * Text/HTML for other pages.
- */
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
-if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
-  define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>. (Requires account)');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED', 'You are already subscribed to be notified when this product is back in stock.');
+if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
+    //if logged in: subscription link adds subscription (no form needed)
+    //if not logged in: redirects to login/account creation page
+  define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'Customers with accounts may be notified when this product is back in stock, please <a href="%s">click here</a>.');
 } else {
   define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
 }
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE', 'Let us notify you when this product is back in stock!');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO', 'Simply enter your details below and we will send you an e-mail when &ldquo;%s&rdquo; is back in stock!');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE', 'We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE', 'Product Back in Stock Notification');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO', 'Enter your details below and you will automatically notified by e-mail when &ldquo;%s&rdquo; is back in stock.');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE', 'We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product.');
 
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_NAME', 'Name');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_EMAIL', 'E-mail Address');
