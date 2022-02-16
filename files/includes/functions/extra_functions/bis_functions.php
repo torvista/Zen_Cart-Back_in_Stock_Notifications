@@ -15,3 +15,17 @@
        return ''; 
     }
   }
+//REMOVE THIS FUNCTION FOR ZEN CART 158 ONWARDS: this function is already included in shopfront functions
+/**
+ * lookup attributes model
+ * @param int $product_id
+ */
+function zen_get_products_model($product_id)
+{
+    global $db;
+    $check = $db->Execute("SELECT products_model
+                    FROM " . TABLE_PRODUCTS . "
+                    WHERE products_id=" . (int)$product_id, 1);
+    if ($check->EOF) return '';
+    return $check->fields['products_model'];
+}
