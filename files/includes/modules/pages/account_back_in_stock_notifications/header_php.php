@@ -63,12 +63,12 @@ function getSubscribedBackInStockNotificationLists($customer_id)
 	} else {
 		// Build the list of notification lists to which this user is subscribed
 		while (!$subscribed_notification_lists_result->EOF) {
-			
-		   $name = zen_get_products_name($subscribed_notification_lists_result->fields['product_id']); 
+
 			$subscribed_notification_lists[] = array(
 				'id' => $subscribed_notification_lists_result->fields['id'],
 				'product_id' => $subscribed_notification_lists_result->fields['product_id'],
-				'product_name' => $name, 
+				'product_model' => zen_get_products_model($subscribed_notification_lists_result->fields['product_id']),
+				'product_name' => zen_get_products_name($subscribed_notification_lists_result->fields['product_id']),
 				'date' => $subscribed_notification_lists_result->fields['date_subscribed']
 				);
 			
