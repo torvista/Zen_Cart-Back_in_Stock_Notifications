@@ -127,27 +127,28 @@ class back_in_stock_notificationsProductInfo extends base
 				$back_in_stock_notification_form_customer_email = '';
 				$back_in_stock_notification_form_customer_email_confirmation = '';
 			}
-			
+
 			if ($product_back_in_stock_notification_form_link == '') {
 				// Build link to form
-            if (BACK_IN_STOCK_REQUIRES_LOGIN != '1') {
-				$product_back_in_stock_notification_form_link = sprintf(
-					BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-					zen_href_link(zen_get_info_page((int) $_GET['products_id']),
-					zen_get_all_get_params(array('number_of_uploads')), $request_type) .
-					'#back_in_stock_notification_form');
-
-            } else {
-              $product_back_in_stock_notification_form_link = sprintf(
-                 BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK, 
-                zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
-                'products_id='.(int) $_GET['products_id'], 'NONSSL')); 
-            }
+				if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
+					//account is required for subscription
+					//if logged in: subscription link adds subscription (no form needed)
+					//if not logged in: redirects to login/account creation page
+					$product_back_in_stock_notification_form_link = __LINE__ . ' ' . sprintf(
+							BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
+							zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
+								'products_id=' . (int)$_GET['products_id']));
+				} else {
+					//guest may subscribe: link jumps to form at foot of page
+					$product_back_in_stock_notification_form_link = __LINE__ . ' ' . sprintf(
+							BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
+							zen_href_link(zen_get_info_page((int)$_GET['products_id']),
+								zen_get_all_get_params(['number_of_uploads']), $request_type) .
+							'#back_in_stock_notification_form');
+				}
 			}
 		}
 	}
 }
 
 // }}}
- 
-?>
