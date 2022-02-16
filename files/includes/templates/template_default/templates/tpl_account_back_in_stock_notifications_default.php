@@ -183,17 +183,7 @@ $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFI
 		$back_in_stock_notifications_table->getXHTMLSource());
 
 	// Build update button
-	// Check if image exists
-	$image_src = zen_output_string($template->get_template_dir(BUTTON_IMAGE_UPDATE, DIR_WS_TEMPLATE,
-		$current_page_base, 'buttons/' . $_SESSION['language'] . '/') . $image);
-	
-	if (file_exists($image_src)) {
-		$update_button_source = zen_image_submit(BUTTON_IMAGE_UPDATE, BUTTON_UPDATE_ALT,
-			'name="submit"');
-	} else {
-		$update_button_source = '<input type="submit" name="submit" value="' . BUTTON_UPDATE_ALT .
-			'" />';
-	}
+	$update_button_source = zen_image_submit(BUTTON_IMAGE_UPDATE , BUTTON_UPDATE_ALT);
 	$back_in_stock_notifications->setVariable('update_button', $update_button_source);
 }
 
