@@ -10,13 +10,21 @@ You may report bugs here (for the CEON version only).
 Note that the original documention in the /_docs folder will NOT be updated.
 
 ## Changelog from the version in Zen Cart Plugins 
-16/02/22: Bugfix for duplicated subscription links when no login required.
-
-Modified: language defines
+16/02/22:
+Bugfix for duplicated subscription links when no login required.
 
 Removed: /modules/ceon_form_bis as functionality duplicated in observer class
+
+Modified: observers made auto-loading
+
+Removed: unnecessary observer loaders 
+
+Bugfix for missing product_model in account BISN listing
+
+Bugfix for missing image in account BISN listing, Update button
+
+Modified: language defines
 
 Removed: modified core file functions_general
 
 Removed: empty language folders
-
