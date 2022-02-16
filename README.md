@@ -28,3 +28,5 @@ Modified: language defines
 Removed: modified core file functions_general
 
 Removed: empty language folders
+
+Shopfront: miscellaneous IDE recommandations, strict comparisons, short-array syntax
