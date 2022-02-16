@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Account Page Notification Notice.
  *
