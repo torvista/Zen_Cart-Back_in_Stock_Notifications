@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Account Back In Stock Notifications Page Template.
  *
@@ -38,7 +38,7 @@ $bisn_template_parts = $bisn_template->extractTemplateParts();
 $content_title = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE;
 
 // Output the list of Back In Stock Notification Lists this user is subscribed to
-$back_in_stock_notifications = new CeonXHTMLHiTemplate;
+$back_in_stock_notifications = new CeonXHTMLHiTemplate();
 
 // Load in the source for the form
 $back_in_stock_notifications->setXHTMLSource(
@@ -68,11 +68,11 @@ if (isset($intro1)) {
 	$back_in_stock_notifications->setVariable('intro1', $intro1);
 	$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
 	
-} else if (isset($intro_none_selected)) {
+} elseif (isset($intro_none_selected)) {
 	$back_in_stock_notifications->setVariable('intro_none_selected', $intro_none_selected);
 	$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
 	
-} else if (isset($intro_success)) {
+} elseif (isset($intro_success)) {
 	$back_in_stock_notifications->setVariable('intro_success', $intro_success);
 	$back_in_stock_notifications->setVariable('intro_unsubscribed_products',
 		$intro_unsubscribed_products);
@@ -82,7 +82,7 @@ if (isset($intro1)) {
 	}
 }
 
-if (sizeof($subscribed_notification_lists) == 0) {
+if (count($subscribed_notification_lists) === 0) {
 	// User isn't subscribed to any Back In Stock Notification Lists
 	$no_subscriptions_message = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NOT_SUBSCRIBED;
 	
@@ -90,7 +90,7 @@ if (sizeof($subscribed_notification_lists) == 0) {
 		$no_subscriptions_message);
 } else {
 	// Output the list of Back In Stock Notification Lists this user is subscribed to
-	$back_in_stock_notifications_table = new CeonXHTMLHiTemplate;
+	$back_in_stock_notifications_table = new CeonXHTMLHiTemplate();
 	
 	// Load in the source for the form
 	$back_in_stock_notifications_table->setXHTMLSource(
@@ -116,7 +116,7 @@ $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFI
 	
 	$placement_marker_key = $listbox_template_prefix . '_ITEM1';
 	
-	for ($i = 0, $n = sizeof($subscribed_notification_lists); $i < $n; $i++) {
+	for ($i = 0, $n = count($subscribed_notification_lists); $i < $n; $i++) {
 		
 		$back_in_stock_notifications_item = new CeonXHTMLHiTemplate();
 		

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Subscribe Language Definitions.
  *
@@ -29,7 +29,7 @@ define('BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED_MESSAGE', 'You are already
 define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_TITLE', 'Subscription Successful!');
 define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE1', 'You have been successfully subscribed to the Back In Stock Notification List for &ldquo;%s&rdquo; and will therefore receive an e-mail from us when it is back in stock!');
 define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE2', 'For security reasons, an e-mail has been sent to you acknowledging your subscription. Please remember that this subscription will <strong>not</strong> result in you receiving any e-mail from us about anything other than the restocking of this item.');
-define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MY_ACCOUNT_MESSAGE', 'If, for any reason, you would like to unsubscribe from the Back In Stock Notification List for &ldquo;%s&rdquo; you can do so at any time by logging in to your Account and changing your Back In Stock Subscription Notification preferences.');
+define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MY_ACCOUNT_MESSAGE', 'If you would like to unsubscribe from the Back In Stock Notification List for &ldquo;%s&rdquo; you can do so at any time by logging in to your Account and changing your Back In Stock Subscription Notification preferences.');
 define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_LINK_MESSAGE', 'If, for any reason, you would like to unsubscribe from the Back In Stock Notification List for &ldquo;%s&rdquo; you will find details of how to do so in the e-mail that has just been sent to you.');
 
 
@@ -42,5 +42,3 @@ define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO', 'If you
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT', 'Go to My Account');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_INTRO', 'If you did not request to be subscribed to this list or have simply changed your mind and don\'t want to be informed when this product is back in stock, please log in using the following link to unsubscribe yourself:');
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_TEXT', 'Unsubscribe Me!');
-
-?>

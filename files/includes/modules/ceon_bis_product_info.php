@@ -1,5 +1,5 @@
 <?php // BEGIN CEON BACK IN STOCK NOTIFICATIONS 2 of 2
-if (BACK_IN_STOCK_REQUIRES_LOGIN != '1' AND isset($back_in_stock_notification_build_form) && $back_in_stock_notification_build_form) {
+if (BACK_IN_STOCK_REQUIRES_LOGIN !== '1' && isset($back_in_stock_notification_build_form) && $back_in_stock_notification_build_form) {
   // Build the notification request form
   
   /**
@@ -16,7 +16,7 @@ if (BACK_IN_STOCK_REQUIRES_LOGIN != '1' AND isset($back_in_stock_notification_bu
   
   $bisn_template_parts = $bisn_template->extractTemplateParts();
   
-  $back_in_stock_notification_form = new CeonXHTMLHiTemplate;
+  $back_in_stock_notification_form = new CeonXHTMLHiTemplate();
   
   // Load in the source for the form
   $back_in_stock_notification_form->setXHTMLSource(
@@ -66,4 +66,4 @@ if (BACK_IN_STOCK_REQUIRES_LOGIN != '1' AND isset($back_in_stock_notification_bu
   
   print $back_in_stock_notification_form->getXHTMLSource();
 }
-// END CEON BACK IN STOCK NOTIFICATIONS 2 of 2 ?>
+// END CEON BACK IN STOCK NOTIFICATIONS 2 of 2

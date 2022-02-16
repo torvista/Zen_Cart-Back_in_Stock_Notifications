@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Language Definitions - Can be used on main Back In Stock
  * Notification page, on Product Info page or any of the Product Listing pages. Also used on main

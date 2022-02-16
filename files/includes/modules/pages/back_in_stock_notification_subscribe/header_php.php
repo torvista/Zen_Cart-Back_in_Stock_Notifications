@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * Ceon Back In Stock Notification Subscription page.
  *
@@ -15,12 +15,10 @@
  * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
  */
 
-if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
-   if (!$_SESSION['customer_id']) {
-   	$_SESSION['navigation']->set_snapshot();
-   	
-   	zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
-   }
+if ((BACK_IN_STOCK_REQUIRES_LOGIN === '1') && !$_SESSION['customer_id']) {
+	$_SESSION['navigation']->set_snapshot();
+	
+	zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
 }
 
 /**
@@ -57,16 +55,16 @@ $product_name_query = "
 $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
-if ($product_name_result->RecordCount() == 0) {
+if ($product_name_result->RecordCount() === 0) {
    die("No such product"); // should never happen 	
-} else {
-	$product_name = $product_name_result->fields['products_name'];
 }
 
-// Check if the form has been submitted
-$form_errors = array();
+$product_name = $product_name_result->fields['products_name'];
 
-if (BACK_IN_STOCK_REQUIRES_LOGIN == '1') {
+// Check if the form has been submitted
+$form_errors = [];
+
+if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
   $_POST['notify_me'] = 1; 
   $_POST['email'] = get_customers_email(); 
   $_POST['name'] = $_SESSION['customer_first_name'] . ' ' . $_SESSION['customer_last_name']; 
@@ -81,35 +79,35 @@ if (isset($_POST['notify_me'])) {
 	if (isset($_POST['cofnospam'])) {
 		$_POST['cofnospam'] = trim($_POST['cofnospam']);
 		
-	} else if (isset($_SESSION['customer_id']) && isset($_POST['email'])) {
+	} elseif (isset($_SESSION['customer_id'], $_POST['email'])) {
 		// Trust the input from anyone who has already logged in!
 		$_POST['cofnospam'] = $_POST['email'];
 	}
 	
-	if (!isset($_POST['email']) || $_POST['email'] == '') {
+	if (!isset($_POST['email']) || $_POST['email'] === '') {
 		$form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_NOT_ENTERED;
 		
-	} else if (!CeonEmailValidation::isValid($_POST['email'])) {
+	} elseif (!CeonEmailValidation::isValid($_POST['email'])) {
 		$form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_INVALID;
 		
-	} else if (CeonEmailValidation::isHeaderInjection($_POST['email'])) {
+	} elseif (CeonEmailValidation::isHeaderInjection($_POST['email'])) {
 		$form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
 		
-	} else if (!isset($_POST['cofnospam']) || $_POST['cofnospam'] == '') {
+	} elseif (!isset($_POST['cofnospam']) || $_POST['cofnospam'] === '') {
 		$form_errors['cofnospam'] =
 			BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_NOT_ENTERED;
 		
-	} else if (!CeonEmailValidation::isValid($_POST['cofnospam'])) {
+	} elseif (!CeonEmailValidation::isValid($_POST['cofnospam'])) {
 		$form_errors['cofnospam'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_INVALID;
 		
-	} else if (CeonEmailValidation::isHeaderInjection($_POST['cofnospam'])) {
+	} elseif (CeonEmailValidation::isHeaderInjection($_POST['cofnospam'])) {
 		$form_errors['cofnospam'] =
 			BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
 		
-	} else if (CeonEmailValidation::isHeaderInjection($_POST['name'])) {
+	} elseif (CeonEmailValidation::isHeaderInjection($_POST['name'])) {
 		$form_errors['name'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
 		
-	} else if (strtolower($_POST['email']) != strtolower($_POST['cofnospam'])) {
+	} elseif (strtolower($_POST['email']) !== strtolower($_POST['cofnospam'])) {
 		$form_errors['cofnospam'] =
 			BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_DOESNT_MATCH;
 	} else {
@@ -136,7 +134,7 @@ if (isset($_POST['notify_me'])) {
          $check_notification_subscription_query .= " AND ("; 
          $check_notification_subscription_query .= " bisns.email_address = '" . zen_db_prepare_input($email_address) . "'"; 
 
-         if ($cid != -1) { 
+         if ($cid !== -1) { 
             $check_notification_subscription_query .= " OR bisns.customer_id = $cid"; 
          }
          $check_notification_subscription_query .= ")"; 
@@ -185,18 +183,17 @@ if (isset($_POST['notify_me'])) {
 				}
 			}
 			
-			if (isset($customer_email_address) && $customer_email_address == $email_address) {
+			if (isset($customer_email_address) && $customer_email_address === $email_address) {
 				// User is using their registered email address so their user id should be stored
 				// instead of the entered address.
-				$sql_data_array = array(
+				$sql_data_array = [
 					'product_id' => (int) $_GET['products_id'],
 					'customer_id' => (int) $subscription_customer_id,
 					'name' => zen_db_prepare_input($_POST['name']),
-					'date_subscribed' => date('Y-m-d H:m:i', time())
-					);
+					'date_subscribed' => date('Y-m-d H:m:i')
+				];
 				
-				zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array,
-					'insert');
+				zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
 				
 				$back_in_stock_notification_id = $db->insert_ID();
 				
@@ -206,7 +203,7 @@ if (isset($_POST['notify_me'])) {
 				
 				$unsubscribe_message =
 					sprintf(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MY_ACCOUNT_MESSAGE,
-					htmlentities($product_name), ENT_COMPAT, CHARSET);
+					htmlentities($product_name, ENT_COMPAT, CHARSET));
 			} else {
 				// Subscribe user by email address only
 				
@@ -214,16 +211,15 @@ if (isset($_POST['notify_me'])) {
 				// any unsubscription attempts
 				$subscription_code = substr(md5(time()), 0, 10);
 				
-				$sql_data_array = array(
+				$sql_data_array = [
 					'product_id' => (int)$_GET['products_id'],
 					'name' => zen_db_prepare_input($_POST['name']),
 					'email_address' => zen_db_prepare_input($_POST['email']),
 					'subscription_code' => $subscription_code,
-					'date_subscribed' => date('Y-m-d H:m:i', time())
-					);
+					'date_subscribed' => date('Y-m-d H:m:i')
+				];
 				
-				zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array,
-					'insert');
+				zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
 				
 				$back_in_stock_notification_id = $db->insert_ID();
 				
@@ -261,11 +257,21 @@ if ($build_form) {
 }
 
 
+/**
+ * @param $back_in_stock_notification_id
+ * @param $product_name
+ * @param $customer_id
+ * @param $customer_name
+ * @param $email_address
+ * @param $subscription_code
+ *
+ * @return void
+ */
 function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notification_id, $product_name,
 	$customer_id, $customer_name, $email_address, $subscription_code = '')
 {
-	$text_msg_part = array();
-	$html_msg = array();
+	$text_msg_part = [];
+	$html_msg = [];
 	
 	//intro area
 	$text_msg_part['EMAIL_TEXT_HEADER'] = EMAIL_TEXT_HEADER;
@@ -280,7 +286,7 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 	$text_msg_part['PRODUCT_NAME'] = $product_name;
 	$text_msg_part['INTRO2'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO2;
 	
-	if ($subscription_code == '') {
+	if ($subscription_code === '') {
 		// Build link to my account section
 		$text_msg_part['URL_INTRO'] =
 			BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
@@ -307,7 +313,7 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 	$html_msg['PRODUCT_NAME'] = $product_name;
 	$html_msg['INTRO2'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_INTRO2;
 	
-	if ($subscription_code == '') {
+	if ($subscription_code === '') {
 		// Build link to my account section
 		$html_msg['URL_INTRO'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
 		$html_msg['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT;
@@ -325,16 +331,17 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 	$html_msg['EXTRA_INFO'] = '';
 	
 	// Create the text version of the e-mail for Zen Cart's e-mail functionality
-	$language_folder_path_part = (strtolower($_SESSION['languages_code']) == 'en') ? '' :
+	$language_folder_path_part = (strtolower($_SESSION['languages_code']) === 'en') ? '' :
 		strtolower($_SESSION['languages_code']) . '/';
     
 	$template_file = DIR_FS_EMAIL_TEMPLATES . $language_folder_path_part .
 		'email_template_back_in_stock_notification_subscribe.txt';
 	
+	$text_msg_source = '';
 	if (file_exists($template_file)) {
 		// Use template file for current language
 		$text_msg_source = file_get_contents($template_file);
-	} else if ($language_folder_path_part != '') {
+	} elseif ($language_folder_path_part !== '') {
 		// Non-english language being used but no template file exist for it, fall back to the
 		// default english template
 		$text_msg_source =
@@ -351,7 +358,7 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 		'back_in_stock_notification_subscribe');
 	
 	// Send an e-mail to the store owner as well?
-	if (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO != '') {
+	if (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO !== '') {
 		zen_mail('', SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO,
 			sprintf(SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT,
 			$product_name), $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
@@ -359,4 +366,3 @@ function sendBackInStockNotificationSubscriptionEmail($back_in_stock_notificatio
 	}
 }
 
-?>
