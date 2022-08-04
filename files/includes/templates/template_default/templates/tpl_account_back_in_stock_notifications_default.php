@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: tpl_account_back_in_stock_notifications_default.php 937 2012-02-10 11:42:20Z conor $
+ * @version     $Id: tpl_account_back_in_stock_notifications_default.php 2022-8-03 torvista $
  */
 
 ?>
@@ -59,7 +59,7 @@ $back_in_stock_notifications->setVariable('back_button', $back_button_source);
 // Add the title to the subscriptions overview box
 $product_back_in_stock_notifications_overview_title =
 	ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_OVERVIEW_TITLE;
-	
+
 $back_in_stock_notifications->setVariable('overview_title',
 	$product_back_in_stock_notifications_overview_title);
 
@@ -67,16 +67,16 @@ $back_in_stock_notifications->setVariable('overview_title',
 if (isset($intro1)) {
 	$back_in_stock_notifications->setVariable('intro1', $intro1);
 	$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
-	
+
 } elseif (isset($intro_none_selected)) {
 	$back_in_stock_notifications->setVariable('intro_none_selected', $intro_none_selected);
 	$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
-	
+
 } elseif (isset($intro_success)) {
 	$back_in_stock_notifications->setVariable('intro_success', $intro_success);
 	$back_in_stock_notifications->setVariable('intro_unsubscribed_products',
 		$intro_unsubscribed_products);
-	
+
 	if ($intro_instructions != '') {
 		$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
 	}
@@ -85,7 +85,7 @@ if (isset($intro1)) {
 if (count($subscribed_notification_lists) === 0) {
 	// User isn't subscribed to any Back In Stock Notification Lists
 	$no_subscriptions_message = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NOT_SUBSCRIBED;
-	
+
 	$back_in_stock_notifications->setVariable('no_subscriptions_message',
 		$no_subscriptions_message);
 } else {
@@ -104,7 +104,7 @@ $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFI
 	$header_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_SUBSCRIBED;
 	$header_product = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_PRODUCT;
 	$header_date_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_DATE_SUBSCRIBED;
-	
+
 	$back_in_stock_notifications_table->setVariable('header_subscribed', $header_subscribed);
 	$back_in_stock_notifications_table->setVariable('header_product', $header_product);
 	$back_in_stock_notifications_table->setVariable('header_date_subscribed',
@@ -113,66 +113,66 @@ $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFI
 	// Build the list of subscriptions
 	$listbox_template_prefix = 'ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS';
 	$listbox_item_index = 1;
-	
+
 	$placement_marker_key = $listbox_template_prefix . '_ITEM1';
-	
+
 	for ($i = 0, $n = count($subscribed_notification_lists); $i < $n; $i++) {
-		
+
 		$back_in_stock_notifications_item = new CeonXHTMLHiTemplate();
-		
+
 		// Check if template exists, otherwise rewind back to first (Column/rows created by template!)
 		if (!isset($bisn_template_parts[$listbox_template_prefix . '_ITEM' .
 				$listbox_item_index])) {
 			$listbox_item_index = 1;
 		}
-		
+
 		$back_in_stock_notifications_item->setXHTMLSource(
 			$bisn_template_parts[$listbox_template_prefix . '_ITEM' . $listbox_item_index]);
-		
+
 		$listbox_item_index++;
-		
+
 		// Add the checkbox
 		$checkbox = '<input type="checkbox" name="stay_subscribed_to[]" value="' .
 			$subscribed_notification_lists[$i]['id'] . '" checked="checked" />';
-			
+
 		$back_in_stock_notifications_item->setVariable('checkbox', $checkbox);
-		
-		
+
+
 		// Add the product's name
 		$product_name =
 			htmlentities($subscribed_notification_lists[$i]['product_name'], ENT_COMPAT, CHARSET);
-			
+
 		$back_in_stock_notifications_item->setVariable('product_name', $product_name);
-		
-		
+
+
 		// Add the product's model
 		$product_model =
 			htmlentities($subscribed_notification_lists[$i]['product_model'], ENT_COMPAT, CHARSET);
-			
+
 		$back_in_stock_notifications_item->setVariable('product_model', $product_model);
-		
-		
-		// Add a link to the product's page
+
+
+		// Add a link to the product's page steve bugfix http://www.zen-cart.com/showthread.php?102159-Back-In-Stock-Notifications&p=1190718#post1190718
 		$product_page = zen_get_info_page($subscribed_notification_lists[$i]['product_id']);
-		
+
 		$product_info_page_link = zen_href_link($product_page,
 			'products_id=' . $subscribed_notification_lists[$i]['product_id'], $request_type);
-			
+
 		$back_in_stock_notifications_item->setVariable('product_info_page_link',
-			$product_info_page_link);  
-		
-		
+			$product_info_page_link);
+
+
 		// Add the date subscribed
 		$date = zen_date_long($subscribed_notification_lists[$i]['date']);
-		
+
 		$back_in_stock_notifications_item->setVariable('date_subscribed', $date);
-		
-		
+
+
 		// Append a placement for the next product after this one
 		$placement_marker = '{ceon:' . $placement_marker_key . '}';
-		
+
 		$back_in_stock_notifications_item->appendSource($placement_marker);
-		
+
 		// Add the current product to the table
 		$back_in_stock_notifications_table->setVariable($placement_marker_key,
 			$back_in_stock_notifications_item->getXHTMLSource());
