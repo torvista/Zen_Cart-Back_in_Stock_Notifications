@@ -145,13 +145,13 @@ declare(strict_types=1);
 
             $back_in_stock_notifications_item->setVariable('product_name', $product_name);
 
+		// Add the product's model
+        //steve https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications/issues/18
+		/*$product_model =
+			htmlentities($subscribed_notification_lists[$i]['product_model'], ENT_COMPAT, CHARSET);
 
-            // Add the product's model
-            $product_model
-                = htmlentities($subscribed_notification_lists[$i]['product_model'], ENT_COMPAT, CHARSET);
-
-            $back_in_stock_notifications_item->setVariable('product_model', $product_model);
-
+		$back_in_stock_notifications_item->setVariable('product_model', $product_model);
+*/
 
             // Add a link to the product's page steve bugfix https://www.zen-cart.com/showthread.php?102159-Back-In-Stock-Notifications&p=1190718#post1190718
             $product_page = zen_get_info_page($subscribed_notification_lists[$i]['product_id']);
