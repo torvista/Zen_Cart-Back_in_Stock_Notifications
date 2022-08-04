@@ -77,7 +77,7 @@ if (isset($intro1)) {
 	$back_in_stock_notifications->setVariable('intro_unsubscribed_products',
 		$intro_unsubscribed_products);
 
-	if ($intro_instructions != '') {
+        if ($intro_instructions !== '') {
 		$back_in_stock_notifications->setVariable('intro_instructions', $intro_instructions);
 	}
 }
@@ -120,11 +120,12 @@ $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFI
 
 		$back_in_stock_notifications_item = new CeonXHTMLHiTemplate();
 
-		// Check if template exists, otherwise rewind back to first (Column/rows created by template!)
-		if (!isset($bisn_template_parts[$listbox_template_prefix . '_ITEM' .
-				$listbox_item_index])) {
-			$listbox_item_index = 1;
-		}
+            // Check if template exists, otherwise rewind back to first (Column/rows created by template!)
+            $template_parts_index = $listbox_template_prefix . '_ITEM' . $listbox_item_index;
+            if (!isset($bisn_template_parts[$template_parts_index])) {
+                $listbox_item_index = 1;
+            }
+            unset ($template_parts_index);
 
 		$back_in_stock_notifications_item->setXHTMLSource(
 			$bisn_template_parts[$listbox_template_prefix . '_ITEM' . $listbox_item_index]);
