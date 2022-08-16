@@ -81,8 +81,8 @@ switch($_GET['option']){
 	case 1:
 		$products_query_raw = "
 			SELECT
-				bisns.product_id, pd.products_name, COUNT(*) AS num_subscribers, p.products_type,
-				p.products_quantity AS current_stock, cd.categories_name
+				bisns.product_id, pd.products_name, p.products_model, COUNT(*) AS num_subscribers, p.products_type,
+				p.products_quantity AS current_stock, cd.categories_name, cd.categories_id
 			FROM
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
 			LEFT JOIN
@@ -95,16 +95,16 @@ switch($_GET['option']){
 				" . TABLE_PRODUCTS . " p
 			ON
 				p.products_id = pd.products_id
-			LEFT JOIN 
-				" . TABLE_CATEGORIES_DESCRIPTION . " cd 
-			ON 
+			LEFT JOIN
+				" . TABLE_CATEGORIES_DESCRIPTION . " cd
+			ON
 				(p.master_categories_id = cd.categories_id
 			AND
 				cd.language_id = '" . $_SESSION['languages_id'] . "')
 			WHERE
 				1 = 1
 			GROUP BY
-				bisns.product_id";
+				bisns.product_id, pd.products_name, p.products_model, p.products_type, p.products_quantity, cd.categories_name, cd.categories_id";
 		
 		$sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'category';
 		
