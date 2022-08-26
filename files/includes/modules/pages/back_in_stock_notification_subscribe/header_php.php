@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
+ * @version     $Id: header_php.php 2022 08 26 torvista
  */
 
 if ((BACK_IN_STOCK_REQUIRES_LOGIN === '1') && !$_SESSION['customer_id']) {
@@ -190,7 +190,7 @@ if (isset($_POST['notify_me'])) {
 					'product_id' => (int) $_GET['products_id'],
 					'customer_id' => (int) $subscription_customer_id,
 					'name' => zen_db_prepare_input($_POST['name']),
-					'date_subscribed' => date('Y-m-d H:m:i')
+					'date_subscribed' => date('Y-m-d H:i:s')
 				];
 				
 				zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
@@ -216,7 +216,7 @@ if (isset($_POST['notify_me'])) {
 					'name' => zen_db_prepare_input($_POST['name']),
 					'email_address' => zen_db_prepare_input($_POST['email']),
 					'subscription_code' => $subscription_code,
-					'date_subscribed' => date('Y-m-d H:m:i')
+					'date_subscribed' => date('Y-m-d H:i:s')
 				];
 				
 				zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
