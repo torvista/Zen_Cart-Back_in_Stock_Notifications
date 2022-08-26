@@ -30,8 +30,8 @@ require(DIR_FS_CATALOG . DIR_WS_MODULES . 'require_languages.php');
 $breadcrumb->add(BACK_IN_STOCK_NOTIFICATION_NAVBAR_TITLE);
 
 // Make sure that product id was supplied
-if (!isset($_GET['products_id'])) {
-    die("No such product"); // should never happen
+if (empty($_GET['products_id'])) {//should never happen (maybe incorrect urls from spiders)
+    zen_redirect(FILENAME_DEFAULT);
 }
 
 /**
@@ -49,15 +49,17 @@ $product_name_query = "
 	FROM
 		" . TABLE_PRODUCTS_DESCRIPTION . "
 	WHERE
-		products_id = '" . (int)$_GET['products_id'] . "'
+		products_id = " . (int)$_GET['products_id'] . "
 	AND
-		language_id = '" . (int)$_SESSION['languages_id'] . "';";
+		language_id = " . (int)$_SESSION['languages_id'] . " LIMIT 1";
 
 $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
-if ($product_name_result->RecordCount() === 0) {
-    die("No such product"); // should never happen
+if ($product_name_result->RecordCount() === 0) {//should never happen
+    $product_name = '(no product name)';
+} else {
+    $product_name = $product_name_result->fields['products_name'];
 }
 
 $product_name = $product_name_result->fields['products_name'];
@@ -67,7 +69,7 @@ $form_errors = [];
 
 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
     $_POST['notify_me'] = 1;
-    $_POST['email'] = get_customers_email();
+    $_POST['email'] = get_customers_email();//TODO replace with ZC function
     $_POST['name'] = $_SESSION['customer_first_name'] . ' ' . $_SESSION['customer_last_name'];
 }
 
@@ -166,7 +168,7 @@ if (isset($_POST['notify_me'])) {
 					FROM
 						" . TABLE_CUSTOMERS . "
 					WHERE
-						customers_email_address = '" . zen_db_prepare_input($email_address) . "';";
+						customers_email_address = '" . zen_db_prepare_input($email_address) . "'";
 
                 $existing_customer_result = $db->Execute($existing_customer_query);
 
@@ -206,7 +208,7 @@ if (isset($_POST['notify_me'])) {
 
                 // Build a random, (fairly) unique text string to use as a code for verifying
                 // any unsubscription attempts
-                $subscription_code = substr(md5(time()), 0, 10);
+                $subscription_code = substr(md5((string)time()), 0, 10);//time is int, md5 requires string
 
                 $sql_data_array = [
                     'product_id' => (int)$_GET['products_id'],
@@ -259,14 +261,13 @@ if ($build_form) {
     }
 }
 
-
 /**
  * @param $back_in_stock_notification_id
  * @param $product_name
  * @param $customer_id
  * @param $customer_name
  * @param $email_address
- * @param $subscription_code
+ * @param string $subscription_code
  *
  * @return void
  */
@@ -276,7 +277,7 @@ function sendBackInStockNotificationSubscriptionEmail(
     $customer_id,
     $customer_name,
     $email_address,
-    $subscription_code = ''
+    string $subscription_code = ''
 ) {
     $text_msg_part = [];
     $html_msg = [];
@@ -347,6 +348,7 @@ function sendBackInStockNotificationSubscriptionEmail(
     $html_msg['EXTRA_INFO'] = '';
 
     // Create the text version of the e-mail for Zen Cart's e-mail functionality
+    // set the email directory based on language, eg. for es "/es"
     $language_folder_path_part = (strtolower($_SESSION['languages_code']) === 'en') ? '' :
         strtolower($_SESSION['languages_code']) . '/';
 
@@ -354,7 +356,7 @@ function sendBackInStockNotificationSubscriptionEmail(
         'email_template_back_in_stock_notification_subscribe.txt';
 
     $text_msg_source = '';
-    if (file_exists($template_file)) {
+    if (file_exists($template_file)) {//is there a language-specific template?
         // Use template file for current language
         $text_msg_source = file_get_contents($template_file);
     } elseif ($language_folder_path_part !== '') {
@@ -387,4 +389,3 @@ function sendBackInStockNotificationSubscriptionEmail(
         );
     }
 }
-
