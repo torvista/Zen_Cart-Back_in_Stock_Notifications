@@ -67,7 +67,7 @@ $form_errors = [];
 
 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
     $_POST['notify_me'] = 1;
-    $_POST['email'] = get_customers_email();
+    $_POST['email'] = get_customers_email();//TODO replace with ZC function
     $_POST['name'] = $_SESSION['customer_first_name'] . ' ' . $_SESSION['customer_last_name'];
 }
 
@@ -166,7 +166,7 @@ if (isset($_POST['notify_me'])) {
 					FROM
 						" . TABLE_CUSTOMERS . "
 					WHERE
-						customers_email_address = '" . zen_db_prepare_input($email_address) . "';";
+						customers_email_address = '" . zen_db_prepare_input($email_address) . "'";
 
                 $existing_customer_result = $db->Execute($existing_customer_query);
 
@@ -259,14 +259,13 @@ if ($build_form) {
     }
 }
 
-
 /**
  * @param $back_in_stock_notification_id
  * @param $product_name
  * @param $customer_id
  * @param $customer_name
  * @param $email_address
- * @param $subscription_code
+ * @param string $subscription_code
  *
  * @return void
  */
@@ -276,7 +275,7 @@ function sendBackInStockNotificationSubscriptionEmail(
     $customer_id,
     $customer_name,
     $email_address,
-    $subscription_code = ''
+    string $subscription_code = ''
 ) {
     $text_msg_part = [];
     $html_msg = [];
@@ -387,4 +386,3 @@ function sendBackInStockNotificationSubscriptionEmail(
         );
     }
 }
-
