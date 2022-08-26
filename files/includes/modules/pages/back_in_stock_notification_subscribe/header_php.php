@@ -49,9 +49,9 @@ $product_name_query = "
 	FROM
 		" . TABLE_PRODUCTS_DESCRIPTION . "
 	WHERE
-		products_id = '" . (int)$_GET['products_id'] . "'
+		products_id = " . (int)$_GET['products_id'] . "
 	AND
-		language_id = '" . (int)$_SESSION['languages_id'] . "';";
+		language_id = " . (int)$_SESSION['languages_id'] . " LIMIT 1";
 
 $product_name_result = $db->Execute($product_name_query);
 
