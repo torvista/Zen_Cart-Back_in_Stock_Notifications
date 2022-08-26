@@ -348,6 +348,7 @@ function sendBackInStockNotificationSubscriptionEmail(
     $html_msg['EXTRA_INFO'] = '';
 
     // Create the text version of the e-mail for Zen Cart's e-mail functionality
+    // set the email directory based on language, eg. for es "/es"
     $language_folder_path_part = (strtolower($_SESSION['languages_code']) === 'en') ? '' :
         strtolower($_SESSION['languages_code']) . '/';
 
@@ -355,7 +356,7 @@ function sendBackInStockNotificationSubscriptionEmail(
         'email_template_back_in_stock_notification_subscribe.txt';
 
     $text_msg_source = '';
-    if (file_exists($template_file)) {
+    if (file_exists($template_file)) {//is there a language-specific template?
         // Use template file for current language
         $text_msg_source = file_get_contents($template_file);
     } elseif ($language_folder_path_part !== '') {
