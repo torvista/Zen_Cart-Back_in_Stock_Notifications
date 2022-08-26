@@ -386,6 +386,7 @@ function sendBackInStockNotificationSubscriptionEmail(
                 $product_name
             ), $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
             'back_in_stock_notification_subscribe_extra'
+                '', $customer_name, $email_address
         );
     }
 }
