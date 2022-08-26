@@ -206,7 +206,7 @@ if (isset($_POST['notify_me'])) {
 
                 // Build a random, (fairly) unique text string to use as a code for verifying
                 // any unsubscription attempts
-                $subscription_code = substr(md5(time()), 0, 10);
+                $subscription_code = substr(md5((string)time()), 0, 10);//time is int, md5 requires string
 
                 $sql_data_array = [
                     'product_id' => (int)$_GET['products_id'],
