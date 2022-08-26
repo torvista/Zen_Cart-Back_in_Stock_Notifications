@@ -30,8 +30,8 @@ require(DIR_FS_CATALOG . DIR_WS_MODULES . 'require_languages.php');
 $breadcrumb->add(BACK_IN_STOCK_NOTIFICATION_NAVBAR_TITLE);
 
 // Make sure that product id was supplied
-if (!isset($_GET['products_id'])) {
-    die("No such product"); // should never happen
+if (empty($_GET['products_id'])) {//should never happen (maybe incorrect urls from spiders)
+    zen_redirect(FILENAME_DEFAULT);
 }
 
 /**
