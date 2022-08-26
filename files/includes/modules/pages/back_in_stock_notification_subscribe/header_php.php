@@ -56,8 +56,10 @@ $product_name_query = "
 $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
-if ($product_name_result->RecordCount() === 0) {
-    die("No such product"); // should never happen
+if ($product_name_result->RecordCount() === 0) {//should never happen
+    $product_name = '(no product name)';
+} else {
+    $product_name = $product_name_result->fields['products_name'];
 }
 
 $product_name = $product_name_result->fields['products_name'];
