@@ -19,7 +19,12 @@ Removal of some unnecessary files.
 
 Multiple minor code-tightening not affecting functionality.
 
+Use ZC158-style admin header, move css to separate file.
+
 ## Changelog
+23/07/23:
+Use ZC158 admin header, move css to separate file.
+
 16/02/22:
 Bugfix for duplicated subscription links when no login required.
 
