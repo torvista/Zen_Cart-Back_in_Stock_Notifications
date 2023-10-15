@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 /**
  * Ceon Back In Stock Notification Unsubscribe Page Template.
  *
@@ -8,7 +9,7 @@
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @copyright   Copyright 2004-2012 Ceon
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
  * @version     $Id: tpl_back_in_stock_notification_unsubscribe_default.php 935 2012-02-06 14:08:25Z conor $
  */
@@ -38,7 +39,7 @@ $content_title = BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_HEADING_TITLE;
 if ($action == 'display_details') {
 	// Output form
 	// Build the notification request form
-	$back_in_stock_notification_unsubscribe_form = new CeonXHTMLHiTemplate;
+	$back_in_stock_notification_unsubscribe_form = new CeonXHTMLHiTemplate();
 	
 	// Load in the source for the form
 	$back_in_stock_notification_unsubscribe_form->setXHTMLSource(
@@ -83,7 +84,7 @@ if ($action == 'display_details') {
 	
 } else {
 	// Build an error/success message
-	$back_in_stock_notification_unsubscribe_success = new CeonXHTMLHiTemplate;
+	$back_in_stock_notification_unsubscribe_success = new CeonXHTMLHiTemplate();
 	
 	// Load in the source for the message
 	$back_in_stock_notification_unsubscribe_success->setXHTMLSource(

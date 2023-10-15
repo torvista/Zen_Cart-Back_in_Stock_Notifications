@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Account Back In Stock Notifications Page Template.
