@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!DOCTYPE html>
 <head>
 	<title></title>
 </head>
-
 <body>
+<!-- DO NOT EDIT THE COMMENTS PRIOR TO EACH SECTION: they are part of the magic... -->
 
+<!-- this form is shown on the BISN subscribe page: only shown when the submission failed of the form on the product_info page.-->
 	<!-- ceon-begin-part BACK_IN_STOCK_NOTIFICATION_FORM -->
 	<h1><ceon:variable name="title">Subscribe to Back In Stock Notification List</ceon:variable></h1>
 	<p><ceon:variable name="intro">Enter your details below, and we will e-mail you when this product is back in stock!</ceon:variable></p>
@@ -15,62 +15,62 @@
 	<fieldset>
 		<legend><ceon:variable name="title">Let us notify you when this product is back in stock!</ceon:variable></legend>
 		<label class="inputLabel" for="name"><ceon:variable name="name_label">Your Name</ceon:variable>:</label>
-		<input type="text" size="25" maxlength="64" name="name" id="name" value="{ceon:name}" />
+		<input type="text" size="25" maxlength="64" name="name" id="name" value="{ceon:name}">
 		<br class="clearBoth">
 		<ceon:if isset="name_error"><p class="alert"><ceon:variable name="name_error">You have attempted to spam someone!</ceon:variable></p></ceon:if>
 		<label class="inputLabel" for="email"><ceon:variable name="email_label">Your E-mail</ceon:variable>:</label>
-		<input type="text" size="35" maxlength="96" name="email" id="email" value="{ceon:email}" />
+		<input type="text" size="35" maxlength="96" name="email" id="email" value="{ceon:email}">
 		<br class="clearBoth">
 		<ceon:if isset="email_error"><p class="alert"><ceon:variable name="email_error">You have not entered a valid email address!</ceon:variable></p></ceon:if>
 		<label class="inputLabel" for="email_confirmation"><ceon:variable name="email_confirmation_label">Confirm E-mail</ceon:variable>:</label>
-		<input type="text" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}" />
+		<input type="text" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}">
 		<br class="clearBoth">
 		<ceon:if isset="email_confirmation_error"><p class="alert"><ceon:variable name="email_confirmation_error">You have not entered a valid email address!</ceon:variable></p></ceon:if>
 	</fieldset>
-	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit" /></ceon:variable></div>
-	<input type="hidden" name="notify_me" value="true" />
+	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
+	<input type="hidden" name="notify_me" value="true">
 	</form>
 	<!-- ceon-end-part BACK_IN_STOCK_NOTIFICATION_FORM -->
 
-	<hr />
+	<hr>
 
 	<!-- ceon-begin-part BACK_IN_STOCK_NOTIFICATION_SUCCESS -->
 	<h1><ceon:variable name="title">Subscription Successful!</ceon:variable></h1>
 	<p><ceon:variable name="success_message1">You have been successfully subscribed to the Notification List for this product and will therefore receive an e-mail from us when it is back in stock!</ceon:variable></p>
 	<p><ceon:variable name="success_message2">For security reasons, an e-mail has been sent to you acknowledging your subscription. Please remember that this subscription will <strong>not</strong> result in you receiving any e-mail from us about anything other than the restocking of this item.</ceon:variable></p>
 	<p><ceon:variable name="unsubscribe_message">If, for any reason, you would like to unsubscribe from the Notification List for this product you will find details of how to do so in the e-mail that has just been sent to you!</ceon:variable></p>
-	<div class="buttonRow forward"><ceon:variable name="continue_button"><input type="submit" /></ceon:variable></div>
+	<div class="buttonRow forward"><ceon:variable name="continue_button"><input type="submit"></ceon:variable></div>
 	<!-- ceon-end-part BACK_IN_STOCK_NOTIFICATION_SUCCESS -->
 
-	<hr />
+	<hr>
 
 	<!-- ceon-begin-part BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED -->
 	<h1><ceon:variable name="title">Already Subscribed!</ceon:variable></h1>
 	<p><ceon:variable name="message">You are already subscribed to the Notification List for this product!</ceon:variable></p>
-	<div class="buttonRow forward"><ceon:variable name="continue_button"><input type="submit" /></ceon:variable></div>
+	<div class="buttonRow forward"><ceon:variable name="continue_button"><input type="submit"></ceon:variable></div>
 	<!-- ceon-end-part BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED -->
 
-	<hr />
+	<hr>
 
 	<!-- ceon-begin-part BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_FORM -->
 	<ceon:variable name="back_in_stock_notification_unsubscribe_form_start_tag"><form></ceon:variable>
 	<p><ceon:variable name="message">Do you want to unsubscribe yourself from the Notification List for this product?</ceon:variable></p>
-	<div class="buttonRow back"><ceon:variable name="back_button"><img src="" /></ceon:variable></div>
-	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit" /></ceon:variable></div>
-	<input type="hidden" name="id" value="{ceon:id}" />
-	<input type="hidden" name="code" value="{ceon:code}" />
+	<div class="buttonRow back"><ceon:variable name="back_button"><img src=""></ceon:variable></div>
+	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
+	<input type="hidden" name="id" value="{ceon:id}">
+	<input type="hidden" name="code" value="{ceon:code}">
 	</form>
 	<!-- ceon-end-part BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_FORM -->
 
-	<hr />
+	<hr>
 
 	<!-- ceon-begin-part BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MESSAGE -->
 	<h1><ceon:variable name="title">Unsubscription Successful!</ceon:variable></h1>
 	<p><ceon:variable name="message">You have been unsubscribed from the Notification List for ...</ceon:variable></p>
-	<div class="buttonRow forward"><ceon:variable name="continue_button"><input type="submit" /></ceon:variable></div>
+	<div class="buttonRow forward"><ceon:variable name="continue_button"><input type="submit"></ceon:variable></div>
 	<!-- ceon-end-part BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MESSAGE -->
 
-	<hr />
+	<hr>
 
 	<!-- ceon-begin-part PRODUCT_INFO_BACK_IN_STOCK_NOTIFICATION_FORM -->
 	<ceon:variable name="back_in_stock_notification_form_start_tag"><form></ceon:variable>
@@ -80,17 +80,17 @@
 		<p><ceon:variable name="intro">Enter your details below, and we will e-mail you when this product is back in stock!</ceon:variable></p>
 		<p><ceon:variable name="notice">We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!</ceon:variable></p>
 		<label class="inputLabel" for="name"><ceon:variable name="name_label">Your Name</ceon:variable>:</label>
-		<input type="text" size="25" minlength="5" maxlength="64" name="name" id="name" required value="{ceon:name}" />
+		<input type="text" size="25" minlength="5" maxlength="64" name="name" id="name" required value="{ceon:name}">
 		<br class="clearBoth">
 		<label class="inputLabel" for="email"><ceon:variable name="email_label">Your E-mail</ceon:variable>:</label>
-		<input type="email" size="35" maxlength="96" name="email" id="email" required value="{ceon:email}" />
+		<input type="email" size="35" maxlength="96" name="email" id="email" required value="{ceon:email}">
 		<br class="clearBoth">
 		<label class="inputLabel" for="email_confirmation"><ceon:variable name="email_confirmation_label">Confirm E-mail</ceon:variable>:</label>
-		<input type="email" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}" />
+		<input type="email" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}">
 		<br class="clearBoth">
 	</fieldset>
-	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit" /></ceon:variable></div>
-	<input type="hidden" name="notify_me" value="true" />
+	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
+	<input type="hidden" name="notify_me" value="true">
 	</form>
 	<br class="clearBoth">
 	<!-- ceon-end-part PRODUCT_INFO_BACK_IN_STOCK_NOTIFICATION_FORM -->
@@ -108,7 +108,7 @@
 		<legend><ceon:variable name="overview_title">Your current subscriptions</ceon:variable></legend>
 		<ceon:if isset="no_subscriptions_message"><ceon:variable name="no_subscriptions_message">You are not subscribed to any Back In Stock Notification Lists.</ceon:variable></ceon:if>
 		<!-- ceon-begin-part ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE -->
-		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<table style="width:100%">
 			<tr>
 				<th class="AccountBackInStockNotificationsListing"><ceon:variable name="header_subscribed">Subscribed</ceon:variable></th>
 				<th class="AccountBackInStockNotificationsListing"><ceon:variable name="header_product">Product</ceon:variable></th>
@@ -116,14 +116,14 @@
 			</tr>
 			<!-- ceon-begin-part ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_ITEM1 -->
 			<tr>
-				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow1"><ceon:variable name="checkbox"><input type="checkbox" checked /></ceon:variable></td>
+				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow1"><ceon:variable name="checkbox"><input type="checkbox" checked></ceon:variable></td>
 				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow1"><a href="{ceon:product_info_page_link}" target="_blank"><ceon:variable name="product_name">Product Number One</ceon:variable><!-- [<ceon:variable name="product_model">Product Model</ceon:variable>]--></a></td>
 				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow1"><ceon:variable name="date_subscribed">23rd March</ceon:variable></td>
 			</tr>
 			<!-- ceon-end-part ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_ITEM1 -->
 			<!-- ceon-begin-part ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_ITEM2 -->
 			<tr>
-				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow2"><ceon:variable name="checkbox"><input type="checkbox" checked /></ceon:variable></td>
+				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow2"><ceon:variable name="checkbox"><input type="checkbox" checked></ceon:variable></td>
 				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow2"><a href="{ceon:product_info_page_link}" target="_blank"><ceon:variable name="product_name">Product Number One</ceon:variable><!-- [<ceon:variable name="product_model">Product Model</ceon:variable>]--></a></td>
 				<td class="AccountBackInStockNotificationsListing AccountBackInStockNotificationsListingCellRow2"><ceon:variable name="date_subscribed">23rd March</ceon:variable></td>
 			</tr>
@@ -131,9 +131,9 @@
 		</table>
 		<!-- ceon-end-part ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE -->
 	</fieldset>
-	<div class="buttonRow back"><ceon:variable name="back_button"><img src="button" /></ceon:variable></div>
-	<div class="buttonRow forward"><ceon:variable name="update_button"><img src="button" /></ceon:variable></div>
-	<input type="hidden" name="submit" value="submitted" />
+	<div class="buttonRow back"><ceon:variable name="back_button"><img src="button"></ceon:variable></div>
+	<div class="buttonRow forward"><ceon:variable name="update_button"><img src="button"></ceon:variable></div>
+	<input type="hidden" name="submit" value="submitted">
 	</form>
 	<!-- ceon-end-part ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS -->
 
