@@ -22,6 +22,8 @@ Multiple minor code-tightening not affecting functionality.
 Use ZC158-style admin header, move css to separate file.
 
 ## Changelog
+05/11/2023: relocated required/optional template files to main file structure
+
 23/07/23:
 Use ZC158 admin header, move css to separate file.
 

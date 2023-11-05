@@ -233,6 +233,6 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
 </form>
 <!--bof Form close-->
 <?php // BEGIN CEON BACK IN STOCK NOTIFICATIONS 2 of 2
-require 'includes/modules/ceon_bis_product_info.php';
+require 'includes/modules/ceon_bisn_product_info.php';
 // END CEON BACK IN STOCK NOTIFICATIONS 2 of 2 ?>
 </div>
