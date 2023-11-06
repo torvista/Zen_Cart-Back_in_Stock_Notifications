@@ -64,11 +64,10 @@
 
 
 <?php
-// BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 2 
+// plugin BISN 1 of 2
 //if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0') {
-  if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0' ||
-    BACK_IN_STOCK_NOTIFICATION_ENABLED === '1') {
-// END CEON BACK IN STOCK NOTIFICATIONS 1 of 2 
+  if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0' || BACK_IN_STOCK_NOTIFICATION_ENABLED === '1') {
+// eof plugin BISN 1 of 2
 ?>
 <h2><?php echo EMAIL_NOTIFICATIONS_TITLE; ?></h2>
 <ul id="myAccountNotify" class="list">
@@ -78,15 +77,11 @@
 <li><?php echo ' <a href="' . zen_href_link(FILENAME_ACCOUNT_NEWSLETTERS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_NEWSLETTERS . '</a>'; ?></li>
 <?php } //endif newsletter unsubscribe ?>
 <?php
-// BEGIN CEON BACK IN STOCK NOTIFICATIONS 2 of 2
-  if (BACK_IN_STOCK_NOTIFICATION_ENABLED == 1) {
-      if ($subscribed_to_notification_lists) {
-          echo '<li><a href="' . zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS . '</a></li>';
-      } else {
-          echo '<li>' . EMAIL_NOTIFICATIONS_NO_BACK_IN_STOCK_NOTIFICATIONS . '</li>';
-      }
+// plugin BISN 2 of 2
+  if (BACK_IN_STOCK_NOTIFICATION_ENABLED === '1') {
+      echo '<li>' . ($subscribed_to_notification_lists ? '<a href="' . zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS . '</a>' : EMAIL_NOTIFICATIONS_NO_BACK_IN_STOCK_NOTIFICATIONS) . '</li>';
   }
-// END CEON BACK IN STOCK NOTIFICATIONS 2 of 2
+// eof plugin BISN 2 of 2
 ?>
 <?php
   if (CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS == '1') {
