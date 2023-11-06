@@ -13,9 +13,14 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2022 08 26 torvista
+ * @version     $Id: header_php.php 2023-11-06
  */
 
+/**phpStorm inspections
+ * @var queryFactory $db
+ * @var sniffer $sniffer
+ * @var breadcrumb $breadcrumb
+ */
 if ((BACK_IN_STOCK_REQUIRES_LOGIN === '1') && !$_SESSION['customer_id']) {
     $_SESSION['navigation']->set_snapshot();
 
@@ -248,10 +253,9 @@ if (isset($_POST['notify_me'])) {
 // Check if the form has to be displayed or if the request was completed
 if ($build_form) {
     // Store details for form
-    $back_in_stock_notification_form_customer_name =
-        htmlentities($_POST['name'], ENT_COMPAT, CHARSET);
+    $back_in_stock_notification_form_customer_name = (!empty($_POST['name']) ? htmlentities($_POST['name'], ENT_COMPAT, CHARSET) : '');
 
-    $back_in_stock_notification_form_customer_email = htmlentities($_POST['email']);
+    $back_in_stock_notification_form_customer_email = (!empty($_POST['email']) ? htmlentities($_POST['email']) : '');
 
     if (isset($_POST['cofnospam'])) {
         $back_in_stock_notification_form_customer_email_confirmation =
@@ -267,7 +271,7 @@ if ($build_form) {
  * @param $customer_id
  * @param $customer_name
  * @param $email_address
- * @param string $subscription_code
+ * @param  string  $subscription_code
  *
  * @return void
  */
@@ -360,33 +364,32 @@ function sendBackInStockNotificationSubscriptionEmail(
         // Use template file for current language
         $text_msg_source = file_get_contents($template_file);
     } elseif ($language_folder_path_part !== '') {
-        // Non-english language being used but no template file exist for it, fall back to the
-        // default english template
+        // A non-english language is being used but no template file exists for it, so use the default english template
         $text_msg_source =
             file_get_contents(str_replace($language_folder_path_part, '', $template_file));
     }
 
-    foreach ($text_msg_part as $key => $value) {
-        $text_msg_source = str_replace('$' . $key, $value, $text_msg_source);
-    }
+        foreach ($text_msg_part as $key => $value) {
+            $text_msg_source = str_replace('$' . $key, $value, $text_msg_source);
+        }
 
-    zen_mail(
-        $customer_name, $email_address,
-        sprintf(BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT, $product_name),
-        $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
-        'back_in_stock_notification_subscribe'
-    );
-
-    // Send an e-mail to the store owner as well?
-    if (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO !== '') {
         zen_mail(
-            '', SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO,
-            sprintf(
-                SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT,
-                $product_name
-            ), $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
+            $customer_name, $email_address,
+            sprintf(BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT, $product_name),
+            $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
+            'back_in_stock_notification_subscribe'
+        );
+
+        // Send an e-mail to the store owner as well?
+        if (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO !== '') {
+            zen_mail(
+                '', SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO,
+                sprintf(
+                    SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT,
+                    $product_name
+                ), $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
             'back_in_stock_notification_subscribe_extra'
                 '', $customer_name, $email_address
-        );
+            );
     }
 }

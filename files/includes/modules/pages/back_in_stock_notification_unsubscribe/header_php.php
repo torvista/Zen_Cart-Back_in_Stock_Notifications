@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Unsubscription page.
@@ -10,9 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
+ * @version     $Id: header_php.php 2023-11-06 torvista
  */
 
 /**
@@ -27,21 +28,21 @@ $back_in_stock_notification_code = 0;
 $product_name = '';
 
 if (isset($_GET['id']) || isset($_POST['id'])) {
-	// Check that the specified subscription exists!
-	if (isset($_GET['id'])) {
-		$back_in_stock_notification_id = (int) $_GET['id'];
-		$back_in_stock_notification_code = $_GET['code'] ?? 0;
-	} else {
-		$back_in_stock_notification_id = (int) $_POST['id'];
-		$back_in_stock_notification_code = $_POST['code'] ?? 0;
-	}
-	
-	if (!is_numeric($back_in_stock_notification_id)) {
-		$back_in_stock_notification_id = 0;
-	}
-	
-	// Get the information about this notification
-	$unsubscribe_info_query = "
+    // Check that the specified subscription exists!
+    if (isset($_GET['id'])) {
+        $back_in_stock_notification_id = (int)$_GET['id'];
+        $back_in_stock_notification_code = $_GET['code'] ?? 0;
+    } else {
+        $back_in_stock_notification_id = (int)$_POST['id'];
+        $back_in_stock_notification_code = $_POST['code'] ?? 0;
+    }
+
+    if (!is_numeric($back_in_stock_notification_id)) {
+        $back_in_stock_notification_id = 0;
+    }
+
+    // Get the information about this notification
+    $unsubscribe_info_query = "
 		SELECT
 			pd.products_name
 		FROM
@@ -55,49 +56,50 @@ if (isset($_GET['id']) || isset($_POST['id'])) {
 		AND
 			bisns.subscription_code = '" . zen_db_input($back_in_stock_notification_code) . "'
 		AND
-			pd.language_id = '" . (int) $_SESSION['languages_id'] . "'";
-	
-	$unsubscribe_info = $db->Execute($unsubscribe_info_query);
-	
-	if ($unsubscribe_info->RecordCount() === 0) {
-		// Unknown subscription ID/code supplied
-		$action = 'not_found';
-	} else {
-		$product_name = $unsubscribe_info->fields['products_name'];
-		
-		if (isset($_POST['id'])) {
-			$action = 'unsubscribe';
-		} else {
-			$action = 'display_details';
-		}
-	}
+			pd.language_id = " . (int)$_SESSION['languages_id'];
+
+    $unsubscribe_info = $db->Execute($unsubscribe_info_query);
+
+    if ($unsubscribe_info->RecordCount() === 0) {
+        // Unknown subscription ID/code supplied
+        $action = 'not_found';
+    } else {
+        $product_name = $unsubscribe_info->fields['products_name'];
+
+        if (isset($_POST['id'])) {
+            $action = 'unsubscribe';
+        } else {
+            $action = 'display_details';
+        }
+    }
 }
 
 if ($action === 'display_details') {
-	// Display the details for this notification
-	
+    // Display the details for this notification
+
 } elseif ($action === 'not_found') {
-	// Unknown subscription ID/code supplied
-	$back_in_stock_notification_unsubscribe_title =
-		BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_TITLE;
-	$back_in_stock_notification_unsubscribe_message =
-		BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_MESSAGE;
-	
+    // Unknown subscription ID/code supplied
+    $back_in_stock_notification_unsubscribe_title =
+        BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_TITLE;
+    $back_in_stock_notification_unsubscribe_message =
+        BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_MESSAGE;
 } elseif ($action === 'unsubscribe') {
-	$unsubscribe_query = "
+    $unsubscribe_query = "
 		DELETE FROM
 			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
 		WHERE
 			id = '" . zen_db_input($back_in_stock_notification_id) . "'
 		AND
 			subscription_code = '" . zen_db_input($back_in_stock_notification_code) . "'";
-	
-	$unsubscribe = $db->Execute($unsubscribe_query);
-	
-	$back_in_stock_notification_unsubscribe_title =
-		BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_SUCCESS_TITLE;
-	$back_in_stock_notification_unsubscribe_message = sprintf(
-		BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_SUCCESS_MESSAGE, $product_name);
+
+    $unsubscribe = $db->Execute($unsubscribe_query);
+
+    $back_in_stock_notification_unsubscribe_title =
+        BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_SUCCESS_TITLE;
+    $back_in_stock_notification_unsubscribe_message = sprintf(
+        BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_SUCCESS_MESSAGE,
+        $product_name
+    );
 }
 
 $_SESSION['navigation']->remove_current_page();

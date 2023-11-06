@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Account Notifications Management Page.
@@ -8,12 +9,12 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 937 2012-02-10 11:42:20Z conor $
+ * @version     $Id: header_php.php 2023-06-11 torvista
  */
 
-if (!$_SESSION['customer_id']) {
+if (empty($_SESSION['customer_id'])) {
 	$_SESSION['navigation']->set_snapshot();
 	
 	zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
@@ -43,8 +44,9 @@ if (isset($_POST['back']) || isset($_POST['back_x'])) {
 function getSubscribedBackInStockNotificationLists($customer_id): array
 {
 	global $db;
+
 	$subscribed_notification_lists = [];
-   $customer_email = zen_db_input(get_customers_email()); 	
+    $customer_email = zen_db_input(get_customers_email()); 	
 	$subscribed_notification_lists_query = "
 		SELECT
 			bisns.id, bisns.product_id, bisns.date_subscribed
