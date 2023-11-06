@@ -126,11 +126,7 @@ if ($flag_show_ask_a_question) {
   echo $one_time . ((zen_has_product_attributes_values((int)$_GET['products_id']) and $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') . zen_get_products_display_price((int)$_GET['products_id']);
 ?></h2>
 <!--eof Product Price block -->
-<?php // BEGIN CEON BACK IN STOCK NOTIFICATIONS 1 of 2
-if (!is_null($product_back_in_stock_notification_form_link)) {
-  echo '<p>' . $product_back_in_stock_notification_form_link . '</p>';
-}
-// END CEON BACK IN STOCK NOTIFICATIONS 1 of 2 ?>
+
 <!--bof Attributes Module -->
 <?php
   if ($pr_attr->fields['total'] > 0) {
@@ -158,6 +154,10 @@ if (!is_null($product_back_in_stock_notification_form_link)) {
 ?>
 <!--eof Quantity Discounts table -->
 
+<?php // plugin BISN 1 of 4
+  echo (is_null($product_back_in_stock_notification_form_link) ? '<!-- BISN link is null -->' : "<p>$product_back_in_stock_notification_form_link</p>");
+// eof plugin BISN 1 of 4
+?>
 <!--bof Add to Cart Box -->
 <?php
 if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == '') {
@@ -190,6 +190,12 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 </div>
 </div>
 
+<?php // plugin BISN 2 of 4
+// closing tag of form 'cart_quantity' moved here: must be closed before BISN form?>
+<!--bof Form close-->
+</form>
+<!--bof Form close-->
+<?php // eof plugin BISN 2 of 4 ?>
 
 <!--bof Product description -->
 <?php if ($products_description != '') { ?>
@@ -258,14 +264,18 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 ?>
 <!--eof Product URL -->
 
+<?php // plugin BISN 3 of 4
+include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
+// eof plugin BISN 3 of 4
+?>
 <!--bof also purchased products module-->
 <?php require($template->get_template_dir('tpl_modules_also_purchased_products.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_also_purchased_products.php');?>
 <!--eof also purchased products module-->
 
+<?php /* plugin BISN 4 of 4
+close of form 'cart_quantity' moved up, prior to BISN form
 <!--bof Form close-->
 </form>
 <!--bof Form close-->
-<?php // BEGIN CEON BACK IN STOCK NOTIFICATIONS 2 of 2
-require 'includes/modules/ceon_bisn_info_display_form.php';
-// END CEON BACK IN STOCK NOTIFICATIONS 2 of 2 ?>
+eof plugin BISN 4 of 4 */ ?>
 </div>
