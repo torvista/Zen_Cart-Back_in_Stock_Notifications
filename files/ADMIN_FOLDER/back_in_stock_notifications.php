@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/** phpstorm inspections
+ * @var currencies $currencies
+ * @var queryFactory $db
+ * @var messageStack $messageStack
+ * @var notifier $zco_notifier
+ * @var template_func $template
+ * @var $current_page_base
+ */
 /**
  * Ceon Back In Stock Notifications Admin Utility.
  *
@@ -24,8 +33,7 @@ require('includes/application_top.php');
 
 // First off, make sure that necessary database table and configuration options exist. If not,
 // attempt to create them
-$table_exists_query = 'SHOW TABLES LIKE "' .
-	TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '";';
+$table_exists_query = 'SHOW TABLES LIKE "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '"';
 
 $table_exists_result = $db->Execute($table_exists_query);
 
@@ -37,7 +45,7 @@ if ($table_exists_result->EOF ||
 
     $install_or_upgrade = new CeonBISNInstallOrUpgrade();
 
-	if (sizeof($install_or_upgrade->error_messages) > 0) {
+    if (count($install_or_upgrade->error_messages) > 0) {
         foreach ($install_or_upgrade->error_messages as $error_message) {
             print '<p style="background: #fcc; border: 1px solid #f00; margin: 1em;' .
                 ' padding: 0.4em;">Error: ' . $error_message . "</p>\n";
@@ -48,31 +56,30 @@ if ($table_exists_result->EOF ||
 }
 
 
-$bisn_options = array (
-	0 => array(
+$bisn_options = [
+    0 => [
         'id' => 1,
-		'text' => TEXT_LIST_ALL_SUBSCRIBED_PRODUCTS
-		),
-	1 => array(
+        'text' => '1: ' . TEXT_LIST_ALL_SUBSCRIBED_PRODUCTS
+    ],
+    1 => [
         'id' => 2,
-		'text' => TEXT_LIST_ALL_SUBSCRIPTIONS
-		),
-	2 => array(
+        'text' => '2: ' . TEXT_LIST_ALL_SUBSCRIPTIONS
+    ],
+    2 => [
         'id' => 3,
-		'text' => TEXT_PREVIEW_NOTIFICATION_EMAILS
-		),
-	3 => array(
+        'text' => '3: ' . TEXT_PREVIEW_NOTIFICATION_EMAILS
+    ],
+    3 => [
         'id' => 4,
-		'text' => TEXT_SEND_NOTIFICATION_EMAILS
-		),
-	4 => array(
+        'text' => '4: ' . TEXT_SEND_NOTIFICATION_EMAILS
+    ],
+    4 => [
         'id' => 5,
-		'text' => TEXT_REMOVE_DELETED_PRODUCTS
-		)
-	);
+        'text' => '5: ' . TEXT_REMOVE_DELETED_PRODUCTS
+    ]
+];
 
-if (!isset($_GET['option']) || !is_numeric($_GET['option']) || (int)$_GET['option'] < 1 ||
-	$_GET['option'] > 5) {
+if (empty($_GET['option']) || !is_numeric($_GET['option']) || (int)$_GET['option'] < 1 || (int)$_GET['option'] > 5) {
     $_GET['option'] = 1;
 }
 
@@ -121,13 +128,13 @@ switch($_GET['option']){
                 $products_query_raw .= ' ORDER BY cd.categories_name, pd.products_name';
         }
 
-		$products_query_raw = str_replace("\n", ' ', $products_query_raw);
-		$products_query_raw = str_replace("\r", ' ', $products_query_raw);
-		$products_query_raw = str_replace("\t", ' ', $products_query_raw);
+        $products_query_raw = str_replace(["\n", "\r", "\t"], ' ', $products_query_raw);
 
-		if (isset($_GET['page']) && $_GET['page'] != -1) {
-            $products_split = new splitPageResults($_GET['page'],
-                MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $products_query_raw, $num_rows);
+        if (isset($_GET['page']) && (int)$_GET['page'] !== -1) { //todo check strict
+            $products_split = new splitPageResults(
+                $_GET['page'],
+                MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $products_query_raw, $num_rows
+            );
         }
 
         $product_subscriptions_info = $db->Execute($products_query_raw);
@@ -135,7 +142,7 @@ switch($_GET['option']){
         // Get accurate value for the number of rows
         $num_rows_query = "
 			SELECT
-				distinct(product_id) 
+				bisns.id
 			FROM
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
 			WHERE
@@ -177,7 +184,7 @@ switch($_GET['option']){
 			WHERE
 				1 = 1";
 
-		$sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'product';
+        $sort_column = $_GET['sort'] ?? 'product';
 
 		switch ($sort_column) {
 			case 'category':
@@ -202,13 +209,13 @@ switch($_GET['option']){
                     ' bisns.date_subscribed DESC';
         }
 
-		$subscriptions_query_raw = str_replace("\n", ' ', $subscriptions_query_raw);
-		$subscriptions_query_raw = str_replace("\r", ' ', $subscriptions_query_raw);
-		$subscriptions_query_raw = str_replace("\t", ' ', $subscriptions_query_raw);
+        $subscriptions_query_raw = str_replace(["\n", "\r", "\t"], ' ', $subscriptions_query_raw);
 
-		if ($_GET['page'] != -1) {
-            $subscriptions_split = new splitPageResults($_GET['page'],
-                MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $subscriptions_query_raw, $num_rows);
+        if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {//todo check strict
+            $subscriptions_split = new splitPageResults(
+                $_GET['page'],
+                MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $subscriptions_query_raw, $num_rows
+            );
         }
 
         $subscriptions_info = $db->Execute($subscriptions_query_raw);
@@ -257,20 +264,21 @@ switch($_GET['option']){
 <!-- body //-->
 <div id="ceon-bisn-wrapper">
     <h1 id="ceon-bisn-page-heading"><?php echo BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE; ?></h1>
-	
+
     <div class="SpacerSmall"></div>
 
     <ul id="ceon-panels-menu">
-		<li id="transaction-action-tab" class="CeonPanelTabSelected"><a href=""><?php
-		echo BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE; ?></a></li>
+        <li id="transaction-action-tab" class="CeonPanelTabSelected">
+            <a href="#"><?php echo BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE; ?></a>
+        </li>
     </ul>
     <div id="ceon-panels-wrapper">
         <fieldset id="main-panel" class="CeonPanel">
             <legend class="DisplayNone"><?php echo BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE; ?></legend>
             <!-- body_text //-->
             <div id="actionSelector">
-			<?php echo zen_draw_form('back_in_stock_notifications',
-					FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, '', 'GET') .
+                <?php
+                echo zen_draw_form('back_in_stock_notifications', FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, '', 'GET') .
                     zen_hide_session_id(); ?>
                 <fieldset class="DoubleSpaceBelow">
                     <legend><?php echo TEXT_ACTION_TO_PERFORM; ?></legend>
@@ -278,7 +286,7 @@ switch($_GET['option']){
 					<?php echo zen_draw_pull_down_menu('option', $bisn_options, $_GET['option']); ?>
 					<input type="submit" value="Go!" />
                 </fieldset>
-			</form>
+                <?php echo '</form>'; ?>
             </div>
             <?php
 if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
@@ -294,32 +302,44 @@ if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
                     $count_text = TEXT_DISPLAY_NUMBER_OF_BACK_IN_STOCK_NOTIFICATIONS;
                 }
 
-	if (isset($_GET['page']) && $_GET['page'] != -1) {
+                if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {//todo check strict
                     // Page is to be split according to the maximum rows per page
-		$pagination_columns = '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
+                    $pagination_columns = '<table style="width:100%">' .
                         '<tr><td class="BISNPageCount">' .
-                        $split_object->display_count($num_rows, MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
-                            $_GET['page'], $count_text) . '</td>' . "\n";
+                        $split_object->display_count(
+                            $num_rows,
+                            MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
+                            $_GET['page'],
+                            $count_text
+                        ) . '</td>' . "\n";
 
                     $pagination_columns .= '<td class="BISNPageLinks">' .
-                        $split_object->display_links($num_rows, MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
-			MAX_DISPLAY_PAGE_LINKS, $_GET['page'], zen_get_all_get_params(array('page', 'action')));
+                        $split_object->display_links(
+                            $num_rows,
+                            MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
+                            MAX_DISPLAY_PAGE_LINKS,
+                            $_GET['page'],
+                            zen_get_all_get_params(['page', 'action'])
+                        );
 
                     $pagination_columns .= ' [<a href="' . zen_href_link(
                             FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-		 	zen_get_all_get_params(array('page', 'action')) . 'page=-1') . '">' . TEXT_SHOW_ALL .
+                            zen_get_all_get_params(['page', 'action']) . 'page=-1'
+                        ) . '">' . TEXT_SHOW_ALL .
                         '</a>]' . '</td>' . "\n";
 
                     $pagination_columns .= '</tr></table>' . "\n";
                 } else {//page=-1: show all
                     // All results are to be shown regardless of any maximum rows per page setting
-		$pagination_columns = '<table border="0" width="100%" cellspacing="0" cellpadding="0">' .
+                    $pagination_columns = '<table style="width:100%">' . 
                         '<tr><td class="BISNPageCount">' .
                         sprintf($count_text, 1, $num_rows, $num_rows) . '</td>' . "\n";
 
                     $pagination_columns .= '<td class="BISNPageLinks">' .
-                        '<a href="' . zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('page', 'action')) . 'page=1') . '">' . 
+                        '<a href="' . zen_href_link(
+                            FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                            zen_get_all_get_params(['page', 'action']) . 'page=1'
+                        ) . '">' .
                         TEXT_DISPLAY_BY_PAGE . '</a>' . '</td>' . "\n";
 
                     $pagination_columns .= '</tr></table>' . "\n";
@@ -382,7 +402,7 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
                         </tr>
                         <?php
 	$even = false;
-	
+
                         while (!$product_subscriptions_info->EOF) {
                             ?>
                             <tr class="dataTableRow">
@@ -478,7 +498,7 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
                         </tr>
                         <?php
 	$even = false;
-	
+
                         while (!$subscriptions_info->EOF) {
                             ?>
                             <tr class="dataTableRow">
@@ -538,9 +558,14 @@ if (isset($_GET['option']) && $_GET['option'] == 1) {
             ?>
         </fieldset>
     </div>
-	<div id="footer"><p><a href="http://dev.ceon.net/web" target="_blank"><img src="<?php echo DIR_WS_IMAGES; ?>ceon-button-logo.png" alt="Ceon" id="ceon-button-logo" /></a>Module &copy; Copyright 2004-<?php echo (date('Y') > 2012 ? date('Y') : 2012); ?> <a href="http://dev.ceon.net/web" target="_blank">Ceon</a></p>
-        <p id="version-info">Module Version: <?php echo CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION; ?></p>
-		<p id="check-for-updates"><a href="http://dev.ceon.net/web/zen-cart/back-in-stock-notifications/version-checker/<?php echo CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION; ?>" target="_blank">Check for Updates</a></p>
+    <div id="ceon-footer"><p><a href="https://ceon.net" target="_blank"><img src="<?php
+                echo DIR_WS_IMAGES; ?>ceon-button-logo.png" alt="Ceon" id="ceon-button-logo"/></a>Module &copy; Copyright 2004-2012
+            <?php
+            //echo (date('Y') > 2012 ? date('Y') : 2012); ?> <!--<a href="https://dev.ceon.net/web" target="_blank">Ceon</a></p>-->
+        <p id="version-info">Module Version: <?php
+            echo CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION; ?></p>
+        <?php
+        /*?><p id="check-for-updates"><a href="https://dev.ceon.net/web/zen-cart/back-in-stock-notifications/version-checker/<?php echo CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION; ?>" target="_blank">Check for Updates</a></p><?php */ ?>
     </div>
 </div>
 <!-- body_eof //-->
