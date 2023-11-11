@@ -177,7 +177,6 @@ switch ($option) {
 
         $num_rows_result = $db->Execute($num_rows_query);
         $num_rows = $num_rows_result->RecordCount();
-
         break;
 
     case 2://list all the subscriptions, by customer
@@ -277,66 +276,28 @@ switch ($option) {
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
 			WHERE
 				1 = 1;";
-
         $num_rows_result = $db->Execute($num_rows_query);
         $num_rows = $num_rows_result->RecordCount();
-
         break;
 
     case 3://for the test run, show all the emails that need to be sent
 
-//todo needs rework
+        //todo needs rework
         unset($send_output);
-        /*echo __LINE__.':<pre>$languages:'; print_r($languages);echo '</pre>';
-        echo '<pre>$languages_array:';print_r($languages_array);echo '</pre>';
-        echo '$languages_selected='.$languages_selected.'<br>';*/
-        //$languages = !empty($languages) ? $languages : zen_get_languages();//steve global was not available here
-        /*echo __LINE__.':<pre>$languages:'; print_r($languages);echo '</pre>';
-        echo '<pre>$languages_array:';print_r($languages_array);echo '</pre>';
-        echo '$languages_selected='.$languages_selected.'<br>';*/
-        //$current_session_language = $_SESSION['language'];
-
         foreach ($languages as $key => $lang) {
             $send_output[$lang['id']] = sendBackInStockNotifications((int)$lang['id'], true);//test mode == true: emails sent only to EMAIL_FROM (store address). Subscriptions not deleted.
         }
-        //$_SESSION['language'] = $current_session_language;
-
         break;
 
     case 4://for the real sending, send only those with the same admin language to use the correct email constants
-//todo needs rework
-        unset($send_output);
-        $send_output[$_SESSION['languages_id']] = sendBackInStockNotifications((int)$_SESSION['languages_id'], '', $delete_customer_subscriptions);//steve added last parameter for repeat testing of email sending without deleting subscription: set this variable at the start of page
 
-        //$current_session_language = $_SESSION['language'];
-        /*   foreach ($languages as $key=>$lang) {
-               $language = zen_get_language_name($lang['id']);
-               if (!empty($_GET['run']) && $_GET['run'] == '1') {
-                   $send_output[$lang['id']] = sendBackInStockNotifications(true, $lang['id'], $delete_customer_subscriptions);
-               } else {
-                   stream_context_set_default( [
-                       'ssl' => [
-                           'verify_peer' => false,
-                           'verify_peer_name' => false,
-                       ],
-                   ]);
-                   $handle = fopen("http://www.motorvista.es.local/tienda/admin3AHbfbb6FyMU/back_in_stock_notifications.php?action=send&option=4&run=1&language=" . $language, "r");
-                   $contents = 'START<br>';
-   while (!feof($handle))
-   {
-       $contents .= fread($handle, 8192);
-   }
-   fclose($handle);
-   $contents .= '<br>END<br>';
-   echo $contents; die;
-               }
-               //$_SESSION['language'] = $current_session_language;
-           }*/
+        //todo needs rework
+        unset($send_output);
+        $send_output[$_SESSION['languages_id']] = sendBackInStockNotifications((int)$_SESSION['languages_id'], '', $delete_customer_subscriptions);
         break;
 
     case 5:
         expungeOutdatedSubscriptionsFromBackInStockNotificationsDB();
-
         break;
 }
 
@@ -386,18 +347,15 @@ switch ($option) {
                 //steve for info text
 //todo rework
                 if ($option === 1) { ?>
-                    <div><h5>This listing shows only the base product ID: it does not currently list the product variants as individual products.<br>Back In Stock Notifications will be sent to ALL subscribers for the base product as shown here.</h5><h6>Go to Option 2 for details of subscribed
-                            product variants.</h6></div>
+                    <div><?= TEXT_NOTE_OPTION_1; ?></div>
                 <?php
                 }
                 if ($option === 2) { ?>
-                    <div><h5>Although this listing shows the product variants as individual products, this is for information only: the Back In Stock Notifications will be sent to ALL subscribers for the base product.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6></div>
+                    <div><?= TEXT_NOTE_OPTION_1; ?></div>
                 <?php
                 }
-                ?>
-                <?php
-                // Build the listings page count and page links code
 
+                // Build the listings page count and page links code
                 if (isset($products_split)) {
                     $split_object = $products_split;
                     $count_text = TEXT_DISPLAY_NUMBER_OF_PRODUCTS;
