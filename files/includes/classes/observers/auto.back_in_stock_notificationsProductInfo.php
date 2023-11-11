@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Ceon Back In Stock Notifications Product Info Page Notification Form Display.
@@ -57,13 +58,8 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                $back_in_stock_notification_form_customer_email,
                $back_in_stock_notification_form_customer_email_confirmation;
 
-        if ($product_back_in_stock_notification_form_link) {
-            $product_back_in_stock_notification_form_link = true;
-            $back_in_stock_notification_build_form = true;
-        } else {
             $product_back_in_stock_notification_form_link = null;
             $back_in_stock_notification_build_form = false;
-        }
 
         // check product id is valid
         $prid_ok = true;
@@ -76,9 +72,11 @@ class zcObserverBackInStockNotificationsProductInfo extends base
             return;
         }
 
-        // Check if customer should be offered the option to be notified when this product is back
-        // in stock
-        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && $product_back_in_stock_notification_form_link) {
+        // Check if customer should be offered the option to be notified when this product is back in stock
+        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && $products_quantity <= 0) {
+            if (BACK_IN_STOCK_REQUIRES_LOGIN === '1' && !zen_is_logged_in()) {
+                return;
+            }
             $product_back_in_stock_notification_form_link = '';
             $back_in_stock_notification_build_form = true;
 
@@ -163,5 +161,3 @@ class zcObserverBackInStockNotificationsProductInfo extends base
         }
     }
 }
-
-// }}}

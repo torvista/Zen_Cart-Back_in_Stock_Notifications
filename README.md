@@ -21,6 +21,7 @@ Added column sorts for category and model
 Changed default sort column to model
 Bugfix: handle missing/deleted product
 Admin copy of BISN subscription email, replies to customer
+TODO
 
 06/11/2023: relocated required/optional template files to main file structure.
 Updated template files based on ZC158 responsive_classic.

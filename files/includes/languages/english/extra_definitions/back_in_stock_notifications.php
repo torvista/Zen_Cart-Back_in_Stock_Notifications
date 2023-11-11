@@ -30,8 +30,8 @@ define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br>To be n
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE', 'Let us notify you when this product is back in stock');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO', 'Enter your details below and we will send you an e-mail when this product is back in stock:<span style="font-size:medium">%s</span>');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO_ATTS', 'Enter your details below and we will send you an e-mail when the selected product is back in stock:<span style="font-size:medium">%s</span>');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO', 'Enter your details below and we will send you an e-mail when this product is back in stock:<br><span style="font-size:medium;font-weight:bold;">%s</span>');//inline css used here: better than putting only this in a discrete file for product_info
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO_ATTS', 'Enter your details below and we will send you an e-mail when the selected product is back in stock:<br><span style="font-size:medium;font-weight:bold;">%s</span>');//inline css used here: better than putting only this in a discrete file for product_info
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_NOTICE', 'We will not send you any other e-mails or add you to our newsletter list, you will only be e-mailed about <b>this</b> product.');
 
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_NAME', 'Name');
