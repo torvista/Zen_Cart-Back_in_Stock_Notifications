@@ -1,14 +1,14 @@
 # Zen Cart - Back in Stock Notifications
 If a product is out of stock, customers can subscribe/request to receive a notification when that product becomes available again.
 
-This is based on the original CEON version, not the forked ajax version. Neither are supported anymore, but the functionality is well worthwhile, and I use it, so am encouraging use and development here.
+This is based on the original CEON version, not the forked ajax version. Neither are supported anymore, but the functionality is well worthwhile, and I use it, so am encouraging use and development here despite it being the usual yelling into the void...
 
-I've been modifying it for years, so here is where I'll add in those modifications when the mood takes me and, in the process, make the code more Zen-ish to maybe get it into the core one day.
+I've been modifying it for years, so I'm gradually reworking my personal improvements to add those here when the mood takes me and, in the process, make the code more Zen-ish to maybe get it into the core one day.
 
-You may report bugs here (for this CEON version only). This code is tested with the current Zen Cart 1.5.8 and is compatible with php7.3 upwards.
+As a result, this code has many changes from the old plugin version, but as I'm attempting to implement the changes piecemeal to maintain a change history, it's a mongrel and it may have errors in it. So always test on a development server.
+It's compatible with the current Zen Cart 1.5.8 and php7.3+.
 
 Note that the original documentation in the docs folder will NOT be updated for the moment, so the file list is out of date.
-
 
 ## Changelog
 11/11/2023: moved admin functions file so only loaded with BISN admin page
@@ -25,9 +25,7 @@ Bugfix for duplicated subscription links when no login required.
 
 Removed: /modules/ceon_form_bis as functionality duplicated in observer class
 
-Modified: observers made auto-loading
-
-Removed: unnecessary observer loaders 
+Removed: unnecessary observer auto loaders/observers made auto-loading 
 
 Bugfix for missing product_model in account BISN listing
 
