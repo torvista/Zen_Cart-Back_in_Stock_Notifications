@@ -6,6 +6,7 @@ declare(strict_types=1);
  * @var queryFactory $db
  * @var messageStack $messageStack
  * @var notifier $zco_notifier
+ * @var sniffer $sniffer
  * @var template_func $template
  * @var $current_page_base
  */
@@ -19,9 +20,9 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2008 RubikIntegration team @ RubikIntegration.com
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
+ * @link        https://www.ceon.net
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023-07-23 torvista
+ * @version     $Id: back_in_stock_notifications.php 2023-11-11 torvista
  */
 
 /**
@@ -55,6 +56,8 @@ if ($table_exists_result->EOF ||
     }
 }
 
+
+require_once(DIR_WS_FUNCTIONS . 'plugin_bisn_functions.php');
 
 $bisn_options = [
     0 => [

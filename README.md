@@ -9,22 +9,12 @@ You may report bugs here (for this CEON version only). This code is tested with 
 
 Note that the original documentation in the docs folder will NOT be updated for the moment, so the file list is out of date.
 
-## Differences to date from the version 12 in Zen Cart Plugins
-
-Bugfix: duplicate subscription links displayed.
-
-Fixes for warnings in strict mode/php8 compatibility.
-
-Removal of some unnecessary files.
-
-Updating template files based on ZC158 responsive_classic.
-
-Multiple minor code-tightening not affecting functionality.
-
-Admin: use ZC158-style admin header, move css to separate file.
 
 ## Changelog
+11/11/2023: moved admin functions file so only loaded with BISN admin page
+
 06/11/2023: relocated required/optional template files to main file structure.
+Updated template files based on ZC158 responsive_classic.
 
 23/07/23:
 Use ZC158 admin header, move css to separate file.
@@ -48,4 +38,6 @@ Removed: modified core file functions_general
 
 Removed: empty language folders
 
-Shopfront: miscellaneous IDE recommendations, strict comparisons, short-array syntax
+Fixes for warnings in strict mode/php8 compatibility
+
+Miscellaneous IDE recommendations, strict comparisons, short-array syntax

@@ -1,3 +1,16 @@
+/**
+ * Ceon Back In Stock Notifications Admin page css.
+ *
+ * @package     ceon_back_in_stock_notifications
+ * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
+ * @copyright   Copyright 2004-2012 Ceon
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: back_in_stock_notifications.css 2023-11-11 torvista
+ */
+
+/* todo use ZC admin/Bootstrap styles */
+
 #ceon-bisn-wrapper {
     margin: 0 0.8em 0 0.8em;
 }
@@ -132,11 +145,6 @@ input[type='submit'] {
     padding: 0 0.2em;
 }
 
-form[name="back_in_stock_notifications"] select { /*steve original css was affecting the admin language drop down too*/
-    padding: 4px;
-    font-size: 1.1em;
-}
-
 .DoubleSpaceBelow {
     margin-bottom: 2em;
 }
@@ -260,7 +268,16 @@ dl.back-in-stock-notifications-output dd {
     font-size: 0.9em;
 }
 
+form[name="back_in_stock_notifications"] select {
+    padding: 4px;
+    font-size: 1.1em;
+}
+
 form[name="back_in_stock_notifications"] select option[value="4"] {
     background-color: lightcoral;
     font-weight: bold;
+}
+/*not working */
+form[name="back_in_stock_notifications"] select option[value="4"]:hover {
+    background-color: red;
 }

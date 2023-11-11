@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
+//todo sort out installer/versions/new fields
 /**
  * Ceon Back In Stock Notifications Install/Upgrade Class - Creates the database table and Zen Cart
  * configuration group and options.
@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Copyright 2003-2007 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version     $Id: class.CeonBISNInstallOrUpgrade.php 2023-11-06 torvista
+ * @link        https://www.ceon.net
+ * @license     https://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
+ * @version     $Id: class.CeonBISNInstallOrUpgrade.php 2023-11-11 torvista
  */
 
 /**
@@ -26,12 +26,11 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Copyright 2003-2007 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
+ * @link        https://www.ceon.net
+ * @license     https://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
  */
 class CeonBISNInstallOrUpgrade
 {
-
     /**
      * The version of the module.
      *
@@ -73,7 +72,6 @@ class CeonBISNInstallOrUpgrade
     public function __construct()
     {
         $this->_checkCreateDatabase();
-
         $this->_checkZenCartConfigGroupAndOptions();
     }
 
@@ -322,7 +320,7 @@ class CeonBISNInstallOrUpgrade
 
             $db->Execute($add_config_option_sql);
 
-            $messageStack->add('BISN option "Back in Stock requires login" added.', 'success');
+            $messageStack->add('BISN configuration option added: "Back in Stock requires login?"', 'success');
         }
 
 // option: SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO
