@@ -9,9 +9,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-06-11 torvista
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: header_php.php 2023-11-11 torvista
  */
 
 if (empty($_SESSION['customer_id'])) {
@@ -46,16 +46,26 @@ function getSubscribedBackInStockNotificationLists($customer_id): array
 	global $db;
 
 	$subscribed_notification_lists = [];
-    $customer_email = zen_db_input(get_customers_email()); 	
+	
 	$subscribed_notification_lists_query = "
 		SELECT
-			bisns.id, bisns.product_id, bisns.date_subscribed
+			bisns.id, bisns.product_id, pd.products_name, bisns.date_subscribed
 		FROM
 			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
+		LEFT JOIN
+			" . TABLE_PRODUCTS_DESCRIPTION . " pd
+		ON
+			bisns.product_id = pd.products_id
+		LEFT JOIN
+			" . TABLE_CUSTOMERS . " c
+		ON
+			c.customers_id = bisns.customer_id
 		WHERE
-			(bisns.customer_id = " . (int) $customer_id . " 
+			(bisns.customer_id = '" . (int) $customer_id . "'
 		OR
-			bisns.email_address = '" . $customer_email . "')"; 
+			c.customers_email_address = bisns.email_address)
+		AND
+			pd.language_id = '" . (int)$_SESSION['languages_id'] . "';";
 	
 	$subscribed_notification_lists_result = $db->Execute($subscribed_notification_lists_query);
 	
@@ -69,8 +79,7 @@ function getSubscribedBackInStockNotificationLists($customer_id): array
 			$subscribed_notification_lists[] = [
 				'id' => $subscribed_notification_lists_result->fields['id'],
 				'product_id' => $subscribed_notification_lists_result->fields['product_id'],
-				'product_model' => zen_get_products_model($subscribed_notification_lists_result->fields['product_id']),
-				'product_name' => zen_get_products_name($subscribed_notification_lists_result->fields['product_id']),
+				'product_name' => $subscribed_notification_lists_result->fields['products_name'],
 				'date' => $subscribed_notification_lists_result->fields['date_subscribed']
 			];
 			

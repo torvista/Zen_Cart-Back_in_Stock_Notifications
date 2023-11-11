@@ -15,6 +15,12 @@ Note that the original documentation in the docs folder will NOT be updated for 
 Remove duplicated function zen_get_products_model from bis_functions.php
 Renamed BACK_IN_STOCK_NOTIFICATION_ENABLED to BACK_IN_STOCK_NOTIFICATIONS_ENABLED
 Minor changes to installer messages and processing.
+Add delete of single subscriptions of a product
+Add multi-language to email sending
+Added column sorts for category and model
+Changed default sort column to model
+Bugfix: handle missing/deleted product
+Admin copy of BISN subscription email, replies to customer
 
 06/11/2023: relocated required/optional template files to main file structure.
 Updated template files based on ZC158 responsive_classic.

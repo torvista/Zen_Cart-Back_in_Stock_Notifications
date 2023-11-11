@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-06 torvista
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: header_php.php 2023-11-11 torvista
  */
 
 /**
@@ -22,6 +22,8 @@ declare(strict_types=1);
 require(DIR_FS_CATALOG . DIR_WS_MODULES . 'require_languages.php');
 
 $breadcrumb->add(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_NAVBAR_TITLE);
+
+$action = 'not_found'; //todo check
 
 $back_in_stock_notification_id = 0;
 $back_in_stock_notification_code = 0;

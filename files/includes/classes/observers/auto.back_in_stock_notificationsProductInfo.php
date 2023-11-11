@@ -57,8 +57,13 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                $back_in_stock_notification_form_customer_email,
                $back_in_stock_notification_form_customer_email_confirmation;
 
+        if ($product_back_in_stock_notification_form_link) {
+            $product_back_in_stock_notification_form_link = true;
+            $back_in_stock_notification_build_form = true;
+        } else {
             $product_back_in_stock_notification_form_link = null;
             $back_in_stock_notification_build_form = false;
+        }
 
         // check product id is valid
         $prid_ok = true;
@@ -73,7 +78,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
 
         // Check if customer should be offered the option to be notified when this product is back
         // in stock
-        if ($products_quantity <= 0 && BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1') {
+        if (BACK_IN_STOCK_NOTIFICATION_ENABLED === '1' && $product_back_in_stock_notification_form_link) {
             $product_back_in_stock_notification_form_link = '';
             $back_in_stock_notification_build_form = true;
 

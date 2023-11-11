@@ -5,7 +5,6 @@ declare(strict_types=1);
 /** phpstorm inspections
  * @var queryFactory $db
  * @var messageStack $messageStack
- * @var $sniffer
  */
 /**
  * Ceon Back In Stock Notifications Functions.
@@ -19,12 +18,10 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2008 RubikIntegration team @ RubikIntegration.com
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications_functions.php 2023-11-06 torvista
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: plugin_bisn_functions.php 2023-11-11 torvista
  */
-
-
 
 /**
  * Sends (or pretends to send) e-mail notifications to all users subscribed to back in stock
@@ -36,7 +33,8 @@ declare(strict_types=1);
  * @return  string    Information about the customers e-mailed (if any).
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  */
-function sendBackInStockNotifications($test_mode = false)
+//steve $test_mode may be ''
+function sendBackInStockNotifications(int $languages_id, $test_mode = false, $delete_subscriptions = true): string
 {
     global $db, $messageStack;
 
@@ -45,9 +43,16 @@ function sendBackInStockNotifications($test_mode = false)
     }
 
     // Get the list of unique e-mail addresses which are subscribed to list(s) for which the product is back in stock
+//bof steve for languages
+    //if ($test_mode) {//for the test run, retrieve/show all the emails that need to be sent
+    $and_emails = "bisns.languages_id = " . $languages_id;
+    //} else {//for the real sending, retrieve/send only those with the same currently-selected admin language to use the correct email constants
+    //$and_emails = "bisns.languages_id =" . $_SESSION['languages_id'];
+    //}
+//eof steve
     $email_addresses_query_raw = "
 		SELECT
-			bisns.email_address, bisns.name, c.customers_email_address, c.customers_firstname,
+			bisns.email_address, bisns.name, bisns.languages_id, c.customers_email_address, c.customers_firstname,
 			c.customers_lastname
 		FROM
 			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
@@ -61,8 +66,10 @@ function sendBackInStockNotifications($test_mode = false)
 			c.customers_id = bisns.customer_id
 		WHERE
 			p.products_quantity > 0
+		AND
+		    " . $and_emails . "
 		GROUP BY
-			bisns.email_address, c.customers_email_address, bisns.name, c.customers_firstname, c.customers_lastname
+			bisns.email_address, c.customers_email_address, bisns.name, bisns.languages_id, c.customers_firstname, c.customers_lastname
 		ORDER BY
 			bisns.email_address, c.customers_email_address";
 
@@ -84,6 +91,14 @@ function sendBackInStockNotifications($test_mode = false)
         if (!array_key_exists($customer_email_address, $email_addresses_notified)) {
             // Get all the products for which this e-mail address is subscribed to a back in stock
             // notification list and for which the product is back in stock
+            //steve for languages
+            //		if ($test_mode) {
+            $where_products = "pd.language_id = '" . $languages_id . "'";
+            /*		} else {
+                        $where_products = "pd.language_id = '" . $_SESSION['languages_id'] . "'";
+                    }
+            */        //eof steve
+            //steve added p.products_model
             $products_query = "
 				SELECT DISTINCT
 					bisns.id, bisns.product_id, pd.products_name, p.products_model
@@ -102,9 +117,11 @@ function sendBackInStockNotifications($test_mode = false)
 				ON
 					pd.products_id = bisns.product_id
 				WHERE
-					pd.language_id = '" . $_SESSION['languages_id'] . "'
+				    " . $where_products . "
 				AND
 					p.products_quantity > 0
+				AND
+					" . $and_emails . "
 				AND
 					(
 					bisns.email_address = '" . $customer_email_address . "'
@@ -150,14 +167,19 @@ function sendBackInStockNotifications($test_mode = false)
                     $product_page = 'product_info';
                 }
 
-				$plain_text_msg .= $products_result->fields['products_name'] . "\n\n" . EMAIL_LINK .
-					zen_catalog_href_link($product_page, 'products_id=' .
-					$products_result->fields['product_id']) . "\n\n\n";
+                //steve added $products_result->fields['products_model']
+                $plain_text_msg .= $products_result->fields['products_model'] . " - " . $products_result->fields['products_name'] . "\n\n" . EMAIL_LINK . zen_catalog_href_link(
+                        $product_page,
+                        'products_id=' .
+                        $products_result->fields['product_id']
+                    ) . "\n\n\n";
 
-				$html_msg .= '<p class="BackInStockNotificationProduct">' . '<a href="' .
-					zen_catalog_href_link($product_page, 'products_id=' .
-					$products_result->fields['product_id']) . '" target="_blank">' .
-					htmlentities($products_result->fields['products_name'], ENT_COMPAT, CHARSET) .
+                $html_msg .= '<p class="BackInStockNotificationProduct">' . '<a href="' . zen_catalog_href_link(
+                        $product_page,
+                        'products_id=' .
+                        $products_result->fields['product_id']
+                    ) . '" target="_blank">' .
+                    htmlentities($products_result->fields['products_model'] . " - " . $products_result->fields['products_name'], ENT_COMPAT, CHARSET) .
                     '</a></p>' . "\n";
 
                 $products_result->MoveNext();
@@ -169,9 +191,8 @@ function sendBackInStockNotifications($test_mode = false)
             $message_sent_or_skipped = true;
 
             if (!$test_mode || sizeof($email_addresses_notified) < 1) {
-				$message_sent_or_skipped = sendBackInStockNotificationEmail(
-					$customer_name, $customer_email_address, $plain_text_msg, $html_msg,
-					(sizeof($products) > 1), $test_mode);
+                //steve added languages_id
+                $message_sent_or_skipped = sendBackInStockNotificationEmail($customer_name, $customer_email_address, $plain_text_msg, $html_msg, $languages_id, (sizeof($products) > 1), $test_mode);
             }
 
             if ($message_sent_or_skipped) {
@@ -192,6 +213,9 @@ function sendBackInStockNotifications($test_mode = false)
 
     $num_addresses_notified = sizeof($email_addresses_notified);
 
+    //bof steve languages
+    $output = '<h4>' . zen_get_language_icon($languages_id) . ' ' . TEXT_LANGUAGE . ' ' . $languages_id . ' - ' . ucfirst(zen_get_language_name($languages_id)) . '</h4>';
+    //eof steve
     if ($num_addresses_notified == 0) {
         $output .= '<p>' . TEXT_PREVIEW_OR_SEND_OUTPUT_TITLE_NONE . "</p>\n";
     } else {
@@ -218,8 +242,14 @@ function sendBackInStockNotifications($test_mode = false)
                 $email_address . '&gt;</dt>' . "\n";
 
             foreach ($info['products'] as $product) {
-				$output .= "\t<dd>" . htmlentities($product['name'], ENT_COMPAT, CHARSET) .
-					'</dd>' . "\n";
+                $output .= "\t<dd>" . htmlentities($product['product_model'], ENT_COMPAT, CHARSET) . " - " . htmlentities($product['name'], ENT_COMPAT, CHARSET) .
+                    '</dd>' . "\n";
+                $output .= "\t<dd>" . '<a href="' . zen_catalog_href_link(
+                        $product_page,
+                        'products_id=' .
+                        $product['product_id']
+                    ) . '" title="' . TEXT_TITLE_VIEW_PRODUCT . '" target="_blank">' . htmlentities(zen_catalog_href_link($product_page, 'products_id=' . $product['product_id']), ENT_COMPAT, CHARSET) . '</a>' .
+                    '</dd>' . "\n";
 
                 $subscription_ids[] = $product['subscription_id'];
             }
@@ -227,7 +257,7 @@ function sendBackInStockNotifications($test_mode = false)
 
         $output .= "</dl>\n";
 
-		if (!$test_mode) {
+        if (!$test_mode && $delete_subscriptions) {//$delete_subscriptionsmanually defined in admin/back_in_stock_notifications.php
             // Now delete the subscriptions from the database
             $subscription_ids_string = implode(',', $subscription_ids);
 
@@ -250,7 +280,7 @@ function sendBackInStockNotifications($test_mode = false)
  * @return void
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  */
-function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB()
+function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB(): void
 {
     global $db, $messageStack;
 
@@ -267,10 +297,14 @@ function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB()
 					1 = 1
 			);";
 
-	$delete_subscriptions_result = $db->Execute($delete_subscriptions_query);
-
-	$messageStack->add(sprintf(TEXT_DELETED_PRODUCTS_SUBSCRIPTIONS_REMOVED,
-		mysqli_affected_rows($db->link)), 'back_in_stock_notifications');
+    $db->Execute($delete_subscriptions_query);
+    $messageStack->add(
+        sprintf(
+            TEXT_DELETED_PRODUCTS_SUBSCRIPTIONS_REMOVED,
+            $db->affectedRows()
+        ),
+        'info'
+    );
 }
 
 /**
@@ -281,20 +315,22 @@ function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB()
  * @param  string  $email  The e-mail address of the person being e-mailed.
  * @param  string  $plain_text_msg  The plain text version of the product notifications message.
  * @param  string  $html_msg  The HTML version of the product notifications message.
+ * @param  int  $languages_id  Language id of the required email.
  * @param  bool  $more_than_one  Whether more than one product is being notified about.
  * @param  bool  $test_mode  Whether the e-mail should simply be sent to the admin.
  * @return  bool   Whether or not the e-mail was sent successfully.
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  */
-function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_msg,
-	$more_than_one = false, $test_mode = false)
+function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_msg, $languages_id, $more_than_one = false, $test_mode = false): bool
 {
-	global $messageStack, $ENABLE_SSL;
+    global $db, $messageStack, $ENABLE_SSL;
 
     $plain_text_msg_parts['EMAIL_GREETING'] = sprintf(EMAIL_GREETING, $name);
 
-	$html_msg_parts['EMAIL_GREETING'] =
-		htmlentities(sprintf(EMAIL_GREETING, $name), ENT_COMPAT, CHARSET);
+    $html_msg_parts['EMAIL_GREETING'] = htmlentities(sprintf(EMAIL_GREETING, $name), ENT_COMPAT, CHARSET);
+
+    $plain_text_msg_parts['EMAIL_INTRO_1'] = $html_msg_parts['EMAIL_INTRO_1'] = '';//todo check php notice on send
+    $plain_text_msg_parts['EMAIL_INTRO_2'] = $html_msg_parts['EMAIL_INTRO_2'] = '';//todo check php notice on send
 
     if (!$more_than_one) {
         $plain_text_msg_parts['EMAIL_INTRO_1'] .= EMAIL_INTRO_SINGULAR1;
@@ -399,19 +435,26 @@ function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @author  RubikIntegration team @ RubikIntegration.com
  */
-function buildLinkToProductAdminPage($name, $id, $products_type): string
+function buildLinkToProductAdminPage(string $name, int $id, int $products_type): string
 {
     global $zc_products;
-
     $type_admin_handler = $zc_products->get_admin_handler($products_type);
 
     $name_length = 55;
 
-	$new_name = '<a href="' . zen_href_link($type_admin_handler, 'pID=' . $id . '&product_type=' .
-		$products_type . '&action=new_product', 'NONSSL', true, true, false, false) . '" title="' .
-		htmlentities($name, ENT_COMPAT, CHARSET) . '" target="_blank">' .
-		htmlentities(substr($name, 0, $name_length), ENT_COMPAT, CHARSET) .
-		(strlen($name) > $name_length ? '...' : '') . '</a>';
+    $new_name = '<a href="' . zen_href_link(
+            $type_admin_handler,
+            'pID=' . $id . '&product_type=' .
+            $products_type . '&action=new_product',
+            'NONSSL',
+            true,
+            true,
+            false,
+            false
+        ) . '" title="' .
+        TEXT_TITLE_EDIT_PRODUCT . '" target="_blank">' .
+        htmlentities(substr($name, 0, $name_length), ENT_COMPAT, CHARSET) .
+        (strlen($name) > $name_length ? '...' : '') . '</a>';
 
 	return $new_name;
 }

@@ -1,6 +1,10 @@
-<?php
+<?php //product_name_extra to add
 
 declare(strict_types=1);
+
+//todo: striped table css, change CEON css/ids/classes -> ZC standard
+//todo: POSM support
+
 /** phpstorm inspections
  * @var currencies $currencies
  * @var queryFactory $db
@@ -24,9 +28,17 @@ declare(strict_types=1);
  * @version     $Id: back_in_stock_notifications.php 2023-11-11 torvista
  */
 
+// FOR REPEAT TESTING ONLY
+// normally true: only set to false to NOT delete the subscriptions after sending the (real) emails in Option 4, to allow repeat testing but not have to keep adding the subscriptions again.
+//todo make an admin option
+$delete_customer_subscriptions = true;
+
+//////////////////////////////////////
 const CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION = '3.2.3alpha';
 
 require('includes/application_top.php');
+
+$languages = !empty($languages) ? $languages : zen_get_languages();// todo check in case $languages not yet been set
 
 // Check the database subscriptions table exist. If not, run the installer
 $table_exists_query = 'SHOW TABLES LIKE "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '"';
@@ -82,9 +94,18 @@ $bisn_options = [
 if (empty($_GET['option']) || !is_numeric($_GET['option']) || (int)$_GET['option'] < 1 || (int)$_GET['option'] > 5) {
     $_GET['option'] = 1;
 }
+$option = (int)$_GET['option'];
 
-switch($_GET['option']){
-	case 1:
+switch ($option) {
+    case 1://list the products that have subscriptions attached
+
+        //for deleting all subscriptions to one product
+        //todo review this
+        if (isset($_POST['delete'])) {
+            $delete_product_subscriptions_query_raw = "DELETE FROM " . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " WHERE product_id = " . (int)$_POST['delete'];
+            $db->Execute($delete_product_subscriptions_query_raw);
+        }
+
         $products_query_raw = "
 			SELECT
 				bisns.product_id, pd.products_name, p.products_model, COUNT(*) AS num_subscribers, p.products_type,
@@ -112,9 +133,15 @@ switch($_GET['option']){
 			GROUP BY
 				bisns.product_id, pd.products_name, p.products_model, p.products_type, p.products_quantity, cd.categories_name, cd.categories_id";
 
-		$sort_column = isset($_GET['sort']) ? $_GET['sort'] : 'category';
+        $sort_column = $_GET['sort'] ?? 'model'; //set default sort column
 
         switch ($sort_column) {
+            case 'category':
+                $products_query_raw .= ' ORDER BY cd.categories_name';
+                break;
+            case 'model':
+                $products_query_raw .= ' ORDER BY p.products_model';//steve extra column
+                break;//steve extra column
             case 'product':
                 $products_query_raw .= ' ORDER BY pd.products_name';
                 break;
@@ -153,12 +180,19 @@ switch($_GET['option']){
 
         break;
 
-	case 2:
+    case 2://list all the subscriptions, by customer
+
+        //for deleting a single subscription to one product
+        if (isset($_POST['delete'])) {
+            $delete_customer_subscription_query_raw = "DELETE FROM " . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " WHERE id = " . (int)$_POST['delete'];
+            $db->Execute($delete_customer_subscription_query_raw);
+        }
+
         $subscriptions_query_raw = "
 			SELECT
-				DISTINCT bisns.id, bisns.product_id, bisns.name, bisns.email_address,
-				bisns.date_subscribed, pd.products_name, p.products_type, c.customers_email_address,
-				cd.categories_name
+				DISTINCT bisns.id, bisns.customer_id, bisns.product_id, bisns.name, bisns.email_address,
+				bisns.date_subscribed, pd.products_name, p.products_type, c.customers_firstname, c.customers_lastname, c.customers_email_address,
+				cd.categories_name, cd.categories_id, p.products_model, bisns.languages_id 
 			FROM
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
 			LEFT JOIN
@@ -186,10 +220,17 @@ switch($_GET['option']){
 
         $sort_column = $_GET['sort'] ?? 'product';
 
-		switch ($sort_column) {
-			case 'category':
-				$subscriptions_query_raw .= ' ORDER BY cd.categories_name, pd.products_name,' .
+        switch ($sort_column) {//steve edited for model instead of category
+            /*case 'category':
+                $subscriptions_query_raw .= ' ORDER BY cd.categories_name, pd.products_name,' .
                     ' bisns.date_subscribed DESC';
+                break;*/
+            case 'model':
+                $subscriptions_query_raw .= ' ORDER BY p.products_model,' .
+                    ' bisns.date_subscribed DESC';
+                break;
+            case 'product':
+                $subscriptions_query_raw .= ' ORDER BY pd.products_name';
                 break;
             case 'date':
                 $subscriptions_query_raw .= ' ORDER BY bisns.date_subscribed DESC,' .
@@ -204,8 +245,16 @@ switch($_GET['option']){
                     ' c.customers_email_address, bisns.date_subscribed DESC,' .
                     ' cd.categories_name, pd.products_name';
                 break;
+            case 'languages_id':
+                $subscriptions_query_raw .= ' ORDER BY bisns.languages_id,' .
+                    ' bisns.date_subscribed DESC';
+                break;
+            //eof
             default:
-				$subscriptions_query_raw .= ' ORDER BY pd.products_name,' .
+                //steve changed to model
+                //$subscriptions_query_raw .= ' ORDER BY pd.products_name,' .
+                //    ' bisns.date_subscribed DESC';
+                $subscriptions_query_raw .= ' ORDER BY p.products_model,' .
                     ' bisns.date_subscribed DESC';
         }
 
@@ -234,14 +283,55 @@ switch($_GET['option']){
 
         break;
 
-	case 3:
-		$send_output = sendBackInStockNotifications(true);
+    case 3://for the test run, show all the emails that need to be sent
+
+//todo needs rework
+        unset($send_output);
+        /*echo __LINE__.':<pre>$languages:'; print_r($languages);echo '</pre>';
+        echo '<pre>$languages_array:';print_r($languages_array);echo '</pre>';
+        echo '$languages_selected='.$languages_selected.'<br>';*/
+        //$languages = !empty($languages) ? $languages : zen_get_languages();//steve global was not available here
+        /*echo __LINE__.':<pre>$languages:'; print_r($languages);echo '</pre>';
+        echo '<pre>$languages_array:';print_r($languages_array);echo '</pre>';
+        echo '$languages_selected='.$languages_selected.'<br>';*/
+        //$current_session_language = $_SESSION['language'];
+
+        foreach ($languages as $key => $lang) {
+            $send_output[$lang['id']] = sendBackInStockNotifications((int)$lang['id'], true);//test mode == true: emails sent only to EMAIL_FROM (store address). Subscriptions not deleted.
+        }
+        //$_SESSION['language'] = $current_session_language;
 
         break;
 
-	case 4:
-		$send_output = sendBackInStockNotifications();
-		
+    case 4://for the real sending, send only those with the same admin language to use the correct email constants
+//todo needs rework
+        unset($send_output);
+        $send_output[$_SESSION['languages_id']] = sendBackInStockNotifications((int)$_SESSION['languages_id'], '', $delete_customer_subscriptions);//steve added last parameter for repeat testing of email sending without deleting subscription: set this variable at the start of page
+
+        //$current_session_language = $_SESSION['language'];
+        /*   foreach ($languages as $key=>$lang) {
+               $language = zen_get_language_name($lang['id']);
+               if (!empty($_GET['run']) && $_GET['run'] == '1') {
+                   $send_output[$lang['id']] = sendBackInStockNotifications(true, $lang['id'], $delete_customer_subscriptions);
+               } else {
+                   stream_context_set_default( [
+                       'ssl' => [
+                           'verify_peer' => false,
+                           'verify_peer_name' => false,
+                       ],
+                   ]);
+                   $handle = fopen("http://www.motorvista.es.local/tienda/admin3AHbfbb6FyMU/back_in_stock_notifications.php?action=send&option=4&run=1&language=" . $language, "r");
+                   $contents = 'START<br>';
+   while (!feof($handle))
+   {
+       $contents .= fread($handle, 8192);
+   }
+   fclose($handle);
+   $contents .= '<br>END<br>';
+   echo $contents; die;
+               }
+               //$_SESSION['language'] = $current_session_language;
+           }*/
         break;
 
     case 5:
@@ -264,6 +354,7 @@ switch($_GET['option']){
 <!-- body //-->
 <div id="ceon-bisn-wrapper">
     <h1 id="ceon-bisn-page-heading"><?php echo BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE; ?></h1>
+    <?php echo(!$delete_customer_subscriptions ? TEXT_DEBUG_NO_DELETE_SUBSCRIPTIONS : ''); ?>
 
     <div class="SpacerSmall"></div>
 
@@ -283,13 +374,28 @@ switch($_GET['option']){
                 <fieldset class="DoubleSpaceBelow">
                     <legend><?php echo TEXT_ACTION_TO_PERFORM; ?></legend>
                     <input type="hidden" name="action" value="send"/>
-					<?php echo zen_draw_pull_down_menu('option', $bisn_options, $_GET['option']); ?>
-					<input type="submit" value="Go!" />
+                    <?php
+                    echo zen_draw_pull_down_menu('option', $bisn_options, $option); ?>
+                    <input type="submit" value="<?php
+                    echo TEXT_SUBMIT_GO; ?>"/>
                 </fieldset>
                 <?php echo '</form>'; ?>
             </div>
             <?php
-if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
+            if ($option === 1 || $option === 2) {
+                //steve for info text
+//todo rework
+                if ($option === 1) { ?>
+                    <div><h5>This listing shows only the base product ID: it does not currently list the product variants as individual products.<br>Back In Stock Notifications will be sent to ALL subscribers for the base product as shown here.</h5><h6>Go to Option 2 for details of subscribed
+                            product variants.</h6></div>
+                <?php
+                }
+                if ($option === 2) { ?>
+                    <div><h5>Although this listing shows the product variants as individual products, this is for information only: the Back In Stock Notifications will be sent to ALL subscribers for the base product.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6></div>
+                <?php
+                }
+                ?>
+                <?php
                 // Build the listings page count and page links code
 
                 if (isset($products_split)) {
@@ -346,211 +452,347 @@ if (isset($_GET['option']) && ($_GET['option'] == 1 || $_GET['option'] == 2)) {
                 }
             }
 
-if (isset($_GET['option']) && $_GET['option'] == 1) {
+            if ($option === 1) {
                 ?>
                 <fieldset class="NoMarginBottom">
-                    <legend><?php echo TEXT_PRODUCTS_WITH_SUBSCRIPTIONS; ?></legend>
-			<table border="0" cellspacing="1" cellpadding="2" align="center">
-				<tr>
-					<td colspan="4" class="BISNPaginationWrapper"><?php echo $pagination_columns; ?></td>
-				</tr>
+                    <legend><?php
+                        echo TEXT_PRODUCTS_WITH_SUBSCRIPTIONS; ?></legend>
+                    <div class="BISNPaginationWrapper"><?php echo $pagination_columns; ?></div>
+                    <table class="table table-striped table-hover">
+                        <thead>
                         <tr>
                             <?php
-	if ($sort_column == 'category') {
-		echo '<th>' . TABLE_HEADING_PRODUCT_CATEGORY . '</th>';
+                            if ($sort_column === 'model') {
+                                echo '<th>' . TABLE_HEADING_PRODUCT_MODEL . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=category') .
-			'" title="' . TEXT_SORT_BY_PRODUCT_CATEGORY . '">' .
-			TABLE_HEADING_PRODUCT_CATEGORY . '</a></th>';
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=model'
+                                    ) .
+                                    '" title="' . TEXT_SORT_BY_PRODUCT_MODEL . '">' .
+                                    TABLE_HEADING_PRODUCT_MODEL . '</a></th>';
                             }
 
-	echo '<th>' . TABLE_HEADING_PRODUCT_ID . '</th>';
-	if ($sort_column == 'product') {
+                            if ($sort_column === 'product') {
                                 echo '<th>' . TABLE_HEADING_PRODUCT_NAME . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=product') .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=product'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_PRODUCT_NAME . '">' .
                                     TABLE_HEADING_PRODUCT_NAME . '</a></th>';
                             }
 
-	if ($sort_column == 'subscribers') {
-		echo '<th>' . TABLE_HEADING_NUM_SUBSCRIBERS . '</th>';
+                            if ($sort_column === 'category') {
+                                echo '<th>' . TABLE_HEADING_PRODUCT_CATEGORY . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=subscribers') .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=category'
+                                    ) .
+                                    '" title="' . TEXT_SORT_BY_PRODUCT_CATEGORY . '">' .
+                                    TABLE_HEADING_PRODUCT_CATEGORY . '</a></th>';
+                            }
+                            if ($sort_column === 'subscribers') {
+                                echo '<th class="center">' . TABLE_HEADING_NUM_SUBSCRIBERS . '</th>';
+                            } else {
+                                echo '<th class="ClickToSort center"><a href="' .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=subscribers'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_NUM_SUBSCRIBERS . '">' .
                                     TABLE_HEADING_NUM_SUBSCRIBERS . '</a></th>';
                             }
 
-	if ($sort_column == 'stock') {
-		echo '<th>' . TABLE_HEADING_CURRENT_STOCK . '</th>';
+                            if ($sort_column === 'stock') {
+                                echo '<th class="""center">' . TABLE_HEADING_CURRENT_STOCK . '</th>';
                             } else {
-		echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=stock') .
+                                echo '<th class="ClickToSort center"><a href="' .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=stock'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_CURRENT_STOCK . '">' .
                                     TABLE_HEADING_CURRENT_STOCK . '</a></th>';
                             }
-	
+                            echo '<th class="center">' . TABLE_HEADING_DELETE_SUBSCRIPTIONS . '</th>';
                             echo "\n";
                             ?>
                         </tr>
+                        </thead>
                         <?php
-	$even = false;
 
                         while (!$product_subscriptions_info->EOF) {
+                            $product_null = $product_subscriptions_info->fields['products_name'] === null;
+                            if ($product_null) {
+                                $product_subscriptions_info->fields['products_model'] = '';
+                                $product_subscriptions_info->fields['products_name'] = sprintf(TEXT_PRODUCT_ID_NOT_FOUND, (int)$product_subscriptions_info->fields['product_id']);
+                                $product_subscriptions_info->fields['product_name_extra'] = '';
+                                $product_subscriptions_info->fields['categories_id'] = '';
+                            }
                             ?>
+                            <tbody>
                             <tr class="dataTableRow">
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-						<?php echo $product_subscriptions_info->fields['categories_name'];?>
+                                <td class="dataTableContent">
+                                    <?php if (!$product_null) { ?>
+                                        <a href="<?php
+                                    echo zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($product_subscriptions_info->fields['product_id']) . '&products_id=' . $product_subscriptions_info->fields['product_id']); ?>" target="_blank" title="<?php
+                                    echo TEXT_TITLE_VIEW_PRODUCT; ?>"><?php
+                                        echo $product_subscriptions_info->fields['products_model'] . ($product_subscriptions_info->fields['product_name_extra'] === '' ? '' : ': ' . $product_subscriptions_info->fields['product_name_extra']); ?></a>
+                                    <?php } ?>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-<?php echo $product_subscriptions_info->fields['product_id']; ?>
-					</td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-                                    <?php echo buildLinkToProductAdminPage(
-                                        $product_subscriptions_info->fields['products_name'],
-                                        $product_subscriptions_info->fields['product_id'],
-                                        $product_subscriptions_info->fields['products_type']); ?>
+                                <td class="dataTableContent">
+                                    <?php
+                                    if (!$product_null) {
+                                        echo buildLinkToProductAdminPage(
+                                            $product_subscriptions_info->fields['products_name'],
+                                            (int)$product_subscriptions_info->fields['product_id'],
+                                            (int)$product_subscriptions_info->fields['products_type']
+                                        );
+                                    } else {
+                                        echo $product_subscriptions_info->fields['products_name'];
+                                    }
+                                    ?>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-                                    <?php echo $product_subscriptions_info->fields['num_subscribers']; ?>
+                                <td class="dataTableContent small">
+                                    <?php
+                                    if (!$product_null) { ?>
+                                    <a href="category_product_listing.php?cPath=<?php
+                                    echo zen_get_product_path($product_subscriptions_info->fields['product_id']); ?>" title="<?php
+                                    echo TEXT_TITLE_GOTO_CATEGORY; ?>"><?php
+                                        echo zen_output_generated_category_path($product_subscriptions_info->fields['categories_id']); ?></a>
+                                        <?php } ?>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-                                    <?php echo $product_subscriptions_info->fields['current_stock']; ?>
+                                <td class="dataTableContent center">
+                                    <?php
+                                    echo $product_subscriptions_info->fields['num_subscribers']; ?>
+                                </td>
+                                <td class="dataTableContent center">
+                                    <?php
+                                    echo $product_subscriptions_info->fields['current_stock']; ?>
+                                </td>
+                                <td class="dataTableContent center">
+                                    <?php
+                                    echo zen_draw_form('delete_product_subscriptions_' . $product_subscriptions_info->fields['product_id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=1&action=delete');
+                                    echo zen_draw_hidden_field('delete', $product_subscriptions_info->fields['product_id']);
+                                    echo zen_image_submit(
+                                        'button_delete.gif',
+                                        TEXT_TITLE_DELETE_ALL,
+                                        'onclick="return confirm(\'' .
+                                        sprintf(TEXT_DELETE_SUBSCRIPTION_CONFIRM, "\\n" . $product_subscriptions_info->fields['products_model'] . ' - ' . htmlentities($product_subscriptions_info->fields['products_name'])) .
+                                        '\');"'
+                                    );
+                                    echo '</form>';
+                                    ?>
                                 </td>
                             </tr>
+                            </tbody>
                             <?php
                             $product_subscriptions_info->MoveNext();
                         }
                         ?>
                     </table>
+                    <div class="BISNPaginationWrapper"><?php
+                        echo $pagination_columns; ?></div>
                 </fieldset>
                 <?php
-} elseif(isset($_GET['option']) && $_GET['option'] == 2) {
+            } elseif ($option === 2) {
                 ?>
                 <fieldset class="NoMarginBottom">
-                    <legend><?php echo TEXT_ALL_SUBSCRIPTIONS; ?></legend>
-			<table border="0" cellspacing="1" cellpadding="2" align="center">
-				<tr>
-					<td colspan="5" class="BISNPaginationWrapper"><?php echo $pagination_columns; ?></td>
-				</tr>
+                    <legend><?php
+                        echo TEXT_ALL_SUBSCRIPTIONS; ?></legend>
+                    <div class="BISNPaginationWrapper"><?php
+                        echo $pagination_columns; ?></div>
+                    <table>
                         <tr>
                             <?php
-	if ($sort_column == 'category') {
-		echo '<th>' . TABLE_HEADING_PRODUCT_CATEGORY . '</th>';
+                            if ($sort_column === 'model') {
+                                echo '<th>' . TABLE_HEADING_PRODUCT_MODEL . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=category') .
-			'" title="' . TEXT_SORT_BY_PRODUCT_CATEGORY . '">' .
-			TABLE_HEADING_PRODUCT_CATEGORY . '</a></th>';
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=model'
+                                    ) .
+                                    '" title="' . TEXT_SORT_BY_PRODUCT_MODEL . '">' .
+                                    TABLE_HEADING_PRODUCT_MODEL . '</a></th>';
                             }
 
-   echo '<th>' . TABLE_HEADING_PRODUCT_ID . '</th>';
-	if ($sort_column == 'product') {
+                            if ($sort_column === 'product') {
                                 echo '<th>' . TABLE_HEADING_PRODUCT_NAME . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=product') .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=product'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_PRODUCT_NAME . '">' .
                                     TABLE_HEADING_PRODUCT_NAME . '</a></th>';
                             }
 
-	if ($sort_column == 'date') {
-		echo '<th>' . TABLE_HEADING_DATE_SUBSCRIBED . '</th>';
+                            if ($sort_column === 'date') {
+                                echo '<th class="center">' . TABLE_HEADING_DATE_SUBSCRIBED . '</th>';
                             } else {
-		echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=date') .
+                                echo '<th class="ClickToSort center"><a href="' .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=date'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_DATE_SUBSCRIBED . '">' .
                                     TABLE_HEADING_DATE_SUBSCRIBED . '</a></th>';
                             }
 
-	if ($sort_column == 'customer_name') {
+                            if ($sort_column === 'customer_name') {
                                 echo '<th>' . TABLE_HEADING_CUSTOMER_NAME . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=customer_name') .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=customer_name'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_CUSTOMER_NAME . '">' .
                                     TABLE_HEADING_CUSTOMER_NAME . '</a></th>';
                             }
 
-	if ($sort_column == 'customer_email') {
-		echo '<th>' . TABLE_HEADING_CUSTOMER_NAME . '</th>';
+                            if ($sort_column === 'customer_email') {
+                                echo '<th>' . TABLE_HEADING_CUSTOMER_EMAIL . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
-                                    zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-			zen_get_all_get_params(array('sort', 'action')) . 'sort=customer_email') .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=customer_email'
+                                    ) .
                                     '" title="' . TEXT_SORT_BY_CUSTOMER_EMAIL . '">' .
                                     TABLE_HEADING_CUSTOMER_EMAIL . '</a></th>';
                             }
-	
-	echo "\n";
-?>
+                            // this block made html (php) to fix IDE inspection error!
+//todo rework
+                            if ($sort_column === 'languages_id') { ?>
+                                <th class="center"><?php
+                                    echo TABLE_HEADING_CUSTOMER_LANGUAGES_ID; ?></th>
+                            <?php
+                            } else { ?>
+                                <th class="ClickToSort center">
+                                    <a href="<?php
+                                    echo zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, zen_get_all_get_params(['sort', 'action']) . 'sort=languages_id'); ?>"
+                                       title="<?php
+                                       echo TEXT_SORT_BY_LANGUAGE_ID; ?>"><?php
+                                        echo TABLE_HEADING_CUSTOMER_LANGUAGES_ID; ?></a>
+                                </th>
+                            <?php
+                            } ?>
+                            <th class="center"><?php
+                                echo TABLE_HEADING_DELETE_SUBSCRIPTIONS; ?></th>
                         </tr>
                         <?php
-	$even = false;
 
                         while (!$subscriptions_info->EOF) {
+                            //skip deleted products: is already highlighted on first entry into BISN admin page, should be deleted there
+                            if ($subscriptions_info->fields['products_name'] === null) {
+                                $subscriptions_info->MoveNext();
+                            };
                             ?>
                             <tr class="dataTableRow">
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-						<?php echo $subscriptions_info->fields['categories_name'];?>
-					</td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-<?php echo $subscriptions_info->fields['product_id']; ?>
+                                <td class="dataTableContent">
+                                    <?php
+                                    //steve link to catalog product info using custom function without rewriting 
+                                    //todo remove custom function ?>
+                                    <a href="<?php
+                                    echo mv_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($subscriptions_info->fields['product_id']) . '&products_id=' . $subscriptions_info->fields['product_id'], 'NONSSL', false); ?>" target="_blank" title="<?php
+                                    echo TEXT_TITLE_VIEW_PRODUCT; ?>"><?php
+                                        echo $subscriptions_info->fields['products_model'] . ($subscriptions_info->fields['product_name_extra'] === '' ? '' : ': ' . $subscriptions_info->fields['product_name_extra']); ?></a>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-                                    <?php echo buildLinkToProductAdminPage(
+                                <td class="dataTableContent">
+                                    <?php
+                                    echo buildLinkToProductAdminPage(
                                         $subscriptions_info->fields['products_name'],
-                                        $subscriptions_info->fields['product_id'],
-                                        $subscriptions_info->fields['products_type']); ?>
+                                        (int)$subscriptions_info->fields['product_id'],
+                                        (int)$subscriptions_info->fields['products_type']
+                                    ); ?>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-                                    <?php echo
-							zen_date_long($subscriptions_info->fields['date_subscribed']);?>
+                                <td class="dataTableContent center">
+                                    <?php
+                                    echo
+                                    zen_date_short($subscriptions_info->fields['date_subscribed']); ?>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
-						<?php echo $subscriptions_info->fields['name'];?>
+                                <td class="dataTableContent">
+                                    <?php
+                                    if ($subscriptions_info->fields['customer_id'] !== null) {
+                                        $is_customer = true;
+                                        echo '<a href="' . zen_href_link(
+                                                'customers.php?search=' . $subscriptions_info->fields['customers_email_address']
+                                            ) . '" target="blank" title="' . TEXT_TITLE_VIEW_CUSTOMER . '">' . $subscriptions_info->fields['customers_firstname'] . ' ' . $subscriptions_info->fields['customers_lastname'] . '</a>';
+                                    } else {
+                                        $is_customer = false;
+                                        echo $subscriptions_info->fields['name'];
+                                    } ?>
                                 </td>
-					<td class="dataTableContent<?php if ($even) echo ' Even';?>">
+                                <td class="dataTableContent">
                                     <?php
                                     $customer_email_address =
+                                        ($subscriptions_info->fields['email_address'] ?? $subscriptions_info->fields['customers_email_address']);
 
-							(!is_null($subscriptions_info->fields['email_address']) ?
-							$subscriptions_info->fields['email_address'] :
-							$subscriptions_info->fields['customers_email_address']);
-						
-						echo $customer_email_address;
-						?>
+                                    if ($is_customer) {
+                                        $customer_email_address_link = zen_href_link(FILENAME_MAIL, 'origin=back_in_stock_notificationsp&amp;mode=NONSSL&customer=' . $customer_email_address . '&amp;cID=' . $subscriptions_info->fields['customer_id'], 'NONSSL');
+                                    } else {
+                                        $customer_email_address_link = 'mailto:' . $customer_email_address;
+                                    } ?>
+                                    <a href="<?php
+                                    echo $customer_email_address_link; ?>" title="<?php
+                                    echo TEXT_TITLE_SEND_EMAIL; ?>" target="_blank"><?php
+                                        echo $customer_email_address; ?></a>
+                                </td>
+                                <td class="dataTableContent center smallText">
+                                    <?php
+                                    echo zen_get_language_icon($subscriptions_info->fields['languages_id']) . '<br>' .
+                                        ucfirst(
+                                            zen_get_language_name($subscriptions_info->fields['languages_id']) .
+                                            ' (' . $subscriptions_info->fields['languages_id'] . ')'
+                                        ); ?>
+                                </td>
+                                <td class="dataTableContent center">
+                                    <?php
+                                    echo zen_draw_form('delete_customer_subscription_' . $subscriptions_info->fields['id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=2&action=delete');
+                                    echo zen_draw_hidden_field('delete', $subscriptions_info->fields['id']);
+                                    echo zen_image_submit('button_delete.gif', IMAGE_DELETE, 'onclick="return confirm(\'' . sprintf(TEXT_DELETE_SUBSCRIPTION_CONFIRM, "\\n" . $customer_email_address) . '\');"');
+                                    echo '</form>'; ?>
                                 </td>
                             </tr>
                             <?php
-		$even = !$even;
-		
                             $subscriptions_info->MoveNext();
                         }
                         ?>
-				<tr>
-					<td colspan="5" class="BISNPaginationWrapper"><?php echo $pagination_columns; ?></td>
-				</tr>
                     </table>
+                    <div class="BISNPaginationWrapper"><?php
+                        echo $pagination_columns; ?></div>
                 </fieldset>
                 <?php
-} else if (isset($_GET['option']) && ($_GET['option'] == 3 || $_GET['option'] == 4)) {
+            } elseif ($option === 3 || $option === 4) {
                 ?>
                 <fieldset>
-                    <legend><?php echo TEXT_SEND_OUTPUT_TITLE; ?></legend>
+                    <legend><?php
+                        echo TEXT_SEND_OUTPUT_TITLE; ?></legend>
                     <?php
-	print $send_output;
+                    if ($option === 3) {
+                        echo '<div>' . TEXT_TEST_OUTPUT . '</div>';
+                    }
+                    if (CEON_URI_MAPPING_ENABLED) {
+                        echo '<p>' . TEXT_NOTE_URI_MAPPING . '</p>';
+                    } ?>
+                    <?php
+                    //print_r ($send_output);
+                    if (!empty($send_output)) {
+                        foreach ($send_output as $key => $lang) {
+                            //echo '$key='.$key.'<br />';
+                            //echo '$lang='.$lang.'<br />';
+                            print $lang;
+                        }
+                    }
                     ?>
                 </fieldset>
                 <?php

@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-06
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: header_php.php 2023-11-11 torvista
  */
 
 /**phpStorm inspections
@@ -67,7 +67,27 @@ if ($product_name_result->RecordCount() === 0) {//should never happen
     $product_name = $product_name_result->fields['products_name'];
 }
 
-$product_name = $product_name_result->fields['products_name'];
+//steve bof get products model
+$product_model_query = "SELECT products_model FROM " . TABLE_PRODUCTS . " WHERE	products_id = " . (int)$_GET['products_id'] . " LIMIT 1";
+$product_model_result = $db->Execute($product_model_query);
+//steve eof get products model
+
+// Make sure the product exists!
+if ($product_model_result->RecordCount() === 0) {
+    $product_model = '';
+} else {
+    $product_model = $product_model_result->fields['products_model'];//steve
+}
+if (isset($_POST['posmProductNameExtra'])) {
+    $posmProductNameExtra = zen_db_prepare_input($_POST['posmProductNameExtra']);
+    //$posm_pos_name = $db->Execute("SELECT pos_model FROM " . TABLE_PRODUCTS_OPTIONS_STOCK . " WHERE pos_id = $posm_pos_id LIMIT 1");
+    //$posm_pos_name = $posm_pos_name->fields['pos_model'];
+    //echo __LINE__ . ': $posm_pos_name=' . $posm_pos_value_name . '<br>';
+} else {
+    $posmProductNameExtra = '';
+}
+//steve expand name for notifications and for passing to new form displayed on this page if validation failed.
+$product_name = $product_model . ' - ' . $product_name . ($posmProductNameExtra === '' ? '' : " ($posmProductNameExtra)");
 
 // Check if the form has been submitted
 $form_errors = [];
@@ -116,12 +136,6 @@ if (isset($_POST['notify_me'])) {
 
         $email_address = $_POST['email'];
 
-        $cid = -1;
-        // See if there's a customer with this email, if so, capture $cid.
-        $cust_query = $db->Execute("SELECT customers_id FROM " . TABLE_CUSTOMERS . " WHERE customers_email_address = '" . zen_db_input($email_address) . "'");
-        if (!$cust_query->EOF) {
-            $cid = $cust_query->fields['customers_id'];
-        }
 
         // Check if the user is already subscribed to the notification list for this product
         $check_notification_subscription_query = "
@@ -129,15 +143,16 @@ if (isset($_POST['notify_me'])) {
 				id
 			FROM
 				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
+			LEFT JOIN
+				" . TABLE_CUSTOMERS . " c
+			ON
+				c.customers_id = bisns.customer_id
 			WHERE
-				bisns.product_id = " . (int)$_GET['products_id'] . " ";
-        $check_notification_subscription_query .= " AND (";
-        $check_notification_subscription_query .= " bisns.email_address = '" . zen_db_prepare_input($email_address) . "'";
-
-        if ($cid !== -1) {
-            $check_notification_subscription_query .= " OR bisns.customer_id = $cid";
-        }
-        $check_notification_subscription_query .= ")";
+				bisns.product_id = '" . (int)$_GET['products_id'] . "'
+			AND
+				(bisns.email_address = '" . zen_db_prepare_input($email_address) . "'
+			OR
+				c.customers_email_address = '" . zen_db_prepare_input($email_address) . "');";
         $check_notification_subscription = $db->Execute($check_notification_subscription_query);
 
         if ($check_notification_subscription->RecordCount() > 0) {
@@ -188,9 +203,11 @@ if (isset($_POST['notify_me'])) {
                 // instead of the entered address.
                 $sql_data_array = [
                     'product_id' => (int)$_GET['products_id'],
+                    'product_name_extra' => $posmProductNameExtra,//steve added: temporary fix for POSM info
                     'customer_id' => (int)$subscription_customer_id,
                     'name' => zen_db_prepare_input($_POST['name']),
-                    'date_subscribed' => date('Y-m-d H:i:s')
+                    'date_subscribed' => date('Y-m-d H:i:s'),
+                    'languages_id' => (int)$_SESSION['languages_id']//steve added
                 ];
 
                 zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
@@ -200,7 +217,10 @@ if (isset($_POST['notify_me'])) {
                 // Send e-mail
                 sendBackInStockNotificationSubscriptionEmail(
                     $back_in_stock_notification_id,
-                    $product_name, (int)$subscription_customer_id, $_POST['name'], $email_address
+                    $product_name,
+                    (int)$subscription_customer_id,
+                    $_POST['name'],
+                    $email_address
                 );
 
                 $unsubscribe_message =
@@ -217,10 +237,12 @@ if (isset($_POST['notify_me'])) {
 
                 $sql_data_array = [
                     'product_id' => (int)$_GET['products_id'],
+                    'product_name_extra' => $posmProductNameExtra,//steve added: temporary fix for POSM info
                     'name' => zen_db_prepare_input($_POST['name']),
                     'email_address' => zen_db_prepare_input($_POST['email']),
                     'subscription_code' => $subscription_code,
-                    'date_subscribed' => date('Y-m-d H:i:s')
+                    'date_subscribed' => date('Y-m-d H:i:s'),
+                    'languages_id' => (int)$_SESSION['languages_id']//steve added
                 ];
 
                 zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
@@ -230,7 +252,11 @@ if (isset($_POST['notify_me'])) {
                 // Send e-mail
                 sendBackInStockNotificationSubscriptionEmail(
                     $back_in_stock_notification_id,
-                    $product_name, '', $_POST['name'], $email_address, $subscription_code
+                    $product_name,
+                    '',
+                    $_POST['name'],
+                    $email_address,
+                    $subscription_code
                 );
 
                 $unsubscribe_message =
@@ -256,6 +282,9 @@ if ($build_form) {
     $back_in_stock_notification_form_customer_name = (!empty($_POST['name']) ? htmlentities($_POST['name'], ENT_COMPAT, CHARSET) : '');
 
     $back_in_stock_notification_form_customer_email = (!empty($_POST['email']) ? htmlentities($_POST['email']) : '');
+//steve for reposting product name extra
+    $back_in_stock_notification_form_posm_product_name_extra = (!empty($_POST['posmProductNameExtra']) ? $_POST['posmProductNameExtra'] : '');//steve for php notice
+//eof
 
     if (isset($_POST['cofnospam'])) {
         $back_in_stock_notification_form_customer_email_confirmation =
@@ -306,7 +335,9 @@ function sendBackInStockNotificationSubscriptionEmail(
         $text_msg_part['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT;
         $text_msg_part['URL_VALUE'] = zen_href_link(
             FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS,
-            '', 'SSL', false
+            '',
+            'SSL',
+            false
         );
     } else {
         // Build link to unsubscription page
@@ -314,7 +345,9 @@ function sendBackInStockNotificationSubscriptionEmail(
         $text_msg_part['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_TEXT;
         $text_msg_part['URL_VALUE'] = zen_href_link(
             FILENAME_BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE,
-            'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code, 'SSL', false
+            'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code,
+            'SSL',
+            false
         );
     }
 
@@ -335,8 +368,10 @@ function sendBackInStockNotificationSubscriptionEmail(
         $html_msg['URL_INTRO'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
         $html_msg['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT;
         $html_msg['URL_VALUE'] = zen_href_link(
-            FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '',
-            'SSL', false
+            FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS,
+            '',
+            'SSL',
+            false
         );
     } else {
         // Build link to unsubscription page
@@ -344,7 +379,9 @@ function sendBackInStockNotificationSubscriptionEmail(
         $html_msg['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_URL_TEXT;
         $html_msg['URL_VALUE'] = zen_href_link(
             FILENAME_BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE,
-            'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code, 'SSL', false
+            'id=' . $back_in_stock_notification_id . '&code=' . $subscription_code,
+            'SSL',
+            false
         );
     }
 
@@ -365,31 +402,43 @@ function sendBackInStockNotificationSubscriptionEmail(
         $text_msg_source = file_get_contents($template_file);
     } elseif ($language_folder_path_part !== '') {
         // A non-english language is being used but no template file exists for it, so use the default english template
-        $text_msg_source =
-            file_get_contents(str_replace($language_folder_path_part, '', $template_file));
+        $text_msg_source = file_get_contents(DIR_FS_EMAIL_TEMPLATES . 'email_template_back_in_stock_notification_subscribe.txt');
     }
 
+    if ($text_msg_source !== false) {//if file not found
         foreach ($text_msg_part as $key => $value) {
             $text_msg_source = str_replace('$' . $key, $value, $text_msg_source);
         }
 
         zen_mail(
-            $customer_name, $email_address,
+            $customer_name,
+            $email_address,
             sprintf(BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT, $product_name),
-            $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
+            $text_msg_source,
+            STORE_NAME,
+            EMAIL_FROM,
+            $html_msg,
             'back_in_stock_notification_subscribe'
         );
 
         // Send an e-mail to the store owner as well?
         if (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO !== '') {
             zen_mail(
-                '', SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO,
+                '',
+                SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO,
                 sprintf(
                     SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT,
                     $product_name
-                ), $text_msg_source, STORE_NAME, EMAIL_FROM, $html_msg,
-            'back_in_stock_notification_subscribe_extra'
-                '', $customer_name, $email_address
+                ),
+                $text_msg_source,
+                STORE_NAME,
+                EMAIL_FROM,
+                $html_msg,
+                'back_in_stock_notification_subscribe_extra',
+                '',
+                $customer_name,
+                $email_address
             );
+        }
     }
 }
