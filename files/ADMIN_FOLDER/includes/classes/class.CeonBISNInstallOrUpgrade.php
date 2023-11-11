@@ -88,9 +88,7 @@ class CeonBISNInstallOrUpgrade
 
         // Add the notification subscriptions table if it doesn't exist
         $table_exists_query = 'SHOW TABLES LIKE "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '";';
-
         $table_exists_result = $db->Execute($table_exists_query);
-
         if ($table_exists_result->EOF) {
             $create_table_sql = "
 				CREATE TABLE IF NOT EXISTS
@@ -102,7 +100,7 @@ class CeonBISNInstallOrUpgrade
 					`subscription_code` VARCHAR(10) DEFAULT NULL,
 					`name` varchar(64) NOT NULL DEFAULT '',
 					`email_address` VARCHAR(96) DEFAULT NULL,
-					`date_subscribed` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+					`date_subscribed` DATETIME NOT NULL DEFAULT '0001-01-01 00:00:00',
 					`languages_id` int(2) UNSIGNED NOT NULL DEFAULT '1',
 					PRIMARY KEY  (`id`)
 					);";
@@ -113,16 +111,13 @@ class CeonBISNInstallOrUpgrade
             $table_exists_result = $db->Execute($table_exists_query);
 
             if ($table_exists_result->EOF) {
-                $this->error_messages[] = 'New BISN Database table "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '" could not be created! The database user may not have CREATE TABLE privileges?!';
+                $this->error_messages[] = 'BISN Installer: Subscriptions table "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '" could not be created! The database user may not have CREATE TABLE privileges?!';
                 return false;
             }
 
             $this->_notification_subscriptions_table_created = true;
 
-            $messageStack->add(
-                'BISN Notification Subscriptions database table "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '" was created.',
-                'success'
-            );
+            $messageStack->add('BISN Installer: Subscriptions database table "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '" was added to the database.', 'success');
         }
 
         return true;
@@ -150,8 +145,7 @@ class CeonBISNInstallOrUpgrade
         $check_config_group_exists_result = $db->Execute($check_config_group_exists_sql);
 
         if (!$check_config_group_exists_result->EOF) {
-            $configuration_group_id =
-                $check_config_group_exists_result->fields['configuration_group_id'];
+            $configuration_group_id = $check_config_group_exists_result->fields['configuration_group_id'];
         } else {
             $add_config_group_options_sql = "
 				INSERT INTO
@@ -170,25 +164,15 @@ class CeonBISNInstallOrUpgrade
 					'1'
 					);";
 
-            $add_config_group_options_result = $db->Execute($add_config_group_options_sql);
+            $db->Execute($add_config_group_options_sql);
 
-            $configuration_group_id_sql = "
-				SELECT
-					configuration_group_id  
-				FROM
-					" . TABLE_CONFIGURATION_GROUP . "
-				WHERE
-					configuration_group_title = 'Back In Stock Notifications';";
-
-            $configuration_group_id_result = $db->Execute($configuration_group_id_sql);
-
-            if (!$configuration_group_id_result->EOF) {
-                $configuration_group_id =
-                    $configuration_group_id_result->fields['configuration_group_id'];
+            // Check again
+            $check_config_group_exists_result = $db->Execute($check_config_group_exists_sql);
+            if (!$check_config_group_exists_result->EOF) {
+                $configuration_group_id = (int)$check_config_group_exists_result->fields['configuration_group_id'];
             } else {
-                // Problem getting ID!
+                // Problem getting ID/sql failed?
                 $this->error_messages[] = 'BISN installer error: couldn\'t get the ID of the configuration group!';
-
                 return false;
             }
 
@@ -196,24 +180,41 @@ class CeonBISNInstallOrUpgrade
 				UPDATE
 					" . TABLE_CONFIGURATION_GROUP . "
 				SET
-					sort_order = '" . $configuration_group_id . "'
+					sort_order = " . $configuration_group_id . "
 				WHERE
-					configuration_group_id = '" . $configuration_group_id . "';";
+					configuration_group_id = " . $configuration_group_id;
 
-            $set_group_sort_order_result = $db->Execute($set_group_sort_order_sql);
-
-            $messageStack->add('BISN Configuration Group created.', 'success');
+            $db->Execute($set_group_sort_order_sql);
+            $messageStack->add("BISN Installer: Configuration Group created (gID=$configuration_group_id)", 'success');
         }
 
-        //todo use a function!
-        // option: BACK_IN_STOCK_NOTIFICATION_ENABLED
+        // Check Configuration Page exists
+        if (!zen_page_key_exists('ceon_bisn_cg')) {
+            // Add the link to the Ceon Back In Stock Notifications Zen Cart configuration
+            // options to the admin menu
+            zen_register_admin_page(
+                'ceon_bisn_cg',
+                'BOX_CEON_BACK_IN_STOCK_NOTIFICATIONS_CONFIG_GROUP',
+                'FILENAME_CONFIGURATION',
+                'gID=' . $configuration_group_id,
+                'configuration',
+                'Y',
+                $configuration_group_id
+            );
+
+            $messageStack->add('BISN Installer: Configuration Menu Item added "Configuration->' . BOX_CEON_BACK_IN_STOCK_NOTIFICATIONS_CONFIG_GROUP . '" (gID=' . $configuration_group_id . ').', 'success');
+        }
+
+        //todo use a function/rework installer!
+
+        // option: BACK_IN_STOCK_NOTIFICATIONS_ENABLED
         $check_config_option_exists_sql = "
 			SELECT
 				configuration_group_id
 			FROM
 				" . TABLE_CONFIGURATION . "
 			WHERE
-				configuration_key = 'BACK_IN_STOCK_NOTIFICATION_ENABLED';";
+				configuration_key = 'BACK_IN_STOCK_NOTIFICATIONS_ENABLED';";
 
         $check_config_option_exists_result = $db->Execute($check_config_option_exists_sql);
 
@@ -227,9 +228,9 @@ class CeonBISNInstallOrUpgrade
 					SET
 						configuration_group_id = '" . $configuration_group_id . "'
 					WHERE
-						configuration_key = 'BACK_IN_STOCK_NOTIFICATION_ENABLED';";
+						configuration_key = 'BACK_IN_STOCK_NOTIFICATIONS_ENABLED';";
 
-                $set_group_id_result = $db->Execute($set_group_id_sql);
+                $db->Execute($set_group_id_sql);
             }
         } else {
             $add_config_option_sql = "
@@ -248,7 +249,7 @@ class CeonBISNInstallOrUpgrade
 				VALUES
 					(
 					'Enable/Disable Back In Stock Notifications',
-					'BACK_IN_STOCK_NOTIFICATION_ENABLED',
+					'BACK_IN_STOCK_NOTIFICATIONS_ENABLED',
 					'1',
 					'<br>If enabled, when a customer comes across a product that is out of stock, the customer will be offered the chance to be notified when it is back in stock<br><br>0 = off <br>1 = on',
 					'" . $configuration_group_id . "',
@@ -258,11 +259,7 @@ class CeonBISNInstallOrUpgrade
 					);";
 
             $db->Execute($add_config_option_sql);
-
-            $messageStack->add(
-                'BISN option "Enable/Disable Back In Stock Notifications" added',
-                'success'
-            );
+            $messageStack->add('BISN Installer: configuration option added "Enable/Disable Back In Stock Notifications"', 'success');
         }
 
 // option: BACK_IN_STOCK_REQUIRES_LOGIN
@@ -319,8 +316,7 @@ class CeonBISNInstallOrUpgrade
 					);";
 
             $db->Execute($add_config_option_sql);
-
-            $messageStack->add('BISN configuration option added: "Back in Stock requires login?"', 'success');
+            $messageStack->add('BISN Installer: configuration option added "Back in Stock requires login?"', 'success');
         }
 
 // option: SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO
@@ -375,31 +371,9 @@ class CeonBISNInstallOrUpgrade
 					);";
 
             $db->Execute($add_config_option_sql);
-
-            $messageStack->add(
-                'BISN option "Send Copy of Subscription E-mails" added',
-                'success'
-            );
+            $messageStack->add('BISN Installer: configuration option added "Send Copy of Subscription E-mails"', 'success');
         }
 
-        // Make sure configuration group can be displayed in admin menu
-        if (function_exists('zen_register_admin_page')) {
-            if (!zen_page_key_exists('ceon_bisn_cg')) {
-                // Add the link to the Ceon Back In Stock Notifications Zen Cart configuration
-                // options to the admin menu
-                zen_register_admin_page(
-                    'ceon_bisn_cg',
-                    'BOX_CEON_BACK_IN_STOCK_NOTIFICATIONS_CONFIG_GROUP',
-                    'FILENAME_CONFIGURATION',
-                    'gID=' . $configuration_group_id,
-                    'configuration',
-                    'Y',
-                    $configuration_group_id
-                );
-
-                $messageStack->add("BISN Configuration Group (gID=$configuration_group_id) added to admin menu.", 'success');
-            }
-        }
         return true;
     }
 

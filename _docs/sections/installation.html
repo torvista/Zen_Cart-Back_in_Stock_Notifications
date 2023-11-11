@@ -54,15 +54,14 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 
 <h2><a name="installation" id="installation"></a>Installation</h2>
 <p>Installation of the module has been made as simple as possible and shouldn't take long for any stores which have not already modified any of the template files which this module has to modify.</p>
-<p>If any of the template files this distribution uses have already been modified (because of another third party module being installed), then the changes for the respective files should be applied manually, by copying across the appropriate sections of code required for the Ceon Back In Stock Notifications module. These sections are clearly marked (with &ldquo;// BEGIN&rdquo; and &ldquo;// END&rdquo; comments) within the sample files provided in this distribution.</p>
+<p>If any of the template files this distribution uses have already been modified (because of another third-party module being installed), then the changes for the respective files should be applied manually, by copying across the appropriate sections of code required for the Ceon Back In Stock Notifications module. These sections are clearly marked (with &ldquo;// BEGIN&rdquo; and &ldquo;// END&rdquo; comments) within the sample files provided in this distribution.</p>
 
 <h3>Installation Overview</h3>
 <ol id="installation-overview">
-	<li>Copy the new files from the distribution into the Zen Cart installation.</li>
-	<li>Copy the updated core file from the distribution into the Zen Cart installation, or modify the respective core file.</li>
-	<li>Copy the updated template files from the distribution into the Zen Cart installation, or modify their equivalents in the store's existing template files.</li>
-	<li>Copy the e-mail templates to a directory, for <strong>each</strong> language the store uses.</li>
-  <li>Go to Admin-&gt;Catalog-&gt;Ceon Back In Stock Notifications to install the required database changes.</li>
+	<li>Copy the new ADMIN_FOLDER files from the distribution into the Zen Cart installation. These are all new/do not overwrite existing files.</li>
+	<li>Merge/Copy the updated SHOPFRONT files from the distribution into the Zen Cart installation or modify their equivalents in the store's existing template files.</li>
+	<li>Copy the e-mail templates to the email directory.</li>
+  <li>Go to Admin-&gt;Catalog-&gt;Ceon Back In Stock Notifications. This will install the Configuration page and constants, and the BISN subscription table.</li>
 	<li>[<em>Optional but <strong>Recommended</strong></em>] Prevent the module's files from being indexed by search engines.</li>
 </ol>
 
@@ -78,7 +77,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		<h5>New files for the Admin directory</h5>
 		
 		<p>Most Zen Cart stores have their admin directory renamed from the default of &ldquo;admin&rdquo;.</p>
-		<p>Copy all of the folders and files from the <span class="FileName">files/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
+		<p>Copy all the folders and files from the <span class="FileName">files/admin</span> folder into the store's &ldquo;admin&rdquo; directory, whatever it is called.</p>
 		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folders/files in the <span class="FileName">files/admin</span> folder into the &ldquo;admin&rdquo; directory for the store will put the files in the correct locations.</p>
 		<p><strong>Please do not copy the files individually</strong> - there's simply no need - doing so often results in files being missed out!</p>
 		
@@ -105,7 +104,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		<p>Copy the <span class="FileName">includes</span> folder and the <span class="FileName">email</span> folder from the <span class="FileName">files</span> folder into the store's main directory.</p>
 		<p>The files are already in the correct directory structure, so a single drag-and-drop of the folder into the root directory for the store will put the files in the correct locations.</p>
 		<p><strong>Please do not copy the files individually</strong> - there's simply no need - doing so often results in files being missed out!</p>
-		<p class="Note"><strong>Warning</strong>: Be careful <em class="Underlined FontStyleNormal">NOT</em> to copy the files from the <span class="FileName">files/includes</span> folder into the store's <span class="FileName">admin/includes</span> directory, they go in the <span class="FileName">includes</span> directory which is <strong>alongside, not inside</strong> the store's admin directory.</p>
+		<p class="Note"><strong>Warning</strong>: Be careful <em class="Underlined FontStyleNormal">NOT</em> to copy the files from the <span class="FileName">files/includes</span> folder into the store's <span class="FileName">admin/includes</span> directory, they go in the <span class="FileName">includes</span> directory, which is <strong>alongside, not inside</strong> the store's admin directory.</p>
 		
 		<ul class="Steps">
 			<li>email/email_template_back_in_stock_notification.html</li>
@@ -214,7 +213,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 	<li>
 		<h4><a name="copying-e-mail-templates-for-languages" id ="copying-e-mail-templates-for-languages"></a>Copy the E-mail Templates to a Folder for <strong class="Underlined">Each</strong> Language the Store Uses</h4>
 		
-		<p>Zen Cart's e-mail functionality requires that there are e-mail template files for <strong>every</strong> language the store uses, in order to create HTML versions of any e-mails being sent.</p>
+		<p>Zen Cart's e-mail functionality requires that there are e-mail template files for <strong>every</strong> language the store uses,  to create HTML versions of any e-mails being sent.</p>
 		
 		<p>The five Back In Stock Notifications e-mail templates should therefore be copied into a folder for <strong>each</strong> language the store uses.</p>
 		
@@ -223,7 +222,7 @@ CeonAddLoadEvent(CeonCrossfadeInit);
 		<ul class="Steps">
 			<li>
 				<p>If one doesn't already exist, create a folder for the language within the e-mail templates folder.</p>
-				<p>The name of the folder is simply the two letter language code for the language.</p>
+				<p>The name of the folder is simply the two-letter language code for the language.</p>
 				<p>For example, if the store uses Spanish, the language code for which is &ldquo;es&rdquo;, the following folder should be created in the store's e-mail folder:</p>
 				<p><code>email/<strong>es</strong></code></p>
 			</li>

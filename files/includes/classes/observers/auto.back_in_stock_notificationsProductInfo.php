@@ -8,9 +8,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-06 torvista
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-11 torvista
  */
 
 /**
@@ -73,7 +73,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
 
         // Check if customer should be offered the option to be notified when this product is back
         // in stock
-        if ($products_quantity <= 0 && BACK_IN_STOCK_NOTIFICATION_ENABLED === '1') {
+        if ($products_quantity <= 0 && BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1') {
             $product_back_in_stock_notification_form_link = '';
             $back_in_stock_notification_build_form = true;
 
