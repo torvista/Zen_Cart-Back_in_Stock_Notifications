@@ -28,13 +28,13 @@ define('EMAIL_TEXT_HEADER', 'Back in Stock Notification Subscription');
 define('EMAIL_TEXT_FROM',' from ');
 
 define('BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED_TITLE', 'Already Subscribed!');
-define('BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED_MESSAGE', 'You are already subscribed to the Back In Stock Notification List for &ldquo;%s&rdquo;!');
+define('BACK_IN_STOCK_NOTIFICATION_ALREADY_SUBSCRIBED_MESSAGE', 'You are already subscribed to the Back In Stock Notification List for &ldquo;<b>%s</b>&rdquo;!');
 
 define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_TITLE', 'Subscription Successful!');
-define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE1', 'You have been successfully subscribed to the Back In Stock Notification List for &ldquo;%s&rdquo; and will therefore receive an e-mail from us when it is back in stock!');
+define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE1', 'You have been successfully subscribed to the Back In Stock Notification List for &ldquo;<b>%s</b>&rdquo; and will therefore receive an e-mail from us when it is back in stock!');
 define('BACK_IN_STOCK_NOTIFICATION_SUCCESS_MESSAGE2', 'For security reasons, an e-mail has been sent to you acknowledging your subscription. Please remember that this subscription will <strong>not</strong> result in you receiving any e-mail from us about anything other than the restocking of this item.');
-define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MY_ACCOUNT_MESSAGE', 'If, for any reason, you would like to unsubscribe from the Back In Stock Notification List for &ldquo;%s&rdquo; you can do so at any time by logging in to your Account and changing your Back In Stock Subscription Notification preferences.');
-define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_LINK_MESSAGE', 'If, for any reason, you would like to unsubscribe from the Back In Stock Notification List for &ldquo;%s&rdquo; you will find details of how to do so in the e-mail that has just been sent to you.');
+define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_MY_ACCOUNT_MESSAGE', 'If, for any reason, you would like to unsubscribe from the Back In Stock Notification List for &ldquo;<b>%s</b>&rdquo; you can do so at any time by logging in to your Account and changing your Back In Stock Subscription Notification preferences.');
+define('BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_LINK_MESSAGE', 'If, for any reason, you would like to unsubscribe from the Back In Stock Notification List for &ldquo;<b>%s</b>&rdquo; you will find details of how to do so in the e-mail that has just been sent to you.');
 
 
 define('BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_SUBJECT', 'Back In Stock Notification Subscription for %s');

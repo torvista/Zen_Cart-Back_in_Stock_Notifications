@@ -254,7 +254,11 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <!--eof Product URL -->
 
 <?php // plugin BISN 3 of 4
-include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
+if (is_null($product_back_in_stock_notification_form_link)) {
+    echo '<!-- BISN link is null -->';
+} else {
+   include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
+}
 // eof plugin BISN 3 of 4
 ?>
 <!--bof also purchased products module-->

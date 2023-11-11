@@ -203,7 +203,7 @@ if (isset($_POST['notify_me'])) {
                 // instead of the entered address.
                 $sql_data_array = [
                     'product_id' => (int)$_GET['products_id'],
-                    'product_name_extra' => $posmProductNameExtra,//steve added: temporary fix for POSM info
+                    //'product_name_extra' => $posmProductNameExtra,//steve added: temporary fix for POSM info
                     'customer_id' => (int)$subscription_customer_id,
                     'name' => zen_db_prepare_input($_POST['name']),
                     'date_subscribed' => date('Y-m-d H:i:s'),
@@ -237,7 +237,7 @@ if (isset($_POST['notify_me'])) {
 
                 $sql_data_array = [
                     'product_id' => (int)$_GET['products_id'],
-                    'product_name_extra' => $posmProductNameExtra,//steve added: temporary fix for POSM info
+                    //'product_name_extra' => $posmProductNameExtra,//steve added: temporary fix for POSM info
                     'name' => zen_db_prepare_input($_POST['name']),
                     'email_address' => zen_db_prepare_input($_POST['email']),
                     'subscription_code' => $subscription_code,
