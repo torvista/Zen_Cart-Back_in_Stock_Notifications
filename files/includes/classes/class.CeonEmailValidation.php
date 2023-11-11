@@ -8,9 +8,9 @@
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @copyright   Copyright 2004-2012 Ceon
- * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: class.CeonEmailValidation.php 904 2012-01-01 17:24:17Z conor $
+ * @link        https://www.dev.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: class.CeonEmailValidation.php 904 2023-11-11 torvista
  */
 class CeonEmailValidation
 {
@@ -29,7 +29,7 @@ class CeonEmailValidation
 	 * @param   string    $email   E-mail Address to validate
 	 * @return  boolean   Status of validation (true for valid, false for invalid).
 	 */
-	static function isValid($email)
+    public static function isValid($email)
 	{
 		// Create the syntactical validation regular expression (2-6 includes .uk -> .museum)
 		$regexp = "/^([_a-z0-9-]+)(\.[_a-z0-9\+=-]+)*@([a-z0-9-]+)(\.[a-z0-9-]+)*(\.[a-z]{2,6})$/i";
@@ -58,7 +58,7 @@ class CeonEmailValidation
 	 * @param   string    $header   E-mail header to check for injection attempt
 	 * @return  boolean   Status of detection (true if Injection Detected, false if None Detected)
 	 */
-	static function isHeaderInjection($header)
+	public static function isHeaderInjection($header)
 	{
 		// Define strings to test against
 		$test_strings = array(
@@ -83,5 +83,3 @@ class CeonEmailValidation
 	
 	// }}}
 }
-
-?>
