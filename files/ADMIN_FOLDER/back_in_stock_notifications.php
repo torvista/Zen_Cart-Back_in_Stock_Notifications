@@ -6,7 +6,6 @@ declare(strict_types=1);
  * @var queryFactory $db
  * @var messageStack $messageStack
  * @var notifier $zco_notifier
- * @var sniffer $sniffer
  * @var template_func $template
  * @var $current_page_base
  */
@@ -25,25 +24,24 @@ declare(strict_types=1);
  * @version     $Id: back_in_stock_notifications.php 2023-11-11 torvista
  */
 
-/**
- * Version info - don't touch!
- */
-define('CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION', '3.2.1beta');
+const CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION = '3.2.3alpha';
 
 require('includes/application_top.php');
 
-// First off, make sure that necessary database table and configuration options exist. If not,
-// attempt to create them
+// Check the database subscriptions table exist. If not, run the installer
 $table_exists_query = 'SHOW TABLES LIKE "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '"';
-
 $table_exists_result = $db->Execute($table_exists_query);
 
-if ($table_exists_result->EOF ||
-		!defined('BACK_IN_STOCK_REQUIRES_LOGIN') ||
-    isset($_GET['check-config'])) {
+// Check all the admin options are created
+$option_missing =
+    !defined('BACK_IN_STOCK_NOTIFICATIONS_ENABLED') ||
+    !defined('BACK_IN_STOCK_REQUIRES_LOGIN') ||
+    !defined('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO');
+
+//can use parameter on page url &check-config=1 to force check
+if ($table_exists_result->EOF || $option_missing || isset($_GET['check-config'])) {
     // Instantiate and run the installation/upgrade class
     require_once(DIR_WS_CLASSES . 'class.CeonBISNInstallOrUpgrade.php');
-
     $install_or_upgrade = new CeonBISNInstallOrUpgrade();
 
     if (count($install_or_upgrade->error_messages) > 0) {
@@ -55,7 +53,6 @@ if ($table_exists_result->EOF ||
         exit;
     }
 }
-
 
 require_once(DIR_WS_FUNCTIONS . 'plugin_bisn_functions.php');
 

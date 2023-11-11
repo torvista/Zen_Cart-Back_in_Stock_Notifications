@@ -66,7 +66,7 @@
 <?php
 // plugin BISN 1 of 2
 //if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0') {
-  if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0' || BACK_IN_STOCK_NOTIFICATION_ENABLED === '1') {
+  if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 or CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS !='0' || BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1') {
 // eof plugin BISN 1 of 2
 ?>
 <h2><?php echo EMAIL_NOTIFICATIONS_TITLE; ?></h2>
@@ -78,7 +78,7 @@
 <?php } //endif newsletter unsubscribe ?>
 <?php
 // plugin BISN 2 of 2
-  if (BACK_IN_STOCK_NOTIFICATION_ENABLED === '1') {
+  if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1') {
       echo '<li>' . ($subscribed_to_notification_lists ? '<a href="' . zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '', 'SSL') . '">' . EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS . '</a>' : EMAIL_NOTIFICATIONS_NO_BACK_IN_STOCK_NOTIFICATIONS) . '</li>';
   }
 // eof plugin BISN 2 of 2

@@ -13,6 +13,8 @@ Note that the original documentation in the docs folder will NOT be updated for 
 ## Changelog
 11/11/2023: moved admin functions file so only loaded with BISN admin page
 Remove duplicated function zen_get_products_model from bis_functions.php
+Renamed BACK_IN_STOCK_NOTIFICATION_ENABLED to BACK_IN_STOCK_NOTIFICATIONS_ENABLED
+Minor changes to installer messages and processing.
 
 06/11/2023: relocated required/optional template files to main file structure.
 Updated template files based on ZC158 responsive_classic.
