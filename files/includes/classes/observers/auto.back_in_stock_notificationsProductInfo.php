@@ -78,7 +78,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
 
         // Check if customer should be offered the option to be notified when this product is back
         // in stock
-        if (BACK_IN_STOCK_NOTIFICATION_ENABLED === '1' && $product_back_in_stock_notification_form_link) {
+        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && $product_back_in_stock_notification_form_link) {
             $product_back_in_stock_notification_form_link = '';
             $back_in_stock_notification_build_form = true;
 
