@@ -10,18 +10,27 @@ It's compatible with the current Zen Cart 1.5.8 and php7.3+.
 
 Note that the original documentation in the docs folder will NOT be updated for the moment, so the file list is out of date.
 
+
 ## Changelog
+PR Big Bang
+Add multi-language to email sending
+Admin copy of BISN subscription email, replies to customer
+
+Admin
+Bugfix: handle fatal error for missing/deleted product
+Replace tabs with spaces
+Option 1 (list subscriptions by product)
+Added column sorts/set column sort links to table id anchor
+Hide model column if not used.
+Add Delete All subscriptions button for each products
+Use CSS buttons instead of images.
+Correct page display text.
+
 11/11/2023: moved admin functions file so only loaded with BISN admin page
 Remove duplicated function zen_get_products_model from bis_functions.php
 Renamed BACK_IN_STOCK_NOTIFICATION_ENABLED to BACK_IN_STOCK_NOTIFICATIONS_ENABLED
 Minor changes to installer messages and processing.
 Add delete of single subscriptions of a product
-Add multi-language to email sending
-Added column sorts for category and model
-Changed default sort column to model
-Bugfix: handle missing/deleted product
-Admin copy of BISN subscription email, replies to customer
-TODO
 
 06/11/2023: relocated required/optional template files to main file structure.
 Updated template files based on ZC158 responsive_classic.

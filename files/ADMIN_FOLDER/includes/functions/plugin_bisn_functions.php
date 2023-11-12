@@ -51,27 +51,27 @@ function sendBackInStockNotifications(int $languages_id, $test_mode = false, $de
     //}
 //eof steve
     $email_addresses_query_raw = "
-		SELECT
-			bisns.email_address, bisns.name, bisns.languages_id, c.customers_email_address, c.customers_firstname,
-			c.customers_lastname
-		FROM
-			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
-		LEFT JOIN
-			" . TABLE_PRODUCTS . " p
-		ON
-			p.products_id = bisns.product_id
-		LEFT JOIN
-			" . TABLE_CUSTOMERS . " c
-		ON
-			c.customers_id = bisns.customer_id
-		WHERE
-			p.products_quantity > 0
-		AND
-		    " . $and_emails . "
-		GROUP BY
-			bisns.email_address, c.customers_email_address, bisns.name, bisns.languages_id, c.customers_firstname, c.customers_lastname
-		ORDER BY
-			bisns.email_address, c.customers_email_address";
+      SELECT
+         bisns.email_address, bisns.name, bisns.languages_id, c.customers_email_address, c.customers_firstname,
+         c.customers_lastname
+      FROM
+         " . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
+      LEFT JOIN
+         " . TABLE_PRODUCTS . " p
+      ON
+         p.products_id = bisns.product_id
+      LEFT JOIN
+         " . TABLE_CUSTOMERS . " c
+      ON
+         c.customers_id = bisns.customer_id
+      WHERE
+         p.products_quantity > 0
+      AND
+          " . $and_emails . "
+      GROUP BY
+         bisns.email_address, c.customers_email_address, bisns.name, bisns.languages_id, c.customers_firstname, c.customers_lastname
+      ORDER BY
+         bisns.email_address, c.customers_email_address";
 
     $email_addresses_result = $db->Execute($email_addresses_query_raw);
 
@@ -92,42 +92,42 @@ function sendBackInStockNotifications(int $languages_id, $test_mode = false, $de
             // Get all the products for which this e-mail address is subscribed to a back in stock
             // notification list and for which the product is back in stock
             //steve for languages
-            //		if ($test_mode) {
+            //      if ($test_mode) {
             $where_products = "pd.language_id = '" . $languages_id . "'";
-            /*		} else {
+            /*      } else {
                         $where_products = "pd.language_id = '" . $_SESSION['languages_id'] . "'";
                     }
             */        //eof steve
             //steve added p.products_model
             $products_query = "
-				SELECT DISTINCT
-					bisns.id, bisns.product_id, pd.products_name, p.products_model
-				FROM
-					" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
-				LEFT JOIN
-					" . TABLE_CUSTOMERS . " c
-				ON
-					c.customers_id = bisns.customer_id
-				LEFT JOIN
-					" . TABLE_PRODUCTS . " p
-				ON
-					p.products_id = bisns.product_id
-				LEFT JOIN
-					" . TABLE_PRODUCTS_DESCRIPTION . " pd
-				ON
-					pd.products_id = bisns.product_id
-				WHERE
-				    " . $where_products . "
-				AND
-					p.products_quantity > 0
-				AND
-					" . $and_emails . "
-				AND
-					(
-					bisns.email_address = '" . $customer_email_address . "'
-				OR
-					c.customers_email_address = '" . $customer_email_address . "'
-					);";
+            SELECT DISTINCT
+               bisns.id, bisns.product_id, pd.products_name, p.products_model
+            FROM
+               " . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
+            LEFT JOIN
+               " . TABLE_CUSTOMERS . " c
+            ON
+               c.customers_id = bisns.customer_id
+            LEFT JOIN
+               " . TABLE_PRODUCTS . " p
+            ON
+               p.products_id = bisns.product_id
+            LEFT JOIN
+               " . TABLE_PRODUCTS_DESCRIPTION . " pd
+            ON
+               pd.products_id = bisns.product_id
+            WHERE
+                " . $where_products . "
+            AND
+               p.products_quantity > 0
+            AND
+               " . $and_emails . "
+            AND
+               (
+               bisns.email_address = '" . $customer_email_address . "'
+            OR
+               c.customers_email_address = '" . $customer_email_address . "'
+               );";
 
             $products_result = $db->Execute($products_query);
 
@@ -146,17 +146,17 @@ function sendBackInStockNotifications(int $languages_id, $test_mode = false, $de
                 ];
 
                 $product_type_result = $db->Execute("
-					SELECT
-						p.products_id,
-						pt.type_handler
-					FROM
-						" . TABLE_PRODUCTS . " p
-					LEFT JOIN
-						" . TABLE_PRODUCT_TYPES . " pt
-					ON
-						pt.type_id = p.products_type
-					WHERE
-						p.products_id = " . (int)$products_result->fields['product_id']
+               SELECT
+                  p.products_id,
+                  pt.type_handler
+               FROM
+                  " . TABLE_PRODUCTS . " p
+               LEFT JOIN
+                  " . TABLE_PRODUCT_TYPES . " pt
+               ON
+                  pt.type_id = p.products_type
+               WHERE
+                  p.products_id = " . (int)$products_result->fields['product_id']
                 );
 
                 if (!$product_type_result->EOF &&
@@ -208,7 +208,7 @@ function sendBackInStockNotifications(int $languages_id, $test_mode = false, $de
 
     // Build list of addresses and products that notifications were sent for, as well as a list of IDs for the subscriptions (so they can be deleted)
 
-	$output = '';
+    $output = '';
     $subscription_ids = [];
 
     $num_addresses_notified = sizeof($email_addresses_notified);
@@ -262,10 +262,10 @@ function sendBackInStockNotifications(int $languages_id, $test_mode = false, $de
             $subscription_ids_string = implode(',', $subscription_ids);
 
             $delete_subscriptions_query = "
-				DELETE FROM
-					" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
-				WHERE
-					id IN (" . $subscription_ids_string . ");";
+            DELETE FROM
+               " . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
+            WHERE
+               id IN (" . $subscription_ids_string . ");";
 
             $db->Execute($delete_subscriptions_query);
         }
@@ -285,17 +285,17 @@ function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB(): void
     global $db, $messageStack;
 
     $delete_subscriptions_query = "
-		DELETE FROM
-			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
-		WHERE
-			product_id NOT IN (
-				SELECT
-					products_id
-				FROM
-					" . TABLE_PRODUCTS . "
-				WHERE
-					1 = 1
-			);";
+      DELETE FROM
+         " . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
+      WHERE
+         product_id NOT IN (
+            SELECT
+               products_id
+            FROM
+               " . TABLE_PRODUCTS . "
+            WHERE
+               1 = 1
+         );";
 
     $db->Execute($delete_subscriptions_query);
     $messageStack->add(
@@ -385,11 +385,11 @@ function sendBackInStockNotificationEmail($name, $email, $plain_text_msg, $html_
         STORE_OWNER_EMAIL_ADDRESS . '">' . STORE_OWNER_EMAIL_ADDRESS . ' </a>'
     );
 
-    $test_mode_subj = ''; 
+    $test_mode_subj = '';
     if ($test_mode) {
         // Only send e-mails to store owner when in test mode
         $email = EMAIL_FROM;
-        $test_mode_subj = ' - TEST MODE'; 
+        $test_mode_subj = ' - TEST MODE';
     }
 
     // Create the text version of the e-mail for Zen Cart's e-mail functionality
@@ -456,5 +456,27 @@ function buildLinkToProductAdminPage(string $name, int $id, int $products_type):
         htmlentities(substr($name, 0, $name_length), ENT_COMPAT, CHARSET) .
         (strlen($name) > $name_length ? '...' : '') . '</a>';
 
-	return $new_name;
+    return $new_name;
+}
+
+/**
+ * Check for the use of a value for model in the query results.
+ * If no value found, hide model columns etc.
+ * @param $query_result
+ * @return bool
+ */
+function checkForModel($query_result): bool
+{
+    $use_model = false;
+    foreach ($query_result as $array) {
+        //debug
+        //mv_printVar($array);
+        $use_model = !empty($array['products_model']);
+        if ($use_model) {
+            break;
+        }
+    }
+    //debug
+    //echo '$use_model=' . $use_model;
+    return $use_model;
 }

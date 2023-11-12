@@ -48,7 +48,7 @@ define('TEXT_SORT_BY_CUSTOMER_EMAIL', 'Sort by Customer\'s E-mail Address');
 
 define('TEXT_DISPLAY_NUMBER_OF_BACK_IN_STOCK_NOTIFICATIONS', 'Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> subscriptions) ');
 define('TEXT_SHOW_ALL', 'Show All');
-define('TEXT_DISPLAY_BY_PAGE', 'Display by Page');
+define('TEXT_DISPLAY_BY_PAGE', 'Paged Listing');
 
 define('TEXT_SEND_OUTPUT_TITLE', 'Send Output');
 define('TEXT_PREVIEW_OR_SEND_OUTPUT_TITLE_NONE', 'There are no notifications to be sent at this time.');
@@ -93,14 +93,15 @@ define('MESSAGE_STACK_BISN_SUBS_NOT_DELETED', 'BISN subscriptions not deleted (r
 define('TEXT_TITLE_GOTO_CATEGORY','go to admin category listing');
 define('TEXT_TITLE_EDIT_PRODUCT','edit product');
 define('TEXT_TITLE_VIEW_PRODUCT','view product in shop');
-define('TEXT_TITLE_DELETE_ALL','delete ALL subscriptions for product');
+define('TEXT_TITLE_DELETE_ALL','delete ALL subscriptions for: %s');
 define('TEXT_TITLE_SEND_EMAIL','send email');
 define('TEXT_TITLE_VIEW_CUSTOMER','view customer entry');
 define('TEXT_PRODUCT_ID_NOT_FOUND', 'product ID#%u not found (deleted)');
 define('TEXT_SUBMIT_GO','GO!');
 define('TABLE_HEADING_DELETE_SUBSCRIPTIONS', '');
-define('TEXT_DELETE_SUBSCRIPTION_CONFIRM', 'Are you sure you want to delete ALL the subscription(s) for: %s?');
+define('TEXT_DELETE_ALL_SUBSCRIPTIONS_CONFIRM', 'Are you sure you want to delete ALL the subscription(s) for: %s?');
+define('TEXT_DELETE_SUBSCRIPTION_CONFIRM', 'Are you sure you want to delete this subscription for: %s?');
 define('TEXT_DEBUG_NO_DELETE_SUBSCRIPTIONS', '<p class="messageStackError">$delete_customer_subscriptions = false (for repeat testing): Email notifications WILL be sent to the subscribers (unless overridden) but their subscriptions will NOT be deleted</p><br>');
 define('ERROR_TEST_MODE','In Test Mode - showing emails to be sent although there are sending errors');//shown in message stack when there are sending errors. Emails to be sent should not be listed due to the sending errors but I decided to allow the listing in test mode to permit offline development.
-define('TEXT_NOTE_OPTION_1','<h5>This listing shows only the base product ID: it does not currently list the product variants as individual products.<br>Back In Stock Notifications will be sent to ALL subscribers for the base product as shown here.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6>');
-define('TEXT_NOTE_OPTION_2','<h5>Although this listing shows the product variants as individual products, this is for information only: the Back In Stock Notifications will be sent to ALL subscribers for the base product.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6>');
+define('TEXT_NOTE_OPTION_1','<h5>This listing shows only the base product: it does not (yet...) list the product variants as individual products.<br>Back In Stock Notifications will be sent to ALL subscribers for the base product/all variants as shown here.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6>');
+define('TEXT_NOTE_OPTION_2','<h5>Although this listing shows the product variants as individual products, this is for information only: the Back In Stock Notifications will be sent to ALL subscribers for the base product.</h5>');
