@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023-11-11 torvista
+ * @version     $Id: back_in_stock_notifications.php 2023-11-12 torvista
  */
 
 /**
@@ -39,11 +39,11 @@ define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_EMAIL', 'E-mail');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_ENTRY_CONFIRM_EMAIL', 'Confirm E-mail');
 
 if (!defined('BUTTON_NOTIFY_ME_ALT')) {
-	define('BUTTON_NOTIFY_ME_ALT', 'Notify Me');
+    define('BUTTON_NOTIFY_ME_ALT', 'Notify Me');
 }
 
 if (!defined('BUTTON_IMAGE_NOTIFY_ME')) {
-	define('BUTTON_IMAGE_NOTIFY_ME', 'button_ceon_bisn_notify_me.png');
+    define('BUTTON_IMAGE_NOTIFY_ME', 'button_ceon_bisn_notify_me.png');
 }
 
 define('EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS', 'Unsubscribe from Back In Stock Notification Lists.');

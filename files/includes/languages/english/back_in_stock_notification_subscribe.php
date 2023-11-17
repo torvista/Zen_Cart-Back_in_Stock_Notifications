@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notification_subscribe.php 2023-11-11 torvista
+ * @version     $Id: back_in_stock_notification_subscribe.php 2023-11-12 torvista
  */
 
 define('BACK_IN_STOCK_NOTIFICATION_NAVBAR_TITLE', 'Back In Stock Notification');

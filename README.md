@@ -1,30 +1,29 @@
 # Zen Cart - Back in Stock Notifications
 If a product is out of stock, customers can subscribe/request to receive a notification when that product becomes available again.
 
-This is based on the original CEON version, not the forked ajax version. Neither are supported anymore, but the functionality is well worthwhile, and I use it, so am encouraging use and development here despite it being the usual yelling into the void...
+This was based on the original CEON version, not the forked ajax version. Neither are supported anymore, but the functionality is well worthwhile, and I use it, so am encouraging use and development here despite it being the usual yelling into the void...
 
-I've been modifying it for years, so I'm gradually reworking my personal improvements to add those here when the mood takes me and, in the process, make the code more Zen-ish to maybe get it into the core one day.
+I've been modifying it for years, multi-language and attributes handling being the most significant omissions from the original code.
+I've almost finished reworking and merging the huge amount of changes, and in the process, make the code more Zen-ish to maybe get it into the core one day.
 
-As a result, this code has many changes from the old plugin version, but as I'm attempting to implement the changes piecemeal to maintain a change history, it's a mongrel and it may have errors in it. So always test on a development server.
+As a result, this code is hugely different from the old plugin version, so always test on a development server: DO NOT drop it into your production server without testing first.
 It's compatible with the current Zen Cart 1.5.8 and php7.3+.
 
 Note that the original documentation in the docs folder will NOT be updated for the moment, so the file list is out of date.
 
-
 ## Changelog
-PR Big Bang
-Add multi-language to email sending
-Admin copy of BISN subscription email, replies to customer
-
+12/11/2023:
+Add multi-language to email sending.
+A reply to the Admin copy of BISN subscription email now replies to customer
+Replace tabs with spaces with all files.
 Admin
-Bugfix: handle fatal error for missing/deleted product
-Replace tabs with spaces
-Option 1 (list subscriptions by product)
+Option 1 list subscriptions by product
+Option 2 list all subscriptions 
+Bugfix: handle fatal error for a missing/deleted product
 Added column sorts/set column sort links to table id anchor
 Hide model column if not used.
-Add Delete All subscriptions button for each products
-Use CSS buttons instead of images.
-Correct page display text.
+Add Delete buttons for each product/subscription.
+Corrected paging display text.
 
 11/11/2023: moved admin functions file so only loaded with BISN admin page
 Remove duplicated function zen_get_products_model from bis_functions.php

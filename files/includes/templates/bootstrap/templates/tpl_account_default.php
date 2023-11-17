@@ -64,7 +64,7 @@ if ((int)ACCOUNT_NEWSLETTER_STATUS > 0 || CUSTOMERS_PRODUCTS_NOTIFICATION_STATUS
     } //endif product notification 
 ?>
 <?php
-// steve Back in Stock BISN
+// plugin BISN 1 of 1
   if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1') {
       echo '<li class="list-group-item">' . ($subscribed_to_notification_lists ? zca_button_link(zen_href_link(FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS, '', 'SSL'), EMAIL_NOTIFICATIONS_BACK_IN_STOCK_NOTIFICATIONS) : EMAIL_NOTIFICATIONS_NO_BACK_IN_STOCK_NOTIFICATIONS) . '</li>';
   }

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-11 torvista
+ * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-17 torvista
  */
 
 /**
@@ -58,8 +58,8 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                $back_in_stock_notification_form_customer_email,
                $back_in_stock_notification_form_customer_email_confirmation;
 
-            $product_back_in_stock_notification_form_link = null;
-            $back_in_stock_notification_build_form = false;
+        $product_back_in_stock_notification_form_link = null;
+        $back_in_stock_notification_build_form = false;
 
         // check product id is valid
         $prid_ok = true;
@@ -82,33 +82,31 @@ class zcObserverBackInStockNotificationsProductInfo extends base
 
             // Update the source with the details of the customer (if available)
             if (isset($_SESSION['customer_id']) && $_SESSION['customer_id']) {
-
                 // Check if this user has already requested to be notified when this product is back
                 // in stock
-                $customer_details_query = "
-					SELECT
-						customers_firstname, customers_lastname, customers_email_address
-					FROM
-						" . TABLE_CUSTOMERS . "
-					WHERE
-						customers_id = " . (int)$_SESSION['customer_id'];
+                $customer_details_query = '
+               SELECT
+                  customers_firstname, customers_lastname, customers_email_address
+               FROM
+                  ' . TABLE_CUSTOMERS . '
+               WHERE
+                  customers_id = ' . (int)$_SESSION['customer_id'];
 
                 $customer_details = $db->Execute($customer_details_query);
 
-                $already_to_be_notified_query = "
-					SELECT
-						id
-					FROM
-						" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
-					WHERE
-						product_id = " . (int)$_GET['products_id'] . "
-					AND
-						(
-							customer_id = " . (int)$_SESSION['customer_id'] . "
-						OR
-							email_address = '" . $customer_details->fields['customers_email_address'] . "'
-
-						)";
+                $already_to_be_notified_query = '
+               SELECT
+                  id
+               FROM
+                  ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '
+               WHERE
+                  product_id = ' . (int)$_GET['products_id'] . '
+               AND
+                  (
+                     customer_id = ' . (int)$_SESSION['customer_id'] . "
+                  OR
+                     email_address = '" . $customer_details->fields['customers_email_address'] . "'
+                  )";
 
                 $already_to_be_notified = $db->Execute($already_to_be_notified_query);
 
@@ -118,7 +116,6 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                     $back_in_stock_notification_build_form = false;
 
                     $product_back_in_stock_notification_form_link = BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED;
-
                 } else {
                     // Customer is not yet subscribed to be notified - store data for notification
                     // request form
@@ -146,16 +143,18 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                     // if logged in: the subscription link adds the subscription (no form needed)
                     // if not logged in: redirects to login/account creation page
                     $product_back_in_stock_notification_form_link = sprintf(
-                            BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-                            zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
-                                'products_id=' . (int)$_GET['products_id']));
+                        BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
+                        zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
+                            'products_id=' . (int)$_GET['products_id']));
                 } else {
                     // guest may subscribe: link jumps to form at foot of page
                     $product_back_in_stock_notification_form_link = sprintf(
-                            BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-                            zen_href_link(zen_get_info_page((int)$_GET['products_id']),
-                                zen_get_all_get_params(['number_of_uploads']), $request_type) .
-                            '#back_in_stock_notification_form');
+                        BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
+                        zen_href_link(zen_get_info_page((int)$_GET['products_id']),
+                            zen_get_all_get_params(['number_of_uploads']),
+                            $request_type
+                        ) .
+                        '#back_in_stock_notification_form');
                 }
             }
         }

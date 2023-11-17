@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-11 torvista
+ * @version     $Id: header_php.php 2023-11-17 torvista
  */
 
 /**phpStorm inspections
@@ -48,36 +48,27 @@ $build_form = true;
 $already_subscribed = false;
 
 // Get the name of the product
-$product_name_query = "
-	SELECT
-		products_name
-	FROM
-		" . TABLE_PRODUCTS_DESCRIPTION . "
-	WHERE
-		products_id = " . (int)$_GET['products_id'] . "
-	AND
-		language_id = " . (int)$_SESSION['languages_id'] . " LIMIT 1";
+$product_name_query = '
+   SELECT
+      products_name
+   FROM
+      ' . TABLE_PRODUCTS_DESCRIPTION . '
+   WHERE
+      products_id = ' . (int)$_GET['products_id'] . '
+   AND
+      language_id = ' . (int)$_SESSION['languages_id'] . ' LIMIT 1';
 
 $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
 if ($product_name_result->RecordCount() === 0) {//should never happen
     $product_name = '(no product name)';
-} else {
-    $product_name = $product_name_result->fields['products_name'];
-}
-
-//steve bof get products model
-$product_model_query = "SELECT products_model FROM " . TABLE_PRODUCTS . " WHERE	products_id = " . (int)$_GET['products_id'] . " LIMIT 1";
-$product_model_result = $db->Execute($product_model_query);
-//steve eof get products model
-
-// Make sure the product exists!
-if ($product_model_result->RecordCount() === 0) {
     $product_model = '';
 } else {
-    $product_model = $product_model_result->fields['products_model'];//steve
+    $product_name = $product_name_result->fields['products_name'];
+    $product_model = zen_get_products_model((int)$_GET['products_id']);
 }
+
 if (isset($_POST['posmProductNameExtra'])) {
     $posmProductNameExtra = zen_db_prepare_input($_POST['posmProductNameExtra']);
     //$posm_pos_name = $db->Execute("SELECT pos_model FROM " . TABLE_PRODUCTS_OPTIONS_STOCK . " WHERE pos_id = $posm_pos_id LIMIT 1");
@@ -138,21 +129,21 @@ if (isset($_POST['notify_me'])) {
 
 
         // Check if the user is already subscribed to the notification list for this product
-        $check_notification_subscription_query = "
-			SELECT
-				id
-			FROM
-				" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
-			LEFT JOIN
-				" . TABLE_CUSTOMERS . " c
-			ON
-				c.customers_id = bisns.customer_id
-			WHERE
-				bisns.product_id = '" . (int)$_GET['products_id'] . "'
-			AND
-				(bisns.email_address = '" . zen_db_prepare_input($email_address) . "'
-			OR
-				c.customers_email_address = '" . zen_db_prepare_input($email_address) . "');";
+        $check_notification_subscription_query = '
+         SELECT
+            id
+         FROM
+            ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
+         LEFT JOIN
+            ' . TABLE_CUSTOMERS . ' c
+         ON
+            c.customers_id = bisns.customer_id
+         WHERE
+            bisns.product_id = ' . (int)$_GET['products_id'] . '
+         AND
+            (bisns.email_address = "' . zen_db_prepare_input($email_address) . '"
+         OR
+            c.customers_email_address = "' . zen_db_prepare_input($email_address) . '")';
         $check_notification_subscription = $db->Execute($check_notification_subscription_query);
 
         if ($check_notification_subscription->RecordCount() > 0) {
@@ -166,13 +157,13 @@ if (isset($_POST['notify_me'])) {
                 $subscription_customer_id = $_SESSION['customer_id'];
 
                 // Get the currently logged in customer's email address
-                $customer_email_address_query = "
-					SELECT
-						customers_email_address
-					FROM
-						" . TABLE_CUSTOMERS . "
-					WHERE
-						customers_id = '" . (int)$_SESSION['customer_id'] . "';";
+                $customer_email_address_query = '
+               SELECT
+                  customers_email_address
+               FROM
+                  ' . TABLE_CUSTOMERS . '
+               WHERE
+                  customers_id = ' . (int)$_SESSION['customer_id'];
 
                 $customer_email_address_result = $db->Execute($customer_email_address_query);
 
@@ -182,14 +173,13 @@ if (isset($_POST['notify_me'])) {
                 }
             } else {
                 // Is this an existing customer who hasn't signed in?
-                $existing_customer_query = "
-					SELECT
-						customers_id
-					FROM
-						" . TABLE_CUSTOMERS . "
-					WHERE
-						customers_email_address = '" . zen_db_prepare_input($email_address) . "'";
-
+                $existing_customer_query = '
+               SELECT
+                  customers_id
+               FROM
+                  ' . TABLE_CUSTOMERS . '
+               WHERE
+                  customers_email_address = "' . zen_db_prepare_input($email_address) . '"';
                 $existing_customer_result = $db->Execute($existing_customer_query);
 
                 if (!$existing_customer_result->EOF) {
@@ -311,7 +301,7 @@ function sendBackInStockNotificationSubscriptionEmail(
     $customer_name,
     $email_address,
     string $subscription_code = ''
-) {
+): void {
     $text_msg_part = [];
     $html_msg = [];
 

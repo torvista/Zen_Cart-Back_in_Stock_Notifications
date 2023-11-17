@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Ceon Back In Stock Notifications Admin Language Definitions.
+ * Ceon Back In Stock Notifications Admin English Language Definitions.
  *
  * @package     ceon_back_in_stock_notifications
  * @author      Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023 11 11 torvista $
+ * @version     $Id: back_in_stock_notifications.php 2023 11 12 torvista $
  */
 
 define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Ceon Back In Stock Notifications');
@@ -78,7 +78,6 @@ define('TEXT_FINISHED_SENDING_EMAILS', 'Finished sending e-mails!');
 
 define('TEXT_AFTER_EMAIL_INSTRUCTIONS','<p>%s emails sent!</p><p>The email addresses which were subscribed to be notified when this product was back in stock <strong>have now been deleted</strong> from the Back In Stock Notification List for this product!</p>');
 
-//added for 3.2.2
 define('MODULE_COPYRIGHT', 'Module &copy; Copyright 2004-2011');
 define('MODULE_VERSION', 'Module Version: ');
 define('CHECK_FOR_UPDATES', 'Check for Updates');
@@ -86,7 +85,7 @@ define('TABLE_HEADING_PRODUCT_MODEL', 'Model');
 define('TEXT_SORT_BY_PRODUCT_MODEL', 'Sort by Product Model');
 define('TABLE_HEADING_CUSTOMER_LANGUAGES_ID', 'Language');
 define('TEXT_SORT_BY_LANGUAGE_ID', 'Sort by Language');
-define('TEXT_TEST_OUTPUT', '<h5>These are <strong>ALL</strong> the emails that are <strong>DUE</strong> to be sent (in both languages).</h5><p>In the real sending process (Option 4), <strong>ONLY</strong> emails matching the currently-selected admin-language will be sent (or via cron with ?action=send&amp;option=4&amp;language=es etc.) to ensure the correct language constants are used with the email template.<br>Consequently, after executing Option 4 once, the Admin language MUST then be changed to the next language to automatically reload this page and re-execute Option 4 again for the remaining emails in the second language.</p>');
+define('TEXT_TEST_OUTPUT', '<h5>These are <strong>ALL</strong> the emails that are <strong>DUE</strong> to be sent (in both languages).</h5><p>In the real sending process (Option 4), <strong>ONLY</strong> emails matching the <b>currently-selected</b> admin-language will be sent (or via cron with ?action=send&amp;option=4&amp;language=es etc.), to ensure the correct language constants are used with the email template.</p><p>Consequently, after executing Option 4 once, the Admin language MUST then be changed to the next language to automatically reload this page and re-execute Option 4 again for emails in other languages.</p>');
 define('TEXT_LANGUAGE', 'Language');
 define('TEXT_NOTE_URI_MAPPING','Note: CEON URI Mapping static links are language-dependant and can only be displayed here in the current Admin language. The correct language is used in the email.');
 define('MESSAGE_STACK_BISN_SUBS_NOT_DELETED', 'BISN subscriptions not deleted (repeated test mode)');

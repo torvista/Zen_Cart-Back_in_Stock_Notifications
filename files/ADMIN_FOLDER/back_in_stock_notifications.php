@@ -28,7 +28,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023-11-11 torvista
+ * @version     $Id: back_in_stock_notifications.php 2023-11-12 torvista
  */
 
 // FOR REPEAT TESTING ONLY
@@ -103,11 +103,11 @@ $option = (int)$_GET['option'];
 switch ($option) {
     case 1://list the products that have subscriptions attached
 
-        //for deleting all subscriptions to one product
-        //todo review this
+        // deleting all subscriptions for one product
         if (isset($_POST['delete'])) {
-            $delete_product_subscriptions_query_raw = 'DELETE FROM ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' WHERE product_id = ' . (int)$_POST['delete'];
-            $db->Execute($delete_product_subscriptions_query_raw);
+            $sql = 'DELETE FROM ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' WHERE product_id=:productID:';
+            $sql = $db->bindVars($sql, ':productID:', $_POST['delete'], 'integer');
+            $db->Execute($sql);
         }
 
         $products_query_raw = '
@@ -127,15 +127,15 @@ switch ($option) {
          ON
             p.products_id = pd.products_id
          LEFT JOIN
-            ' . TABLE_CATEGORIES_DESCRIPTION . " cd
+            ' . TABLE_CATEGORIES_DESCRIPTION . ' cd
          ON
             (p.master_categories_id = cd.categories_id
          AND
-            cd.language_id = '" . $_SESSION['languages_id'] . "')
+            cd.language_id = ' . (int)$_SESSION['languages_id'] . ')
          WHERE
             1 = 1
          GROUP BY
-            bisns.product_id, pd.products_name, p.products_model, p.products_type, p.products_quantity, cd.categories_name, cd.categories_id";
+            bisns.product_id, pd.products_name, p.products_model, p.products_type, p.products_quantity, cd.categories_name, cd.categories_id';
 
         $sort_column = $_GET['sort'] ?? 'model'; //set default sort column
 
@@ -169,19 +169,7 @@ switch ($option) {
         }
 
         $product_subscriptions_info = $db->Execute($products_query_raw);
-
-        // Get accurate value for the number of rows
-        $num_rows_query = '
-         SELECT
-            bisns.id
-         FROM
-            ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
-         WHERE
-            1 = 1;';
-
-        $num_rows_result = $db->Execute($num_rows_query);
-        $num_rows = $num_rows_result->RecordCount();
-
+        $num_rows = $product_subscriptions_info->RecordCount();
         break;
 
     case 2://list all the subscriptions, by customer
@@ -194,7 +182,7 @@ switch ($option) {
 
         $subscriptions_query_raw = '
          SELECT
-            DISTINCT bisns.id, bisns.customer_id, bisns.product_id, bisns.name, bisns.email_address,
+            DISTINCT bisns.*, bisns.name, bisns.email_address,
             bisns.date_subscribed, pd.products_name, p.products_type, c.customers_firstname, c.customers_lastname, c.customers_email_address,
             cd.categories_name, cd.categories_id, p.products_model, bisns.languages_id 
          FROM
@@ -272,25 +260,16 @@ switch ($option) {
         }
 
         $subscriptions_info = $db->Execute($subscriptions_query_raw);
-
-        // Get accurate value for the number of rows
-        $num_rows_query = '
-         SELECT
-            bisns.id
-         FROM
-            ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
-         WHERE
-            1 = 1';
-        $num_rows_result = $db->Execute($num_rows_query);
-        $num_rows = $num_rows_result->RecordCount();
+        $num_rows = $subscriptions_info->RecordCount();
         break;
 
-    case 3://for the test run, show all the emails that need to be sent
+    case 3://test run, display all the emails that need to be sent, and also send them to the EMAIL_FROM (store email address). Subscriptions not deleted
 
         //todo needs rework
         unset($send_output);
+        // create array of emails per language
         foreach ($languages as $key => $lang) {
-            $send_output[$lang['id']] = sendBackInStockNotifications((int)$lang['id'], true);//test mode == true: emails sent only to EMAIL_FROM (store address). Subscriptions not deleted.
+            $send_output[$lang['id']] = sendBackInStockNotifications((int)$lang['id'], true);//test mode == true: emails are sent only to EMAIL_FROM (store address). Subscriptions not deleted.
         }
         break;
 
