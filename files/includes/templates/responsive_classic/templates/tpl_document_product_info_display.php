@@ -180,7 +180,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 </div>
 </div>
 <?php // plugin BISN 2 of 4
-// closing tag of form 'cart_quantity' moved here: must be closed before BISN form?>
+// closing tag of form 'cart_quantity' moved here: must be closed before BISN form ?>
 <!--bof Form close-->
 </form>
 <!--bof Form close-->
@@ -256,11 +256,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <!--eof Product URL -->
 
 <?php // plugin BISN 3 of 4
-if (is_null($product_back_in_stock_notification_form_link)) {
-    echo '<!-- BISN link is null -->';
-} else {
    include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
-}
 // eof plugin BISN 3 of 4
 ?>
 <!--bof also purchased products module-->

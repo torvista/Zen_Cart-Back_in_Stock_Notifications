@@ -112,4 +112,6 @@ if (!empty($back_in_stock_notification_build_form)) {
     );
 
     print $back_in_stock_notification_form->getXHTMLSource();
+} else {
+    echo '<!-- BISN link is null -->';
 }
