@@ -33,8 +33,8 @@ declare(strict_types=1);
  * @return  string    Information about the customers e-mailed (if any).
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  */
-//steve $test_mode may be ''
-function sendBackInStockNotifications(int $languages_id, $test_mode = false, $delete_subscriptions = true): string
+
+function sendBackInStockNotifications(int $languages_id, bool $test_mode = false, $delete_subscriptions = true): string
 {
     global $db;
 
@@ -189,16 +189,15 @@ function sendBackInStockNotifications(int $languages_id, $test_mode = false, $de
         }
     }
 
-    // Build list of addresses and products that notifications were sent for, as well as a list of IDs for the subscriptions (so they can be deleted)
+    // Build list of addresses and products for which notifications were sent, as well as a list of IDs for the subscriptions (so they can be deleted)
 
     $output = '';
     $subscription_ids = [];
 
     $num_addresses_notified = count($email_addresses_notified);
 
-    //bof steve languages
     $output = '<h4>' . zen_get_language_icon($languages_id) . ' ' . TEXT_LANGUAGE . ' ' . $languages_id . ' - ' . ucfirst(zen_get_language_name($languages_id)) . '</h4>';
-    //eof steve
+
     if ($num_addresses_notified == 0) {
         $output .= '<p>' . TEXT_PREVIEW_OR_SEND_OUTPUT_TITLE_NONE . "</p>\n";
     } else {
@@ -280,7 +279,7 @@ function expungeOutdatedSubscriptionsFromBackInStockNotificationsDB(): void
  * @return  bool   Whether or not the e-mail was sent successfully.
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  */
-function sendBackInStockNotificationEmail(string $name, string $email, string $plain_text_msg, string $html_msg, int $languages_id, bool $more_than_one = false, $test_mode = false): bool
+function sendBackInStockNotificationEmail(string $name, string $email, string $plain_text_msg, string $html_msg, int $languages_id, bool $more_than_one = false, bool $test_mode = false): bool
 {
     global $messageStack, $ENABLE_SSL;
 
@@ -343,7 +342,7 @@ function sendBackInStockNotificationEmail(string $name, string $email, string $p
     $test_mode_subj = '';
     if ($test_mode) {
         // Only send e-mails to store owner when in test mode
-        $email = EMAIL_FROM;
+        $email = BISN_TEST_EMAIL_TO;
         $test_mode_subj = ' - TEST MODE';
     }
 

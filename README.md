@@ -11,6 +11,21 @@ It's compatible with the current Zen Cart 1.5.8 and php7.3+.
 
 Note that the original documentation in the docs folder will NOT be updated for the moment, so the file list is out of date.
 
+## Notes supplementing the orginal documention
+Optional Copies of real Notification Subscription Emails are sent to what is defined in the BISN Admin (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO).
+
+### Languages
+If you have a single language store, you should not see anything about languages.
+For a multiple-language store, real notification emails should be sent in the same language as that used by the customer for the subscription.
+This is done by selecting Option 4: this sends the emails in the language that matches the currently-selected admin-language.
+Changing the admin language will reload Option 4 and send the other emails that correspond to this admin language etc.
+Todo: make this automatic.
+
+### Testing
+If you want to test the real sending of notifications, repeatedly/not deleting the subscriptions: set this to false
+$delete_customer_subscriptions = true;
+in admin\back_in_stock_notifications.php
+
 ## Changelog
 12/11/2023:
 Add multi-language to email sending.

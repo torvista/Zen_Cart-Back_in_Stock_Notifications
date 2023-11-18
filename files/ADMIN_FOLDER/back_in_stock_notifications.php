@@ -1,5 +1,4 @@
 <?php
-//product_name_extra to add
 
 declare(strict_types=1);
 
@@ -53,7 +52,8 @@ $table_exists_result = $db->Execute($table_exists_query);
 $option_missing =
     !defined('BACK_IN_STOCK_NOTIFICATIONS_ENABLED') ||
     !defined('BACK_IN_STOCK_REQUIRES_LOGIN') ||
-    !defined('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO');
+    !defined('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO') ||
+    !defined('BISN_TEST_EMAIL_TO');
 
 //can use parameter on page url &check-config=1 to force check
 if ($table_exists_result->EOF || $option_missing || isset($_GET['check-config'])) {
@@ -278,7 +278,7 @@ switch ($option) {
 
         //todo needs rework
         unset($send_output);
-        $send_output[$_SESSION['languages_id']] = sendBackInStockNotifications((int)$_SESSION['languages_id'], '', $delete_customer_subscriptions);
+        $send_output[$_SESSION['languages_id']] = sendBackInStockNotifications((int)$_SESSION['languages_id'], false, $delete_customer_subscriptions);
         break;
 
     case 5: // delete subscriptions for deleted products
@@ -660,9 +660,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     if ($subscription_info['customer_id'] !== null) {
                                         $is_customer = true;
                                         $customer_name = $subscription_info['customers_firstname'] . ' ' . $subscription_info['customers_lastname'];
-                                        echo '<a href="' . zen_href_link(
-                                                'customers.php?search=' . $subscription_info['customers_email_address']
-                                            ) . '" target="blank" title="' . TEXT_TITLE_VIEW_CUSTOMER . '">' . $customer_name . '</a>';
+                                        echo '<a href="' . zen_href_link(FILENAME_CUSTOMERS, 'search=' . $subscription_info['customers_email_address']) . '" target="blank" title="' . TEXT_TITLE_VIEW_CUSTOMER . '">' . $customer_name . '</a>';
                                     } else {
                                         $is_customer = false;
                                         $customer_name = $subscription_info['name'];
@@ -716,11 +714,12 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                 <fieldset>
                     <legend><?= TEXT_SEND_OUTPUT_TITLE; ?></legend>
                     <?php
+
                     if ($option === 3) {
-                        echo '<div>' . ($use_langs ? TEXT_NOTE_OPTION_3_LANGS : TEXT_NOTE_OPTION_3) . '</div>';
+                        echo '<div>' . sprintf(TEXT_NOTE_OPTION_3, BISN_TEST_EMAIL_TO) . ($use_langs ? TEXT_NOTE_OPTION_3_LANGS : '') . '</div>';
                     }
                     if ($option === 4) {
-                        echo '<div>' . ($use_langs ? TEXT_NOTE_OPTION_4_LANGS : TEXT_NOTE_OPTION_4) . '</div>';
+                        echo '<div>' . TEXT_NOTE_OPTION_4 . ($use_langs ? TEXT_NOTE_OPTION_4_LANGS : '') . '</div>';
                     }
                     if (defined('CEON_URI_MAPPING_ENABLED') && CEON_URI_MAPPING_ENABLED === '1') {
                         echo '<p>' . TEXT_NOTE_URI_MAPPING . '</p>';
@@ -740,7 +739,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
         </fieldset>
     </div>
     <div id="ceon-footer">
-        <p><a href="https://ceon.net" target="_blank"><img src="<?= DIR_WS_IMAGES; ?>ceon-button-logo.png" alt="Ceon" id="ceon-button-logo"/></a>Module &copy; Copyright 2004-2012</p>
+        <p><a href="https://www.ceon.net" target="_blank"><img src="<?= DIR_WS_IMAGES; ?>ceon-button-logo.png" alt="Ceon" id="ceon-button-logo"/></a>Module &copy; Copyright 2004-2012</p>
         <p id="version-info">Module Version: <?= CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION; ?></p>
     </div>
 </div>

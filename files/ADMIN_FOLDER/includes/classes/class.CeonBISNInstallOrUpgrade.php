@@ -100,7 +100,7 @@ class CeonBISNInstallOrUpgrade
                `email_address` VARCHAR(96) DEFAULT NULL,
                `date_subscribed` DATETIME NOT NULL DEFAULT '0001-01-01 00:00:00',
                `languages_id` int(2) UNSIGNED NOT NULL DEFAULT '1',
-               PRIMARY KEY  (`id`)
+               PRIMARY KEY (`id`)
                )";
 
             $db->Execute($create_table_sql);
@@ -322,7 +322,7 @@ class CeonBISNInstallOrUpgrade
                (
                'Send Copy of Back In Stock Notification Subscription E-mails To',
                'SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO',
-               'Admin <" . SEND_EXTRA_ORDER_EMAILS_TO . ">',
+               'Admin <" . EMAIL_FROM . ">',
                '<br>Send copy of Back In Stock Notification Subscription e-mails to the following email addresses, in this format: <br><br><code>Name 1 &lt;email@address1&gt;, Name 2 &lt;email@address2&gt;</code>',
                '" . $configuration_group_id . "',
                '3',
@@ -331,6 +331,45 @@ class CeonBISNInstallOrUpgrade
 
             $db->Execute($add_config_option_sql);
             $messageStack->add('BISN Installer: configuration option added "Send Copy of Subscription E-mails"', 'success');
+        }
+
+        // option: BISN_TEST_EMAIL_TO
+        $check_config_option_exists_sql = 'SELECT configuration_group_id FROM ' . TABLE_CONFIGURATION . ' WHERE configuration_key = "BISN_TEST_EMAIL_TO"';
+        $check_config_option_exists_result = $db->Execute($check_config_option_exists_sql);
+
+        if (!$check_config_option_exists_result->EOF) {
+            // Make sure the option is assigned to the correct group
+            if ($check_config_option_exists_result->fields['configuration_group_id'] !=
+                $configuration_group_id) {
+                $set_group_id_sql = ' UPDATE ' . TABLE_CONFIGURATION . ' SET configuration_group_id = ' . $configuration_group_id . ' WHERE configuration_key = "BISN_TEST_EMAIL_TO"';
+                $db->Execute($set_group_id_sql);
+            }
+        } else {
+            $add_config_option_sql = "
+            INSERT INTO
+               " . TABLE_CONFIGURATION . "
+               (
+               `configuration_title`,
+               `configuration_key`,
+               `configuration_value`,
+               `configuration_description`,
+               `configuration_group_id`,
+               `sort_order`,
+               `date_added`
+               )
+            VALUES
+               (
+               'Send test Back In Stock Notification E-mails To',
+               'BISN_TEST_EMAIL_TO',
+               '" . EMAIL_FROM . "',
+               '<br>Send the test Back In Stock Notification e-mails to the following email addresses',
+               '" . $configuration_group_id . "',
+               '4',
+               NOW()
+               );";
+
+            $db->Execute($add_config_option_sql);
+            $messageStack->add('BISN Installer: configuration option added "Send test Back In Stock Notification E-mails To (email address)"', 'success');
         }
 
         return true;
