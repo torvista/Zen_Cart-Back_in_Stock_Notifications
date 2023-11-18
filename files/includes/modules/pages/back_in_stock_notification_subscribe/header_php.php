@@ -62,8 +62,8 @@ $product_name_result = $db->Execute($product_name_query);
 
 // Make sure the product exists!
 if ($product_name_result->RecordCount() === 0) {//should never happen
-    $product_name = '(no product name)';
-    $product_model = '';
+    zen_redirect(FILENAME_DEFAULT);
+    error_log('Error BISN Subscribe Page: invalid product id presented (int)$_GET[\'products_id\']=' . (int)$_GET['products_id']);
 } else {
     $product_name = $product_name_result->fields['products_name'];
     $product_model = zen_get_products_model((int)$_GET['products_id']);
@@ -85,7 +85,7 @@ $form_errors = [];
 
 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
     $_POST['notify_me'] = 1;
-    $_POST['email'] = get_customers_email();//TODO replace with ZC function
+    $_POST['email'] = zen_get_customer_email_from_id((int)$_SESSION['customer_id']);
     $_POST['name'] = $_SESSION['customer_first_name'] . ' ' . $_SESSION['customer_last_name'];
 }
 
