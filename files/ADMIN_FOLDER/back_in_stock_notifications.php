@@ -43,6 +43,7 @@ const CEON_BACK_IN_STOCK_NOTIFICATIONS_VERSION = '3.2.3alpha'; //not used anywhe
 
 require('includes/application_top.php');
 $languages = !empty($languages) ? $languages : zen_get_languages();
+$use_langs = count($languages) > 1;
 
 // Check the database subscriptions table exist. If not, run the installer
 $table_exists_query = 'SHOW TABLES LIKE "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '"';
@@ -612,7 +613,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     TABLE_HEADING_CUSTOMER_EMAIL . '</a></th>';
                             }
 
-                            if (count($languages) > 1) {
+                            if ($use_langs) {
                                 if ($sort_column === 'languages_id') { ?>
                                     <th class="center"><?= TABLE_HEADING_CUSTOMER_LANGUAGES_ID; ?></th>
                                     <?php
@@ -680,7 +681,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     } ?>
                                     <a href="<?= $customer_email_address_link; ?>" title="<?= TEXT_TITLE_SEND_EMAIL; ?>" target="_blank"><?= $customer_email_address; ?></a>
                                 </td>
-                                <?php if (count($languages) > 1) { ?>
+                                <?php if ($use_langs) { ?>
                                     <td class="dataTableContent center smallText">
                                         <?= zen_get_language_icon($subscription_info['languages_id']) . '<br>' .
                                         ucfirst(
@@ -716,11 +717,15 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                     <legend><?= TEXT_SEND_OUTPUT_TITLE; ?></legend>
                     <?php
                     if ($option === 3) {
-                        echo '<div>' . TEXT_TEST_OUTPUT . '</div>';
+                        echo '<div>' . ($use_langs ? TEXT_NOTE_OPTION_3_LANGS : TEXT_NOTE_OPTION_3) . '</div>';
+                    }
+                    if ($option === 4) {
+                        echo '<div>' . ($use_langs ? TEXT_NOTE_OPTION_4_LANGS : TEXT_NOTE_OPTION_4) . '</div>';
                     }
                     if (defined('CEON_URI_MAPPING_ENABLED') && CEON_URI_MAPPING_ENABLED === '1') {
                         echo '<p>' . TEXT_NOTE_URI_MAPPING . '</p>';
-                    } ?>
+                    }
+                    ?>
                     <?php
                     if (!empty($send_output)) {
                         foreach ($send_output as $key => $lang) {
