@@ -4,12 +4,18 @@ If a product is out of stock, customers can subscribe/request to receive a notif
 This was based on the original CEON version, not the forked ajax version. Neither are supported anymore, but the functionality is well worthwhile, and I use it, so am encouraging use and development here despite it being the usual yelling into the void...
 
 I've been modifying it for years, multi-language and attributes handling being the most significant omissions from the original code.
-I've almost finished reworking and merging the huge amount of changes, and in the process, make the code more Zen-ish to maybe get it into the core one day.
 
-As a result, this code is hugely different from the old plugin version, so always test on a development server: DO NOT drop it into your production server without testing first.
+As a result, this code is hugely different from the plugin version, so always test on a development server: DO NOT drop it into your production server without testing first.
 It's compatible with the current Zen Cart 1.5.8 and php7.3+.
 
-Note that the original documentation in the docs folder will NOT be updated for the moment, so the file list is out of date.
+Note that the original documentation in the docs folder has NOT been updated for the moment, so the file list is out of date.
+
+## Installation/Upgrade
+On your development server, remove original BISN files and merge this fileset: apart from the template files, all are new/do not overwrite core files.
+Go to the Admin Catalog->BISN Notifications Admin page to auto upgrade/install.
+
+## Problems/Ideas
+Any problems or suggestions: open an issue here, not in the forum. Then make some effort to fix it, I've done enough don't you think!
 
 ## Notes supplementing the orginal documention
 Optional Copies of real Notification Subscription Emails are sent to what is defined in the BISN Admin (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO).
@@ -21,13 +27,17 @@ This is done by selecting Option 4: this sends the emails in the language that m
 Changing the admin language will reload Option 4 and send the other emails that correspond to this admin language etc.
 Todo: make this automatic.
 
+### Templates
+Template examples are provided for responsive_classic and bootstrap.
+
 ### Testing
 If you want to test the real sending of notifications, repeatedly/not deleting the subscriptions: set this to false
 $delete_customer_subscriptions = true;
 in admin\back_in_stock_notifications.php
+The BISN configuration allows an alternative email address for the test emails to prevent cluttering of the main email account.
 
 ## Changelog
-12/11/2023:
+18/11/2023:
 Add multi-language to email sending.
 A reply to the Admin copy of BISN subscription email now replies to customer
 Replace tabs with spaces with all files.
@@ -39,6 +49,7 @@ Added column sorts/set column sort links to table id anchor
 Hide model column if not used.
 Add Delete buttons for each product/subscription.
 Corrected paging display text.
+And lots more fun for all the family as shown in the Big Bang PR list.
 
 11/11/2023: moved admin functions file so only loaded with BISN admin page
 Remove duplicated function zen_get_products_model from bis_functions.php
