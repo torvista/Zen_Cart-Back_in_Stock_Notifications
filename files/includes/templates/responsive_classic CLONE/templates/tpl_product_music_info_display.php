@@ -2,8 +2,8 @@
 /** Ceon BISN template
  * Page Template
  *
- * Loaded automatically by index.php?main_page=product_free_shipping_info.
- * Displays details of a "free-shipping" product (provided it is assigned to the product-free-shipping product type)
+ * Loaded automatically by index.php?main_page=product_music_info.
+ * Displays details of a music product
  *
  * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -11,7 +11,7 @@
  * @version $Id: Steve 2021 Jun 14 Modified in v1.5.8-alpha $
  */
 ?>
-<div class="centerColumn" id="productFreeShipdisplay">
+<div class="centerColumn" id="productMusicDisplay">
 
 <!--bof Form start-->
 <?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product', $request_type), 'post', 'enctype="multipart/form-data" id="addToCartForm"') . "\n"; ?>
@@ -41,7 +41,7 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
 
 <div id="prod-info-top" class="group">
 <!--bof Product Name-->
-<h1 id="productName" class="freeShip"><?php echo $products_name; ?></h1>
+<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
 <!--eof Product Name-->
 
 <div id="pinfo-left">
@@ -68,13 +68,24 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
   }
 ?>
 <div id="pinfo-right">
+<!--bof Media Manager -->
+<div id="mediaManager" class="productMusic group"><?php
+/**
+ * display the products related media clips
+ */
+ require($template->get_template_dir('/tpl_modules_media_manager.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_media_manager.php'); ?>
+</div>
+<!--eof Media Manager -->
+
 <!--bof Product details list  -->
-<?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) ) { ?>
+<?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) or $flag_show_product_music_info_artist == 1 or $flag_show_product_music_info_genre == 1) { ?>
 <ul id="productDetailsList">
   <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_quantity == 1) ? '<li>' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
+  <?php echo (($flag_show_product_music_info_artist == 1 and !empty($products_artist_name)) ? '<li>' . TEXT_PRODUCT_ARTIST . $products_artist_name . '</li>' : '') . "\n"; ?>
+  <?php echo (($flag_show_product_music_info_genre == 1 and !empty($products_music_genre_name)) ? '<li>' . TEXT_PRODUCT_MUSIC_GENRE . $products_music_genre_name . '</li>' : '') . "\n"; ?>
 </ul>
 <?php
   }
@@ -104,7 +115,7 @@ if ($flag_show_ask_a_question) {
 
 <div id="cart-box">
 <!--bof Product Price block -->
-<h2 id="productPrices" class="freeShip">
+<h2 id="productPrices" class="productGeneral">
 <?php
 // base price
   if ($show_onetime_charges_description == 'true') {
@@ -154,21 +165,21 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 } else {
 ?>
 <?php
-  $display_qty = (($flag_show_product_info_in_cart_qty == 1 and $_SESSION['cart']->in_cart($_GET['products_id'])) ? '<p>' . PRODUCTS_ORDER_QTY_TEXT_IN_CART . $_SESSION['cart']->get_quantity($_GET['products_id']) . '</p>' : '');
-  if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
-    // hide the quantity box and default to 1
+    $display_qty = (($flag_show_product_info_in_cart_qty == 1 and $_SESSION['cart']->in_cart($_GET['products_id'])) ? '<p>' . PRODUCTS_ORDER_QTY_TEXT_IN_CART . $_SESSION['cart']->get_quantity($_GET['products_id']) . '</p>' : '');
+    if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
+      // hide the quantity box and default to 1
       $the_button = '<input type="hidden" name="cart_quantity" value="1">';
-  } else {
-    // show the quantity box
+    } else {
+      // show the quantity box
       $the_button = '<div class="max-qty">' . zen_get_products_quantity_min_units_display((int)$_GET['products_id']) . '</div><span class="qty-text">' . PRODUCTS_ORDER_QTY_TEXT . '</span><input type="text" name="cart_quantity" value="' . $products_get_buy_now_qty . '" maxlength="6" size="4" aria-label="' . ARIA_QTY_ADD_TO_CART . '">';
-  }
+    }
     $the_button .= zen_draw_hidden_field('products_id', (int)$_GET['products_id']);
     $the_button .= zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT, ' id="addToCartButton"');
-  $display_button = zen_get_buy_now_button($_GET['products_id'], $the_button);
+    $display_button = zen_get_buy_now_button($_GET['products_id'], $the_button);
 ?>
 <?php if ($display_qty != '' or $display_button != '') { ?>
     <div id="cartAdd">
-    <?php
+<?php
       echo $display_qty;
       echo $display_button;
 ?>
@@ -178,6 +189,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <!--eof Add to Cart Box-->
 </div>
 </div>
+
 <?php // plugin BISN 2 of 4
 // closing tag of form 'cart_quantity' moved here: must be closed before BISN form?>
 <!--bof Form close-->
@@ -187,10 +199,9 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 
 <!--bof Product description -->
 <?php if ($products_description != '') { ?>
-<div id="productDescription" class="freeShip biggerText"><?php echo stripslashes($products_description); ?></div>
+<div id="productDescription" class="productGeneral biggerText"><?php echo stripslashes($products_description); ?></div>
 <?php } ?>
 <!--eof Product description -->
-
 
 
 
@@ -217,7 +228,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <div id="productReviewLink" class="buttonRow back"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params(array())) . '">' . zen_image_button(BUTTON_IMAGE_WRITE_REVIEW, BUTTON_WRITE_REVIEW_ALT) . '</a>'; ?></div>
 <br class="clearBoth">
 <?php
-}
+  }
 }
 ?>
 <!--eof Reviews button and count -->
@@ -228,13 +239,13 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
   if ($products_date_available > date('Y-m-d H:i:s')) {
     if ($flag_show_product_info_date_available == 1) {
 ?>
-  <p id="productDateAvailable" class="freeShip centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
+  <p id="productDateAvailable" class="productMusic centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
 <?php
     }
   } else {
     if ($flag_show_product_info_date_added == 1) {
 ?>
-      <p id="productDateAdded" class="freeShip centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
+      <p id="productDateAdded" class="productMusic centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
 <?php
     } // $flag_show_product_info_date_added
   }
@@ -243,18 +254,18 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 
 <!--bof Product URL -->
 <?php
-  if (!empty($products_url)) {
-    if ($flag_show_product_info_url == 1) {
+  if (!empty($products_record_company_url)) {
+    if ($flag_show_product_music_info_record_company == 1) {
 ?>
-    <p id="productInfoLink" class="freeShip centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?></p>
+    <p id="productInfoLink" class="productMusic centeredContent"><?php echo sprintf(TEXT_RECORD_COMPANY_URL, zen_href_link(FILENAME_REDIRECT, 'action=music_record_company&record_company_id=' . zen_output_string_protected($music_extras->fields['record_company_id']), 'NONSSL', true, false)); ?></p>
 <?php
-    } // $flag_show_product_info_url
+    } // $flag_show_product_info_record_company
   }
 ?>
 <!--eof Product URL -->
 
 <?php // plugin BISN 3 of 4
-include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
+   include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
 // eof plugin BISN 3 of 4
 ?>
 <!--bof also purchased products module-->

@@ -13,9 +13,12 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-06 torvista
+ * @version     $Id: header_php.php 2023-11-12 torvista
  */
-if (BACK_IN_STOCK_REQUIRES_LOGIN !== '1' && isset($back_in_stock_notification_build_form) && $back_in_stock_notification_build_form) {
+/** phpstorm inspections
+ * @var $back_in_stock_notification_build_form
+ */
+if (!empty($back_in_stock_notification_build_form)) {
     // Build the notification request form
 
     /**
@@ -109,4 +112,6 @@ if (BACK_IN_STOCK_REQUIRES_LOGIN !== '1' && isset($back_in_stock_notification_bu
     );
 
     print $back_in_stock_notification_form->getXHTMLSource();
+} else {
+    echo '<!-- BISN link is null -->';
 }

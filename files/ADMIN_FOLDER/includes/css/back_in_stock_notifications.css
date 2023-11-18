@@ -14,6 +14,9 @@
 #ceon-bisn-wrapper {
     margin: 0 0.8em 0 0.8em;
 }
+legend {
+    margin-bottom: revert;/*remove large space under table title */
+}
 
 h1#ceon-bisn-page-heading {
     margin-top: 1em;

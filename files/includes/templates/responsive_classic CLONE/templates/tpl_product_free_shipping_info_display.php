@@ -2,8 +2,8 @@
 /** Ceon BISN template
  * Page Template
  *
- * Loaded automatically by index.php?main_page=document_product_info.
- * Displays template according to "document-product" product-type needs
+ * Loaded automatically by index.php?main_page=product_free_shipping_info.
+ * Displays details of a "free-shipping" product (provided it is assigned to the product-free-shipping product type)
  *
  * @copyright Copyright 2003-2022 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
@@ -11,7 +11,7 @@
  * @version $Id: Steve 2021 Jun 14 Modified in v1.5.8-alpha $
  */
 ?>
-<div class="centerColumn" id="docProductDisplay">
+<div class="centerColumn" id="productFreeShipdisplay">
 
 <!--bof Form start-->
 <?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product', $request_type), 'post', 'enctype="multipart/form-data" id="addToCartForm"') . "\n"; ?>
@@ -41,7 +41,7 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
 
 <div id="prod-info-top" class="group">
 <!--bof Product Name-->
-<h1 id="productName" class="docProduct"><?php echo $products_name; ?></h1>
+<h1 id="productName" class="freeShip"><?php echo $products_name; ?></h1>
 <!--eof Product Name-->
 
 <div id="pinfo-left">
@@ -54,7 +54,6 @@ require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEM
  * display the main product image
  */
    require($template->get_template_dir('/tpl_modules_main_product_image.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_main_product_image.php'); ?>
-
 <!--eof Main Product Image-->
 
 <!--bof Additional Product Images -->
@@ -105,7 +104,7 @@ if ($flag_show_ask_a_question) {
 
 <div id="cart-box">
 <!--bof Product Price block -->
-<h2 id="productPrices" class="docProduct">
+<h2 id="productPrices" class="freeShip">
 <?php
 // base price
   if ($show_onetime_charges_description == 'true') {
@@ -172,8 +171,8 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
     <?php
       echo $display_qty;
       echo $display_button;
-            ?>
-          </div>
+?>
+    </div>
 <?php   } // display qty and button ?>
 <?php } // CUSTOMERS_APPROVAL == 3 ?>
 <!--eof Add to Cart Box-->
@@ -188,10 +187,9 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 
 <!--bof Product description -->
 <?php if ($products_description != '') { ?>
-  <div id="productDescription" class="docProduct  biggerText"><?php echo stripslashes($products_description); ?></div>
+<div id="productDescription" class="freeShip biggerText"><?php echo stripslashes($products_description); ?></div>
 <?php } ?>
 <!--eof Product description -->
-
 
 
 
@@ -225,18 +223,18 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <!--eof Reviews button and count -->
 
 
- <!--bof Product date added/available-->
+<!--bof Product date added/available-->
 <?php
   if ($products_date_available > date('Y-m-d H:i:s')) {
     if ($flag_show_product_info_date_available == 1) {
 ?>
-  <p id="productDateAvailable" class="docProduct centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
+  <p id="productDateAvailable" class="freeShip centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
 <?php
     }
   } else {
-    if ($flag_show_product_info_date_added  == 1) {
+    if ($flag_show_product_info_date_added == 1) {
 ?>
-      <p id="productDateAdded" class="docProduct centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
+      <p id="productDateAdded" class="freeShip centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
 <?php
     } // $flag_show_product_info_date_added
   }
@@ -248,7 +246,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
   if (!empty($products_url)) {
     if ($flag_show_product_info_url == 1) {
 ?>
-    <p id="productInfoLink" class="docProduct centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?></p>
+    <p id="productInfoLink" class="freeShip centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?></p>
 <?php
     } // $flag_show_product_info_url
   }
@@ -256,7 +254,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <!--eof Product URL -->
 
 <?php // plugin BISN 3 of 4
-include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
+   include(DIR_WS_MODULES . zen_get_module_directory('plugin_bisn_product_info_subscribe_form.php'));
 // eof plugin BISN 3 of 4
 ?>
 <!--bof also purchased products module-->

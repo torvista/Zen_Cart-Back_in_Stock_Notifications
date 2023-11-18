@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Ceon Back In Stock Notifications Database Table Name Definition.
  *
@@ -10,14 +12,11 @@
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        http://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications_database_tables.php 935 2012-02-06 14:08:25Z conor $
+ * @version     $Id: back_in_stock_notifications_database_tables.php 2023-11-17 torvista
  */
 
 if (!defined('DB_PREFIX')) {
     define('DB_PREFIX', '');
 }
 
-define('TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS', DB_PREFIX .
-    'back_in_stock_notification_subscriptions');
-
-?>
+define('TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS', DB_PREFIX . 'back_in_stock_notification_subscriptions');

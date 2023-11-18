@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
- * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-06 torvista
+ * @link        https://www.ceon.net
+ * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: header_php.php 2023-11-17 torvista
  */
 
 /**
@@ -22,6 +22,8 @@ declare(strict_types=1);
 require(DIR_FS_CATALOG . DIR_WS_MODULES . 'require_languages.php');
 
 $breadcrumb->add(BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_NAVBAR_TITLE);
+
+$action = 'not_found'; //todo check
 
 $back_in_stock_notification_id = 0;
 $back_in_stock_notification_code = 0;
@@ -37,26 +39,26 @@ if (isset($_GET['id']) || isset($_POST['id'])) {
         $back_in_stock_notification_code = $_POST['code'] ?? 0;
     }
 
-    if (!is_numeric($back_in_stock_notification_id)) {
+    if ( ! is_numeric($back_in_stock_notification_id)) {
         $back_in_stock_notification_id = 0;
     }
 
     // Get the information about this notification
-    $unsubscribe_info_query = "
-		SELECT
-			pd.products_name
-		FROM
-			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . " bisns
-		LEFT JOIN
-			" . TABLE_PRODUCTS_DESCRIPTION . " pd
-		ON
-			pd.products_id = bisns.product_id
-		WHERE
-			bisns.id = '" . zen_db_input($back_in_stock_notification_id) . "'
-		AND
-			bisns.subscription_code = '" . zen_db_input($back_in_stock_notification_code) . "'
-		AND
-			pd.language_id = " . (int)$_SESSION['languages_id'];
+    $unsubscribe_info_query = '
+      SELECT
+         pd.products_name
+      FROM
+         ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
+      LEFT JOIN
+         ' . TABLE_PRODUCTS_DESCRIPTION . " pd
+      ON
+         pd.products_id = bisns.product_id
+      WHERE
+         bisns.id = '" . zen_db_input($back_in_stock_notification_id) . "'
+      AND
+         bisns.subscription_code = '" . zen_db_input($back_in_stock_notification_code) . "'
+      AND
+         pd.language_id = " . (int)$_SESSION['languages_id'];
 
     $unsubscribe_info = $db->Execute($unsubscribe_info_query);
 
@@ -84,13 +86,13 @@ if ($action === 'display_details') {
     $back_in_stock_notification_unsubscribe_message =
         BACK_IN_STOCK_NOTIFICATION_UNSUBSCRIBE_TEXT_UNKNOWN_NOTIFICATION_MESSAGE;
 } elseif ($action === 'unsubscribe') {
-    $unsubscribe_query = "
-		DELETE FROM
-			" . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . "
-		WHERE
-			id = '" . zen_db_input($back_in_stock_notification_id) . "'
-		AND
-			subscription_code = '" . zen_db_input($back_in_stock_notification_code) . "'";
+    $unsubscribe_query = '
+      DELETE FROM
+         ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '
+      WHERE
+         id = "' . zen_db_input($back_in_stock_notification_id) . '"
+      AND
+         subscription_code = "' . zen_db_input($back_in_stock_notification_code) . '"';
 
     $unsubscribe = $db->Execute($unsubscribe_query);
 
