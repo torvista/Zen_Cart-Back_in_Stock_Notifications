@@ -342,7 +342,7 @@ function sendBackInStockNotificationEmail(string $name, string $email, string $p
     $test_mode_subj = '';
     if ($test_mode) {
         // Only send e-mails to store owner when in test mode
-        $email = BISN_TEST_EMAIL_TO;
+        $email = (BISN_TEST_EMAIL_TO === '' ? EMAIL_FROM : BISN_TEST_EMAIL_TO);
         $test_mode_subj = ' - TEST MODE';
     }
 

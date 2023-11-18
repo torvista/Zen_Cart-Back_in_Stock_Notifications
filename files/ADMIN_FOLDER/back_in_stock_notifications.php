@@ -53,7 +53,8 @@ $option_missing =
     !defined('BACK_IN_STOCK_NOTIFICATIONS_ENABLED') ||
     !defined('BACK_IN_STOCK_REQUIRES_LOGIN') ||
     !defined('SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO') ||
-    !defined('BISN_TEST_EMAIL_TO');
+    !defined('BISN_TEST_EMAIL_TO') ||
+    defined('BACK_IN_STOCK_NOTIFICATION_ENABLED');
 
 //can use parameter on page url &check-config=1 to force check
 if ($table_exists_result->EOF || $option_missing || isset($_GET['check-config'])) {
@@ -716,7 +717,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                     <?php
 
                     if ($option === 3) {
-                        echo '<div>' . sprintf(TEXT_NOTE_OPTION_3, BISN_TEST_EMAIL_TO) . ($use_langs ? TEXT_NOTE_OPTION_3_LANGS : '') . '</div>';
+                        echo '<div>' . sprintf(TEXT_NOTE_OPTION_3, (BISN_TEST_EMAIL_TO === '' ? EMAIL_FROM : BISN_TEST_EMAIL_TO)) . ($use_langs ? TEXT_NOTE_OPTION_3_LANGS : '') . '</div>';
                     }
                     if ($option === 4) {
                         echo '<div>' . TEXT_NOTE_OPTION_4 . ($use_langs ? TEXT_NOTE_OPTION_4_LANGS : '') . '</div>';

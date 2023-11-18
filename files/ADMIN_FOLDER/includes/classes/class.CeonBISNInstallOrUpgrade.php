@@ -203,7 +203,60 @@ class CeonBISNInstallOrUpgrade
             $messageStack->add('BISN Installer: Configuration Menu Item added "Configuration->' . BOX_CEON_BACK_IN_STOCK_NOTIFICATIONS_CONFIG_GROUP . '" (gID=' . $configuration_group_id . ').', 'success');
         }
 
-        //todo use a function/rework installer!
+        //todo use a function
+
+        // option: BACK_IN_STOCK_NOTIFICATION_ENABLED change to BACK_IN_STOCK_NOTIFICATIONS_ENABLED
+        $check_config_option_exists_sql = '
+         SELECT
+            configuration_group_id
+         FROM
+            ' . TABLE_CONFIGURATION . "
+         WHERE
+            configuration_key = 'BACK_IN_STOCK_NOTIFICATION_ENABLED';";
+
+        $check_config_option_exists_result = $db->Execute($check_config_option_exists_sql);
+
+        if (!$check_config_option_exists_result->EOF) {
+            //rename constant
+            $sql = 'UPDATE  ' . TABLE_CONFIGURATION . ' SET configuration_key = "BACK_IN_STOCK_NOTIFICATIONS_ENABLED" WHERE configuration_key = "BACK_IN_STOCK_NOTIFICATION_ENABLED"';
+            $db->Execute($sql);
+            $messageStack->add('BISN Installer: configuration option "BACK_IN_STOCK_NOTIFICATION_ENABLED" renamed to "BACK_IN_STOCK_NOTIFICATIONS_ENABLED"', 'success');
+
+            // Make sure the option is assigned to the correct group
+            if ($check_config_option_exists_result->fields['configuration_group_id'] !=
+                $configuration_group_id) {
+                $set_group_id_sql = 'UPDATE  ' . TABLE_CONFIGURATION . ' SET configuration_group_id = ' . $configuration_group_id . ' WHERE configuration_key = "BACK_IN_STOCK_NOTIFICATIONS_ENABLED"';
+                $db->Execute($set_group_id_sql);
+                }
+        } else {
+            $add_config_option_sql = "
+            INSERT INTO
+               " . TABLE_CONFIGURATION . "
+               (
+               `configuration_title`,
+               `configuration_key`,
+               `configuration_value`,
+               `configuration_description`,
+               `configuration_group_id`,
+               `sort_order`,
+               `set_function`,
+               `date_added`
+               )
+            VALUES
+               (
+               'Enable/Disable Back In Stock Notifications',
+               'BACK_IN_STOCK_NOTIFICATIONS_ENABLED',
+               '1',
+               '<br>If enabled, when a customer comes across a product that is out of stock, the customer will be offered the chance to be notified when it is back in stock<br><br>0 = off <br>1 = on',
+               '" . $configuration_group_id . "',
+               '1',
+               'zen_cfg_select_option(array(''0'', ''1''), ',
+               NOW()
+               );";
+
+            $db->Execute($add_config_option_sql);
+            $messageStack->add('BISN Installer: configuration option added "Enable/Disable Back In Stock Notifications"', 'success');
+        }
 
         // option: BACK_IN_STOCK_NOTIFICATIONS_ENABLED
         $check_config_option_exists_sql = '
