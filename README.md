@@ -17,7 +17,7 @@ Go to the Admin Catalog->BISN Notifications Admin page to auto upgrade/install.
 ## Problems/Ideas
 Any problems or suggestions: open an issue here, not in the forum. Then make some effort to fix it, I've done enough don't you think!
 
-## Notes supplementing the orginal documention
+## Notes
 Optional Copies of real Notification Subscription Emails are sent to what is defined in the BISN Admin (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO).
 
 ### Languages
@@ -37,7 +37,7 @@ in admin\back_in_stock_notifications.php
 The BISN configuration allows an alternative email address for the test emails to prevent cluttering of the main email account.
 
 ## Changelog
-18/11/2023:
+18/11/2023 or thereabouts
 Add multi-language to email sending.
 A reply to the Admin copy of BISN subscription email now replies to customer
 Replace tabs with spaces with all files.
@@ -49,7 +49,8 @@ Added column sorts/set column sort links to table id anchor
 Hide model column if not used.
 Add Delete buttons for each product/subscription.
 Corrected paging display text.
-And lots more fun for all the family as shown in the Big Bang PR list.
+Added support for Google reCaptcha.
+And lots more fun for all the family.
 
 11/11/2023: moved admin functions file so only loaded with BISN admin page
 Remove duplicated function zen_get_products_model from bis_functions.php

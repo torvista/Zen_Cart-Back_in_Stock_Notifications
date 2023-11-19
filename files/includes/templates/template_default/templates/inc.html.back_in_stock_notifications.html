@@ -88,6 +88,7 @@
 		<label class="inputLabel" for="email_confirmation"><ceon:variable name="email_confirmation_label">Confirm E-mail</ceon:variable>:</label>
 		<input type="email" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}">
 		<br class="clearBoth">
+        <p><ceon:variable name="reCaptcha"><!-- Google reCaptcha: not replaced/not used --></ceon:variable></p>
 	</fieldset>
 	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
 	<input type="hidden" name="notify_me" value="true">

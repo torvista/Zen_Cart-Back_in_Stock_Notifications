@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-12 torvista
+ * @version     $Id: header_php.php 2023-11-19 torvista
  */
 /** phpstorm inspections
  * @var $back_in_stock_notification_build_form
@@ -107,8 +107,14 @@ if (!empty($back_in_stock_notification_build_form)) {
         'cofnospam',
         $back_in_stock_notification_form_customer_email_confirmation
     );
+    // Google reCaptcha: https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
+    if (defined('GOOGLE_RECAPCHTA_BISN') && GOOGLE_RECAPCHTA_BISN === 'true') {
+        $reCaptcha = recaptcha_get_html(false, 'light', 'normal', 'margin:5px');
+        $back_in_stock_notification_form->setVariable('reCaptcha', $reCaptcha);
+    }
 
     print $back_in_stock_notification_form->getXHTMLSource();
+
 } else {
     echo '<!-- BISN form not generated (link is null) -->';
 }
