@@ -156,6 +156,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                         ) .
                         '#back_in_stock_notification_form');
                 }
+                $product_back_in_stock_notification_form_link = '<div id="bisnFormSubscribeLink">' . "\n<p>" . $product_back_in_stock_notification_form_link . "</p>\n</div>";
             }
         }
     }
