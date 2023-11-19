@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: account_back_in_stock_notifications.php 2023-11-11 torvista
+ * @version     $Id: account_back_in_stock_notifications.php 2023-11-19 torvista
  */
 
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_1', 'My Account');
@@ -20,7 +20,7 @@ define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_NAVBAR_TITLE_2', 'Back In Stock Noti
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Back In Stock Notifications');
 
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO1', 'Below is a list of the Back In Stock Notification Lists to which you are subscribed.');
-define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO2', 'To unsubscribe from a list, uncheck (clear) the box beside the appropriate product and click &ldquo;Update&rdquo;.');
+define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_INTRO2', 'To unsubscribe from a list, uncheck the corresponding product and click &ldquo;Update&rdquo;.');
 
 define('ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_OVERVIEW_TITLE', 'Your current Back In Stock Notification Subscription(s)');
 

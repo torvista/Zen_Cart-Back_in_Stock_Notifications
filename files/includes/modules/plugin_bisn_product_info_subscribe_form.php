@@ -28,12 +28,9 @@ if (!empty($back_in_stock_notification_build_form)) {
 
     // Load in and extract the template parts for Back In Stock Notification functionality
     $bisn_template_filename = $template->get_template_dir(
-            'inc.html.back_in_stock_notifications.html',
-            DIR_WS_TEMPLATE,
-            $current_page_base,
-            'templates'
-        ) . '/' .
-        'inc.html.back_in_stock_notifications.html';
+        'inc.html.back_in_stock_notifications.html',
+        DIR_WS_TEMPLATE, $current_page_base, 'templates' ) .
+        '/' . 'inc.html.back_in_stock_notifications.html';
 
     $bisn_template = new CeonXHTMLHiTemplate($bisn_template_filename);
 
@@ -113,5 +110,5 @@ if (!empty($back_in_stock_notification_build_form)) {
 
     print $back_in_stock_notification_form->getXHTMLSource();
 } else {
-    echo '<!-- BISN link is null -->';
+    echo '<!-- BISN form not generated (link is null) -->';
 }

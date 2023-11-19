@@ -13,10 +13,10 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023 11 18 torvista $
+ * @version     $Id: back_in_stock_notifications.php 2023 11 19 torvista $
  */
 
-define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Ceon Back In Stock Notifications');
+define('BACK_IN_STOCK_NOTIFICATIONS_HEADING_TITLE', 'Back In Stock Notifications');
 
 define('TEXT_ACTION_TO_PERFORM', 'Action to Perform:');
 
@@ -24,19 +24,16 @@ define('TEXT_LIST_ALL_SUBSCRIBED_PRODUCTS', 'List products with subscriptions');
 define('TEXT_LIST_ALL_SUBSCRIPTIONS', 'List all subscriptions');
 define('TEXT_PREVIEW_NOTIFICATION_EMAILS', 'Perform a test run of notification e-mails to be sent');
 define('TEXT_SEND_NOTIFICATION_EMAILS', 'SEND NOTIFICATION E-MAILS');
-define('TEXT_REMOVE_DELETED_PRODUCTS', 'Remove subscriptions for deleted products from database');
+define('TEXT_REMOVE_DELETED_PRODUCTS', 'Remove subscriptions for deleted products');
 
 define('TEXT_PRODUCTS_WITH_SUBSCRIPTIONS', 'Products with subscriptions');
 define('TEXT_ALL_SUBSCRIPTIONS', 'All Subscriptions');
 
-define('TABLE_HEADING_PRODUCT_ID', 'ID');
-define('TABLE_HEADING_PRODUCT_NAME', 'Product Name');
 define('TABLE_HEADING_PRODUCT_CATEGORY', 'Category');
 define('TABLE_HEADING_NUM_SUBSCRIBERS', 'Subscribers');
 define('TABLE_HEADING_CURRENT_STOCK', 'Stock');
 define('TABLE_HEADING_DATE_SUBSCRIBED', 'Date Subscribed');
-define('TABLE_HEADING_CUSTOMER_NAME', 'Customer');
-define('TABLE_HEADING_CUSTOMER_EMAIL', 'Email');
+define('TABLE_HEADING_CUSTOMER_LANGUAGES_ID', 'Language');
 
 define('TEXT_SORT_BY_PRODUCT_NAME', 'Sort by Product Name');
 define('TEXT_SORT_BY_PRODUCT_CATEGORY', 'Sort by Category');
@@ -45,6 +42,8 @@ define('TEXT_SORT_BY_CURRENT_STOCK', 'Sort by Current Stock Level');
 define('TEXT_SORT_BY_DATE_SUBSCRIBED', 'Sort by Date Subscribed');
 define('TEXT_SORT_BY_CUSTOMER_NAME', 'Sort by Customer\'s Name');
 define('TEXT_SORT_BY_CUSTOMER_EMAIL', 'Sort by Customer\'s E-mail Address');
+define('TEXT_SORT_BY_LANGUAGE_ID', 'Sort by Language');
+define('TEXT_SORT_BY_PRODUCT_MODEL', 'Sort by Product Model');
 
 define('TEXT_DISPLAY_NUMBER_OF_BACK_IN_STOCK_NOTIFICATIONS', 'Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> subscriptions) ');
 define('TEXT_SHOW_ALL', 'Show All');
@@ -81,10 +80,8 @@ define('TEXT_AFTER_EMAIL_INSTRUCTIONS','<p>%s emails sent!</p><p>The email addre
 define('MODULE_COPYRIGHT', 'Module &copy; Copyright 2004-2011');
 define('MODULE_VERSION', 'Module Version: ');
 define('CHECK_FOR_UPDATES', 'Check for Updates');
-define('TABLE_HEADING_PRODUCT_MODEL', 'Model');
-define('TEXT_SORT_BY_PRODUCT_MODEL', 'Sort by Product Model');
-define('TABLE_HEADING_CUSTOMER_LANGUAGES_ID', 'Language');
-define('TEXT_SORT_BY_LANGUAGE_ID', 'Sort by Language');
+
+define('TEXT_NOTE_OPTION_1','<h5>This listing shows only the base product: it does not (yet...) list the product variants as individual products.<br>Back In Stock Notifications will be sent to ALL subscribers for the base product/all variants as shown here.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6>');
 define('TEXT_NOTE_OPTION_2','');
 define('TEXT_NOTE_OPTION_3', '<h5>Preview copies of these emails have been sent to "%s".</h5>');
 define('TEXT_NOTE_OPTION_3_LANGS', '<p>The emails have been sent in the currently-selected admin language.</p><p>In the real sending process (Option 4), <strong>ONLY</strong> emails matching the <b>currently-selected</b> admin-language will be sent (or via cron with ?action=send&amp;option=4&amp;language=es etc.) to ensure the correct language constants are used with the email template.</p><p>Consequently, after executing Option 4, to send remaining emails in another language, the Admin language MUST then be changed: this will reload the page and send the matching-language emails.</p>');
@@ -106,6 +103,6 @@ define('TEXT_DELETE_ALL_SUBSCRIPTIONS_CONFIRM', 'Are you sure you want to delete
 define('TEXT_DELETE_SUBSCRIPTION_CONFIRM', 'Are you sure you want to delete this subscription for: %s?');
 define('TEXT_DEBUG_NO_DELETE_SUBSCRIPTIONS', '<p class="messageStackError">$delete_customer_subscriptions = false (for repeat testing): Email notifications WILL be sent to the subscribers (unless overridden) but their subscriptions will NOT be deleted</p><br>');
 define('ERROR_TEST_MODE','In Test Mode - showing emails to be sent although there are sending errors');//shown in message stack when there are sending errors. Emails to be sent should not be listed due to the sending errors but I decided to allow the listing in test mode to permit offline development.
-define('TEXT_NOTE_OPTION_1','<h5>This listing shows only the base product: it does not (yet...) list the product variants as individual products.<br>Back In Stock Notifications will be sent to ALL subscribers for the base product/all variants as shown here.</h5><h6>Go to Option 2 for details of subscribed product variants.</h6>');
+
 //Attributes todo
 //define('TEXT_NOTE_OPTION_2','<h5>Although this listing shows the product variants as individual products, this is for information only: the Back In Stock Notifications will be sent to ALL subscribers for the base product.</h5>');

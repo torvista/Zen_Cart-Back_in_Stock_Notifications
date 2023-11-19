@@ -13,15 +13,15 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023-11-12 torvista
+ * @version     $Id: back_in_stock_notifications.php 2023-11-19 torvista
  */
 
 /**
  * HTML for link on Product Listing pages. (Can be used to display a "subscribe" image etc.).
  * Note that the link is added in place of %s, %s must be present for the link to work!
  */
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_ALREADY_SUBSCRIBED', '<br>You have requested to be notified when this product is back in stock.');
-define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', '<br>To be notified when this product is back in stock please <a href="%s">click here</a>.');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
 
 
 /**

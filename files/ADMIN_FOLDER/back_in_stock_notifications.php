@@ -412,7 +412,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             <?php
                             if ($use_model) {
                                 if ($sort_column === 'model') {
-                                    echo '<th>' . TABLE_HEADING_PRODUCT_MODEL . '</th>';
+                                    echo '<th>' . TABLE_HEADING_MODEL . '</th>';
                                 } else {
                                     echo '<th class="ClickToSort"><a href="' .
                                         zen_href_link(
@@ -420,11 +420,11 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                             zen_get_all_get_params(['sort', 'action']) . 'sort=model' . '#bisnTableProductSubscriptions'
                                         ) .
                                         '" title="' . TEXT_SORT_BY_PRODUCT_MODEL . '">' .
-                                        TABLE_HEADING_PRODUCT_MODEL . '</a></th>';
+                                        TABLE_HEADING_MODEL . '</a></th>';
                                 }
                             }
                             if ($sort_column === 'product') {
-                                echo '<th>' . TABLE_HEADING_PRODUCT_NAME . '</th>';
+                                echo '<th>' . TABLE_HEADING_PRODUCT. '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
                                     zen_href_link(
@@ -432,7 +432,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                         zen_get_all_get_params(['sort', 'action']) . 'sort=product' . '#bisnTableProductSubscriptions'
                                     ) .
                                     '" title="' . TEXT_SORT_BY_PRODUCT_NAME . '">' .
-                                    TABLE_HEADING_PRODUCT_NAME . '</a></th>';
+                                    TABLE_HEADING_PRODUCT . '</a></th>';
                             }
 
                             if ($sort_column === 'category') {
@@ -554,7 +554,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             <?php
                             if ($use_model) {
                                 if ($sort_column === 'model') {
-                                    echo '<th>' . TABLE_HEADING_PRODUCT_MODEL . '</th>';
+                                    echo '<th>' . TABLE_HEADING_MODEL . '</th>';
                                 } else {
                                     echo '<th class="ClickToSort"><a href="' .
                                         zen_href_link(
@@ -562,12 +562,12 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                             zen_get_all_get_params(['sort', 'action']) . 'sort=model' . '#bisnTableProductSubscriptions'
                                         ) .
                                         '" title="' . TEXT_SORT_BY_PRODUCT_MODEL . '">' .
-                                        TABLE_HEADING_PRODUCT_MODEL . '</a></th>';
+                                        TABLE_HEADING_MODEL . '</a></th>';
                                 }
                             }
 
                             if ($sort_column === 'product') {
-                                echo '<th>' . TABLE_HEADING_PRODUCT_NAME . '</th>';
+                                echo '<th>' . TABLE_HEADING_PRODUCT . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
                                     zen_href_link(
@@ -575,7 +575,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                         zen_get_all_get_params(['sort', 'action']) . 'sort=product' . '#bisnTableProductSubscriptions'
                                     ) .
                                     '" title="' . TEXT_SORT_BY_PRODUCT_NAME . '">' .
-                                    TABLE_HEADING_PRODUCT_NAME . '</a></th>';
+                                    TABLE_HEADING_PRODUCT . '</a></th>';
                             }
 
                             if ($sort_column === 'date') {
@@ -591,7 +591,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             }
 
                             if ($sort_column === 'customer_name') {
-                                echo '<th>' . TABLE_HEADING_CUSTOMER_NAME . '</th>';
+                                echo '<th>' . TEXT_CUSTOMER . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
                                     zen_href_link(
@@ -599,11 +599,11 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                         zen_get_all_get_params(['sort', 'action']) . 'sort=customer_name' . '#bisnTableProductSubscriptions'
                                     ) .
                                     '" title="' . TEXT_SORT_BY_CUSTOMER_NAME . '">' .
-                                    TABLE_HEADING_CUSTOMER_NAME . '</a></th>';
+                                    TEXT_CUSTOMER . '</a></th>';
                             }
 
                             if ($sort_column === 'customer_email') {
-                                echo '<th>' . TABLE_HEADING_CUSTOMER_EMAIL . '</th>';
+                                echo '<th>' . TEXT_EMAIL . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
                                     zen_href_link(
@@ -611,7 +611,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                         zen_get_all_get_params(['sort', 'action']) . 'sort=customer_email' . '#bisnTableProductSubscriptions'
                                     ) .
                                     '" title="' . TEXT_SORT_BY_CUSTOMER_EMAIL . '">' .
-                                    TABLE_HEADING_CUSTOMER_EMAIL . '</a></th>';
+                                    TEXT_EMAIL . '</a></th>';
                             }
 
                             if ($use_langs) {
