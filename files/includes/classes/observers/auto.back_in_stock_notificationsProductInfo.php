@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-17 torvista
+ * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-19 torvista
  */
 
 /**
@@ -121,13 +121,18 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                     // request form
                     $back_in_stock_notification_form_customer_name = htmlentities(
                         $customer_details->fields['customers_firstname'] . ' ' .
-                        $customer_details->fields['customers_lastname'], ENT_COMPAT, CHARSET);
+                        $customer_details->fields['customers_lastname'],
+                        ENT_COMPAT,
+                        CHARSET
+                    );
 
                     $back_in_stock_notification_form_customer_email = htmlentities(
-                        $customer_details->fields['customers_email_address']);
+                        $customer_details->fields['customers_email_address']
+                    );
 
                     $back_in_stock_notification_form_customer_email_confirmation = htmlentities(
-                        $customer_details->fields['customers_email_address']);
+                        $customer_details->fields['customers_email_address']
+                    );
                 }
             } else {
                 $back_in_stock_notification_form_customer_name = '';
@@ -144,17 +149,22 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                     // if not logged in: redirects to login/account creation page
                     $product_back_in_stock_notification_form_link = sprintf(
                         BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-                        zen_href_link(FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
-                            'products_id=' . (int)$_GET['products_id']));
+                        zen_href_link(
+                            FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
+                            'products_id=' . (int)$_GET['products_id']
+                        )
+                    );
                 } else {
                     // guest may subscribe: link jumps to form at foot of page
                     $product_back_in_stock_notification_form_link = sprintf(
                         BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-                        zen_href_link(zen_get_info_page((int)$_GET['products_id']),
+                        zen_href_link(
+                            zen_get_info_page((int)$_GET['products_id']),
                             zen_get_all_get_params(['number_of_uploads']),
                             $request_type
                         ) .
-                        '#back_in_stock_notification_form');
+                        '#back_in_stock_notification_form'
+                    );
                 }
                 $product_back_in_stock_notification_form_link = '<div id="bisnFormSubscribeLink">' . "\n<p>" . $product_back_in_stock_notification_form_link . "</p>\n</div>";
             }
