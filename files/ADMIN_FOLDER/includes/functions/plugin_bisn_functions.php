@@ -382,20 +382,20 @@ function sendBackInStockNotificationEmail(string $name, string $email, string $p
  * Builds a link to a Product's admin page, with the product's name limited to a particular number
  * of characters.
  *
- * @param  string  $name  The name of the product.
  * @param  int  $id  The ID of the product.
+ * @param  string  $name  The name of the product.
  * @param  int  $products_type  The ID of the type for the product.
+ * @param  string  $attribute  The product attribute.
+ * @param  int $name_length Optional truncation of the name
  * @return  string    The HTML link to the product's admin page.
  * @author  Conor Kerr <zen-cart.back-in-stock-notifications@dev.ceon.net>
  * @author  RubikIntegration team @ RubikIntegration.com
  */
-function buildLinkToProductAdminPage(string $name, int $id, int $products_type): string
+function buildLinkToProductAdminPage(int $id, string $name, int $products_type, string $attribute = '', int $name_length = 0): string
 {
     global $zc_products;
     $type_admin_handler = $zc_products->get_admin_handler($products_type);
-
-    $name_length = 55;
-
+    $name_length = $name_length === 0 ? zen_field_length(TABLE_PRODUCTS, 'products_name') : $name_length;
     return '<a href="' . zen_href_link(
             $type_admin_handler,
             'pID=' . $id . '&product_type=' .
@@ -408,7 +408,9 @@ function buildLinkToProductAdminPage(string $name, int $id, int $products_type):
         ) . '" 
         title="' . TEXT_TITLE_EDIT_PRODUCT . '" target="_blank">' .
         htmlentities(substr($name, 0, $name_length), ENT_COMPAT, CHARSET) .
-        (strlen($name) > $name_length ? '...' : '') . '</a>';
+        (strlen($name) > $name_length ? '...' : '') .
+        ($attribute === '' ? '' : "<br>: <em><b>$attribute</b></em>") .
+        '</a>';
 }
 
 /**
@@ -428,7 +430,5 @@ function checkForModel($query_result): bool
             break;
         }
     }
-    //debug
-    //echo '$use_model=' . $use_model;
     return $use_model;
 }

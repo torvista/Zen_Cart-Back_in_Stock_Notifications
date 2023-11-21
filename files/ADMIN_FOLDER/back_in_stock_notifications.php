@@ -328,6 +328,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
             </div>
             <?php
             if ($option === 1 || $option === 2) {
+                $use_model = checkForModel($product_subscriptions_info);
                 if ($option === 1) { ?>
                     <div><?= TEXT_NOTE_OPTION_1; ?></div>
                     <?php
@@ -345,16 +346,6 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                 } elseif (isset($subscriptions_split)) {
                     $split_object = $subscriptions_split;
                 }
-
-                //debug
-                /*
-                if (isset($_GET['page'])) {
-                    echo '$_GET[\'page\']=' . $_GET['page'] . ' | (int)$_GET[\'page\']=' . (int)$_GET['page'] . ' | ';
-                } else {
-                    echo '$_GET[\'page\'] not set | ';
-                }
-                echo '$count_text=' . $count_text;*/
-                //eof
 
                 if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {//todo check strict
                     // Page is to be split according to the maximum rows per page
@@ -401,7 +392,6 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
             }
 
             if ($option === 1) {
-                $use_model = checkForModel($product_subscriptions_info);
                 ?>
                 <fieldset class="NoMarginBottom">
                     <legend><?= TEXT_PRODUCTS_WITH_SUBSCRIPTIONS; ?></legend>
@@ -490,7 +480,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     if ($use_model) {
                                         if (!$product_null) { ?>
                                             <a href="<?= zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($product_subscription_info['product_id']) . '&products_id=' . $product_subscription_info['product_id']); ?>" target="_blank"
-                                               title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $product_subscription_info['products_model'] . (!empty($product_subscription_info['product_name_extra']) ? ': ' . $product_subscription_info['product_name_extra'] : ''); ?></a>
+                                               title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $product_subscription_info['products_model']; ?></a>
                                             <?php
                                         }
                                     } ?>
@@ -499,8 +489,8 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     <?php
                                     if (!$product_null) {
                                         echo buildLinkToProductAdminPage(
-                                            $product_subscription_info['products_name'],
                                             (int)$product_subscription_info['product_id'],
+                                            $product_subscription_info['products_name'],
                                             (int)$product_subscription_info['products_type']
                                         );
                                     } else {
@@ -544,7 +534,6 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                 </fieldset>
                 <?php
             } elseif ($option === 2) {
-                $use_model = checkForModel($subscriptions_info);
                 ?>
                 <fieldset class="NoMarginBottom">
                     <legend><?= TEXT_ALL_SUBSCRIPTIONS; ?></legend>
@@ -648,8 +637,8 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                 <?php } ?>
                                 <td class="dataTableContent">
                                     <?= buildLinkToProductAdminPage(
-                                        $subscription_info['products_name'],
                                         (int)$subscription_info['product_id'],
+                                        $subscription_info['products_name'],
                                         (int)$subscription_info['products_type']
                                     ); ?>
                                 </td>

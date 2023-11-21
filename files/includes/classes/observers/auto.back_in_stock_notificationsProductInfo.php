@@ -72,8 +72,13 @@ class zcObserverBackInStockNotificationsProductInfo extends base
             return;
         }
 
+        $attributes_no_stock = [];
+
+        //**************** Add your custom attribute-stock-handling in here *********************//
+        //*************************************************************************************//
+
         // Check if customer should be offered the option to be notified when this product is back in stock
-        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && $products_quantity <= 0) {
+        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && ($products_quantity <= 0 || !empty($attributes_no_stock))) {
             if (BACK_IN_STOCK_REQUIRES_LOGIN === '1' && !zen_is_logged_in()) {
                 return;
             }
