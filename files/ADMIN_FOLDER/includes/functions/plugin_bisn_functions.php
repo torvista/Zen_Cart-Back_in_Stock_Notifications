@@ -20,7 +20,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: plugin_bisn_functions.php 2023-11-12 torvista
+ * @version     $Id: plugin_bisn_functions.php 2023-11-23 torvista
  */
 
 /**
@@ -407,7 +407,7 @@ function buildLinkToProductAdminPage(int $id, string $name, int $products_type, 
             false
         ) . '" 
         title="' . TEXT_TITLE_EDIT_PRODUCT . '" target="_blank">' .
-        htmlentities(substr($name, 0, $name_length), ENT_COMPAT, CHARSET) .
+        htmlentities(substr($name, 0, (int)$name_length), ENT_COMPAT, CHARSET) .
         (strlen($name) > $name_length ? '...' : '') .
         ($attribute === '' ? '' : "<br>: <em><b>$attribute</b></em>") .
         '</a>';
