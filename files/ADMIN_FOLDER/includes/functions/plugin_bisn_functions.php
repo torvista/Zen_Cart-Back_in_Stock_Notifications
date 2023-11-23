@@ -395,7 +395,7 @@ function buildLinkToProductAdminPage(int $id, string $name, int $products_type, 
 {
     global $zc_products;
     $type_admin_handler = $zc_products->get_admin_handler($products_type);
-    $name_length = $name_length === 0 ? zen_field_length(TABLE_PRODUCTS, 'products_name') : $name_length;
+    $name_length = $name_length === 0 ? zen_field_length(TABLE_PRODUCTS_DESCRIPTION, 'products_name') : $name_length;
     return '<a href="' . zen_href_link(
             $type_admin_handler,
             'pID=' . $id . '&product_type=' .
