@@ -185,7 +185,7 @@ switch ($option) {
         $subscriptions_query_raw = '
          SELECT
             DISTINCT bisns.*, bisns.name, bisns.email_address,
-            bisns.date_subscribed, pd.products_name, p.products_type, c.customers_firstname, c.customers_lastname, c.customers_email_address,
+            bisns.date_subscribed, pd.products_name, p.products_type, p.products_quantity, c.customers_firstname, c.customers_lastname, c.customers_email_address,
             cd.categories_name, cd.categories_id, p.products_model, bisns.languages_id
          FROM
             ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
@@ -242,6 +242,9 @@ switch ($option) {
             case 'languages_id':
                 $subscriptions_query_raw .= ' ORDER BY bisns.languages_id,' .
                     ' bisns.date_subscribed DESC';
+                break;
+            case 'stock':
+                $subscriptions_query_raw .= ' ORDER BY p.products_quantity DESC, bisns.name';
                 break;
             //eof
             default:
@@ -450,7 +453,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             }
 
                             if ($sort_column === 'stock') {
-                                echo '<th class="""center">' . TABLE_HEADING_CURRENT_STOCK . '</th>';
+                                echo '<th class="center">' . TABLE_HEADING_CURRENT_STOCK . '</th>';
                             } else {
                                 echo '<th class="ClickToSort center"><a href="' .
                                     zen_href_link(
@@ -568,6 +571,18 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     TABLE_HEADING_PRODUCT . '</a></th>';
                             }
 
+                            if ($sort_column === 'stock') {
+                                echo '<th class="center">' . TABLE_HEADING_CURRENT_STOCK . '</th>';
+                            } else {
+                                echo '<th class="ClickToSort center"><a href="' .
+                                    zen_href_link(
+                                        FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
+                                        zen_get_all_get_params(['sort', 'action']) . 'sort=stock' . '#bisnTableProductSubscriptions'
+                                    ) .
+                                    '" title="' . TEXT_SORT_BY_CURRENT_STOCK . '">' .
+                                    TABLE_HEADING_CURRENT_STOCK . '</a></th>';
+                            }
+
                             if ($sort_column === 'date') {
                                 echo '<th class="center">' . TABLE_HEADING_DATE_SUBSCRIBED . '</th>';
                             } else {
@@ -642,6 +657,9 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                         $subscription_info['products_name'],
                                         (int)$subscription_info['products_type']
                                     ); ?>
+                                </td>
+                                <td class="dataTableContent center">
+                                    <?= zen_get_products_stock((int)$subscription_info['product_id']); ?>
                                 </td>
                                 <td class="dataTableContent center">
                                     <?= zen_date_short($subscription_info['date_subscribed']); ?>
