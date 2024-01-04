@@ -186,7 +186,7 @@ switch ($option) {
          SELECT
             DISTINCT bisns.*, bisns.name, bisns.email_address,
             bisns.date_subscribed, pd.products_name, p.products_type, c.customers_firstname, c.customers_lastname, c.customers_email_address,
-            cd.categories_name, cd.categories_id, p.products_model, bisns.languages_id 
+            cd.categories_name, cd.categories_id, p.products_model, bisns.languages_id
          FROM
             ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
          LEFT JOIN
@@ -328,13 +328,14 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
             </div>
             <?php
             if ($option === 1 || $option === 2) {
-                $use_model = checkForModel($product_subscriptions_info);
-                if ($option === 1) { ?>
+                if ($option === 1) {
+                    $use_model = checkForModel($product_subscriptions_info); ?>
                     <div><?= TEXT_NOTE_OPTION_1; ?></div>
                     <?php
                     $count_text = TEXT_DISPLAY_NUMBER_OF_PRODUCTS;
                 }
-                if ($option === 2) { ?>
+                if ($option === 2) {
+                    $use_model = checkForModel($subscriptions_info); ?>
                     <div><?= TEXT_NOTE_OPTION_2; ?></div>
                     <?php
                     $count_text = TEXT_DISPLAY_NUMBER_OF_BACK_IN_STOCK_NOTIFICATIONS;
