@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-17 torvista
+ * @version     $Id: header_php.php 2024 01 20 torvista
  */
 
 /**phpStorm inspections
@@ -83,6 +83,8 @@ $product_name = $product_model . ' - ' . $product_name . ($posmProductNameExtra 
 // Check if the form has been submitted
 $form_errors = [];
 
+$zco_notifier->notify('NOTIFY_BISN_SUBSCRIBE_CAPTCHA_CHECK', $_POST);
+
 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
     $_POST['notify_me'] = 1;
     $_POST['email'] = zen_get_customer_email_from_id((int)$_SESSION['customer_id']);
@@ -93,6 +95,10 @@ if (isset($_POST['notify_me'])) {
     // Check that a valid e-mail address has been supplied
     if (isset($_POST['email'])) {
         $_POST['email'] = trim($_POST['email']);
+    }
+
+    if (CeonEmailValidation::isHeaderInjection($_POST['name'])) {
+        $form_errors['name'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
     }
 
     if (isset($_POST['cofnospam'])) {
@@ -108,25 +114,39 @@ if (isset($_POST['notify_me'])) {
         $form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_INVALID;
     } elseif (CeonEmailValidation::isHeaderInjection($_POST['email'])) {
         $form_errors['email'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
-    } elseif (!isset($_POST['cofnospam']) || $_POST['cofnospam'] === '') {
-        $form_errors['cofnospam'] =
-            BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_NOT_ENTERED;
+    }
+
+    if (!isset($_POST['cofnospam']) || $_POST['cofnospam'] === '') {
+        $form_errors['cofnospam'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_NOT_ENTERED;
     } elseif (!CeonEmailValidation::isValid($_POST['cofnospam'])) {
         $form_errors['cofnospam'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_INVALID;
     } elseif (CeonEmailValidation::isHeaderInjection($_POST['cofnospam'])) {
-        $form_errors['cofnospam'] =
-            BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
-    } elseif (CeonEmailValidation::isHeaderInjection($_POST['name'])) {
-        $form_errors['name'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
+        $form_errors['cofnospam'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_HEADER_INJECTION_ATTEMPT;
     } elseif (strtolower($_POST['email']) !== strtolower($_POST['cofnospam'])) {
-        $form_errors['cofnospam'] =
-            BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_DOESNT_MATCH;
-    } else {
+        $form_errors['cofnospam'] = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_EMAIL_CONFIRMATION_DOESNT_MATCH;
+    }
+
+    // Add clause for Google reCaptcha plugin.
+    // "$error" is a global created by the plugin observer.
+    // Same observer adds the Recaptcha error message to messageStack. Normally messageStack->output is in the template code, but this uses CEON's unique template variable substitution to put the error message above the Recaptcha on the BISN Subscribe page.
+    if (!empty($error)) {
+        $captcha_error = '';
+        if ($messageStack->size('bisn_subscribe') > 0) {
+            foreach ($messageStack->messages as $message) {
+                if ($message['class'] = 'bisn_subscribe') {
+                    $captcha_error = $message['text'];
+                    break;//there will only be one error message text
+                }
+            }
+            $form_errors['captcha'] = $captcha_error;
+        }
+    }
+
+    if (count($form_errors) === 0) {
         // Valid e-mail address supplied
         $build_form = false;
 
         $email_address = $_POST['email'];
-
 
         // Check if the user is already subscribed to the notification list for this product
         $check_notification_subscription_query = '
@@ -275,8 +295,7 @@ if ($build_form) {
 //eof
 
     if (isset($_POST['cofnospam'])) {
-        $back_in_stock_notification_form_customer_email_confirmation =
-            htmlentities($_POST['cofnospam']);
+        $back_in_stock_notification_form_customer_email_confirmation = htmlentities($_POST['cofnospam']);
     } else {
         $back_in_stock_notification_form_customer_email_confirmation = '';
     }
@@ -410,6 +429,7 @@ function sendBackInStockNotificationSubscriptionEmail(
         );
 
         // Send an e-mail to the store owner as well?
+        //$html_msg = $html_msg . " " . $customer_name ." ".  $email_address;//steve some of these fields are arrays, not just text
         if (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO !== '') {
             zen_mail(
                 '',

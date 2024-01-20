@@ -99,7 +99,7 @@ declare(strict_types=1);
 
         // Add the table headers and update button
         /*	https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications/issues/6
-        $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_TITLE;		
+        $product_back_in_stock_notifications_table_title =  ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_TITLE;
             $back_in_stock_notifications_table->setVariable('table_title',	$product_back_in_stock_notifications_table_title);
         */
         $header_subscribed = ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS_TABLE_HEADER_SUBSCRIBED;

@@ -3,6 +3,7 @@
 	<title></title>
 </head>
 <body>
+<!-- last modified 2024 01 20 torvista -->
 <!-- DO NOT EDIT THE COMMENTS PRIOR TO EACH SECTION: they are part of the magic... -->
 
 <!-- this form is shown on the BISN subscribe page: only shown when the submission failed of the form on the product_info page.-->
@@ -14,18 +15,27 @@
 	<ceon:variable name="back_in_stock_notification_form_start_tag"><form></ceon:variable>
 	<fieldset>
 		<legend><ceon:variable name="title">Let us notify you when this product is back in stock!</ceon:variable></legend>
-		<label class="inputLabel" for="name"><ceon:variable name="name_label">Your Name</ceon:variable>:</label>
-		<input type="text" size="25" maxlength="64" name="name" id="name" value="{ceon:name}">
-		<br class="clearBoth">
-		<ceon:if isset="name_error"><p class="alert"><ceon:variable name="name_error">You have attempted to spam someone!</ceon:variable></p></ceon:if>
-		<label class="inputLabel" for="email"><ceon:variable name="email_label">Your E-mail</ceon:variable>:</label>
-		<input type="text" size="35" maxlength="96" name="email" id="email" value="{ceon:email}">
-		<br class="clearBoth">
-		<ceon:if isset="email_error"><p class="alert"><ceon:variable name="email_error">You have not entered a valid email address!</ceon:variable></p></ceon:if>
+
+        <ceon:if isset="name_error"><br class="clearBoth"><p class="alert"><ceon:variable name="name_error">You have attempted to spam someone!</ceon:variable></p></ceon:if>
+        <label class="inputLabel" for="name"><ceon:variable name="name_label">Your Name</ceon:variable>:</label>
+        <input type="text" size="25" maxlength="64" name="name" id="name" value="{ceon:name}">
+
+        <br class="clearBoth">
+
+        <ceon:if isset="email_error"><br class="clearBoth"><p class="alert"><ceon:variable name="email_error">You have not entered a valid email address!</ceon:variable></p></ceon:if>
+        <label class="inputLabel" for="email"><ceon:variable name="email_label">Your E-mail</ceon:variable>:</label>
+        <input type="text" size="35" maxlength="96" name="email" id="email" value="{ceon:email}">
+
+        <br class="clearBoth">
+
+        <ceon:if isset="email_confirmation_error"><br class="clearBoth"><p class="alert"><ceon:variable name="email_confirmation_error">You have not entered a valid email address!</ceon:variable></p></ceon:if>
 		<label class="inputLabel" for="email_confirmation"><ceon:variable name="email_confirmation_label">Confirm E-mail</ceon:variable>:</label>
-		<input type="text" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}">
-		<br class="clearBoth">
-		<ceon:if isset="email_confirmation_error"><p class="alert"><ceon:variable name="email_confirmation_error">You have not entered a valid email address!</ceon:variable></p></ceon:if>
+        <input type="text" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}">
+
+        <br class="clearBoth">
+
+		<ceon:if isset="captcha_error"><br class="clearBoth"><p class="alert"><ceon:variable name="captcha_error">Captcha check failed!</ceon:variable></p></ceon:if>
+        <ceon:variable name="reCaptcha"></ceon:variable>
 	</fieldset>
 	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
 	<input type="hidden" name="notify_me" value="true">
@@ -72,6 +82,8 @@
 
 	<hr>
 
+<!-- Shown on the product info page \includes\templates\YOUR_TEMPLATE\templates\tpl_product_info_display.php -->
+<!-- Substituted values are loaded from there -->
 	<!-- ceon-begin-part PRODUCT_INFO_BACK_IN_STOCK_NOTIFICATION_FORM -->
 	<ceon:variable name="back_in_stock_notification_form_start_tag"><form></ceon:variable>
 	<a id="back_in_stock_notification_form"></a>
@@ -86,14 +98,13 @@
 		<input type="email" size="35" maxlength="96" name="email" id="email" required value="{ceon:email}">
 		<br class="clearBoth">
 		<label class="inputLabel" for="email_confirmation"><ceon:variable name="email_confirmation_label">Confirm E-mail</ceon:variable>:</label>
-		<input type="email" size="35" maxlength="96" name="cofnospam" id="email_confirmation" value="{ceon:cofnospam}">
+		<input type="email" size="35" maxlength="96" name="cofnospam" id="email_confirmation" required value="{ceon:cofnospam}">
 		<br class="clearBoth">
-        <p><ceon:variable name="reCaptcha"><!-- Google reCaptcha: not replaced/not used --></ceon:variable></p>
+        <ceon:variable name="reCaptcha"></ceon:variable>
+        <div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
+        <input type="hidden" name="notify_me" value="true">
 	</fieldset>
-	<div class="buttonRow forward"><ceon:variable name="submit_button"><input type="submit"></ceon:variable></div>
-	<input type="hidden" name="notify_me" value="true">
 	</form>
-	<br class="clearBoth">
 	<!-- ceon-end-part PRODUCT_INFO_BACK_IN_STOCK_NOTIFICATION_FORM -->
 
 	<hr>

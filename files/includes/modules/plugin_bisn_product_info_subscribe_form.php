@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2023-11-19 torvista
+ * @version     $Id: header_php.php 2024 01 20 torvista
  */
 
 if (!empty($back_in_stock_notification_build_form)) {
@@ -67,22 +67,16 @@ if (!empty($back_in_stock_notification_build_form)) {
     $back_in_stock_notification_form->setVariable('notice', $notice_text);
 
     // Add the customer's details to the form (empty unless logged in)
-    $back_in_stock_notification_form->setVariable(
-        'name',
-        $back_in_stock_notification_form_customer_name
-    );
-    $back_in_stock_notification_form->setVariable(
-        'email',
-        $back_in_stock_notification_form_customer_email
-    );
-    $back_in_stock_notification_form->setVariable(
-        'cofnospam',
-        $back_in_stock_notification_form_customer_email_confirmation
-    );
+    $back_in_stock_notification_form->setVariable('name', $back_in_stock_notification_form_customer_name);
+    $back_in_stock_notification_form->setVariable('email', $back_in_stock_notification_form_customer_email);
+    $back_in_stock_notification_form->setVariable('cofnospam', $back_in_stock_notification_form_customer_email_confirmation);
+
     // Google reCaptcha: https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
-    if (defined('GOOGLE_RECAPCHTA_BISN') && GOOGLE_RECAPCHTA_BISN === 'true') {
+    if (defined('GOOGLE_RECAPTCHA_BISN_SUBSCRIBE') && GOOGLE_RECAPTCHA_BISN_SUBSCRIBE === 'true') {
         $reCaptcha = recaptcha_get_html(false, 'light', 'normal', 'margin:5px');
         $back_in_stock_notification_form->setVariable('reCaptcha', $reCaptcha);
+    } else {
+        $back_in_stock_notification_form->setVariable('reCaptcha', '<!-- Google reCaptcha: not used/enabled -->');
     }
 
     print $back_in_stock_notification_form->getXHTMLSource();

@@ -37,6 +37,8 @@ in admin\back_in_stock_notifications.php
 The BISN configuration allows an alternative email address for the test emails to prevent cluttering of the main email account.
 
 ## Changelog
+01/20/2023: added support for Google Recaptcha: https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
+
 18/11/2023 or thereabouts
 Add multi-language to email sending.
 A reply to the Admin copy of BISN subscription email now replies to customer

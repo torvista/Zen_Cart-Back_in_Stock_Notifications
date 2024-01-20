@@ -12,13 +12,12 @@ declare(strict_types=1);
  * @copyright   Copyright 2004-2012 Ceon
  * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: tpl_back_in_stock_notification_subscribe_default.php 937 2012-02-10 11:42:20Z conor $
+ * @version     $Id: tpl_back_in_stock_notification_subscribe_default.php 2024 01 20 torvista
  */
 
 ?>
 <div class="centerColumn">
 <?php
-
 /**
  * Load the template class
  */
@@ -90,20 +89,27 @@ if ($build_form) {
 	if (count($form_errors) > 0) {
 		$error_intro_text = BACK_IN_STOCK_NOTIFICATION_FORM_ERROR_INTRO;
 		$back_in_stock_notification_form->setVariable('form_error_intro', $error_intro_text);
-
 		if (isset($form_errors['name'])) {
 			$back_in_stock_notification_form->setVariable('name_error', $form_errors['name']);
 		}
-
 		if (isset($form_errors['email'])) {
 			$back_in_stock_notification_form->setVariable('email_error', $form_errors['email']);
 		}
-
 		if (isset($form_errors['cofnospam'])) {
-			$back_in_stock_notification_form->setVariable('email_confirmation_error',
-				$form_errors['cofnospam']);
+			$back_in_stock_notification_form->setVariable('email_confirmation_error', $form_errors['cofnospam']);
 		}
+        if (isset($form_errors['captcha'])) {
+            $back_in_stock_notification_form->setVariable('captcha_error', $form_errors['captcha']);
+        }
 	}
+
+    // Google reCaptcha: https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
+    if (defined('GOOGLE_RECAPTCHA_BISN_SUBSCRIBE') && GOOGLE_RECAPTCHA_BISN_SUBSCRIBE === 'true') {
+        $reCaptcha = recaptcha_get_html(false, 'light', 'normal', 'margin:5px');
+        $back_in_stock_notification_form->setVariable('reCaptcha', $reCaptcha);
+    } else {
+        $back_in_stock_notification_form->setVariable('reCaptcha', '<!-- Google reCaptcha: not used/enabled -->');
+    }
 
 	$back_in_stock_notification_form->cleanSource();
 
