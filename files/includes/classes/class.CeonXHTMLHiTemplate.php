@@ -115,18 +115,14 @@ class CeonXHTMLHiTemplate
         $method_set_count = 0;
 // Replace bracketed replacement tags (e.g. {ceon:content})
         $bracketed_tag = '{ceon:' . $variable_name . '}';
-        if (PHP_VERSION >= '5') {
             $this->xhtml_source = str_replace(
                 $bracketed_tag,
-                $source,
+                (string)$source,  //steve quickfix for error on unsubscribe, sometimes it is an integer: Argument #2 ($replace) must be of type array|string TODO investigate
+                //$source,
                 $this->xhtml_source,
                 $method_set_count
             );
             $set_count += $method_set_count;
-        } elseif (str_contains($this->xhtml_source, $bracketed_tag)) {
-            $this->xhtml_source = str_replace($bracketed_tag, $source, $this->xhtml_source);
-            ++$set_count;
-        }
 
 // Enable <ceon:if blocks
         do {

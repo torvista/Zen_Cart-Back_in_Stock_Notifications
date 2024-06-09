@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
- * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU Public License V2.0
  * @version     $Id: class.back_in_stock_notificationsProductInfo.php 2023-11-19 torvista
  */
 
@@ -23,7 +23,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://dev.ceon.net/web/zen-cart/back-in-stock-notifications
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License V2.0
  */
 
 class zcObserverBackInStockNotificationsProductInfo extends base
@@ -37,7 +37,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                 'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_BOOK_INFO',
                 'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_FREE_SHIPPING_INFO',
                 'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_INFO',
-                'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_MUSIC_INFO'
+                'NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_MUSIC_INFO',
             ]
         );
     }
@@ -82,6 +82,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
             if (BACK_IN_STOCK_REQUIRES_LOGIN === '1' && !zen_is_logged_in()) {
                 return;
             }
+
             $product_back_in_stock_notification_form_link = '';
             $back_in_stock_notification_build_form = true;
 
@@ -122,7 +123,7 @@ class zcObserverBackInStockNotificationsProductInfo extends base
 
                     $product_back_in_stock_notification_form_link = BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED;
                 } else {
-                    // Customer is not yet subscribed to be notified - store data for notification
+                    // Customer is not yet subscribed to be notified - store data for the notification
                     // request form
                     $back_in_stock_notification_form_customer_name = htmlentities(
                         $customer_details->fields['customers_firstname'] . ' ' .
@@ -146,12 +147,12 @@ class zcObserverBackInStockNotificationsProductInfo extends base
             }
 
             if ($product_back_in_stock_notification_form_link === '') {
-                // Build link to form
+                // Build the link to the form
 
                 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
                     // account is required for subscription
                     // if logged in: the subscription link adds the subscription (no form needed)
-                    // if not logged in: redirects to login/account creation page
+                    // if not logged in: redirects to the login/account creation page
                     $product_back_in_stock_notification_form_link = sprintf(
                         BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
                         zen_href_link(
