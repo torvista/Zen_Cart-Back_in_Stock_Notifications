@@ -517,7 +517,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                 </td>
                                 <td class="dataTableContent center">
                                     <?php
-                                    echo zen_draw_form('delete_product_subscriptions_' . $product_subscription_info['product_id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=1&action=delete');
+                                    echo zen_draw_form('delete_product_subscriptions_' . $product_subscription_info['product_id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=1&action=delete' . (!empty($_GET['sort']) ? '&sort=' . $_GET['sort'] : ''));
                                     echo zen_draw_hidden_field('delete', $product_subscription_info['product_id']);
                                     $product_model_name = ($use_model ? $product_subscription_info['products_model'] . ' - ' : '') . htmlentities($product_subscription_info['products_name']);
                                     ?>
@@ -699,7 +699,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                 <?php } ?>
                                 <td class="dataTableContent center">
                                     <?php
-                                    echo zen_draw_form('delete_customer_subscription_' . $subscription_info['id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=2&action=delete');
+                                    echo zen_draw_form('delete_customer_subscription_' . $subscription_info['id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=2&action=delete' . (!empty($_GET['sort']) ? '&sort=' . $_GET['sort'] : ''));
                                     echo zen_draw_hidden_field('delete', $subscription_info['id']);
                                     $customer_name_email = $customer_name . ' (' . $subscription_info['email_address'] . ')';
                                     ?>
