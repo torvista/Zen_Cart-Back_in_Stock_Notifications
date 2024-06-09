@@ -645,7 +645,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                 if ($use_model) {
                                     ?>
                                     <td class="dataTableContent">
-                                        <a href="<?= zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($subscription_info['product_id']) . '&products_id=' . $subscription_info['product_id'], 'NONSSL', false); ?>"
+                                        <a href="<?= zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($subscription_info['product_id']) . '&products_id=' . $subscription_info['product_id']); ?>"
                                            target="_blank"
                                            title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $subscription_info['products_model']// for variants . ($subscription_info['product_name_extra'] === '' ? '' : ': ' . $subscription_info['product_name_extra'])
                                             ; ?></a>
@@ -701,7 +701,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     <?php
                                     echo zen_draw_form('delete_customer_subscription_' . $subscription_info['id'], FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS, 'option=2&action=delete' . (!empty($_GET['sort']) ? '&sort=' . $_GET['sort'] : ''));
                                     echo zen_draw_hidden_field('delete', $subscription_info['id']);
-                                    $customer_name_email = $customer_name . ' (' . $subscription_info['email_address'] . ')';
+                                    $customer_name_email = $customer_name . ' (' . $customer_email_address . ')';
                                     ?>
                                     <button class="btn btn-danger btn-sm" type="submit"
                                             title="<?= ICON_DELETE; ?>"
