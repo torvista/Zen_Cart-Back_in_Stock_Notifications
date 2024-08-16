@@ -1,8 +1,8 @@
 <?php
-/** Ceon BISN template
+/** plugin Back in Stock Notifications
  * Page Template
  *
- * BOOTSTRAP v3.7.0
+ * BOOTSTRAP v3.7.2
  *
  * Loaded automatically by index.php?main_page=product_info.
  * Displays details of a typical product
@@ -189,7 +189,7 @@ if ($pr_attr->fields['total'] > 0) {
 ?>
             <!--bof Product Price block above Attributes -->
 <?php
-    if ($display_price_top === true && zen_get_products_display_price((int)$_GET['products_id']) > 0) {
+    if ($display_price_top === true) {
 ?>
             <!--bof products price top card-->
             <div id="productsPriceTop-card" class="card mb-3">
@@ -199,7 +199,8 @@ if ($pr_attr->fields['total'] > 0) {
 // base price
         echo
             $one_time .
-            ((zen_has_product_attributes_values((int)$_GET['products_id']) && $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') . zen_get_products_display_price((int)$_GET['products_id']);
+            ((zen_has_product_attributes_values((int)$_GET['products_id']) && $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') .
+            zen_get_products_display_price((int)$_GET['products_id']);
 ?>
                     </h2>
                 </div>
@@ -238,7 +239,7 @@ if ($products_discount_type !== '0') {
 <?php
 }
 
-if ($display_price_bottom === true && zen_get_products_display_price((int)$_GET['products_id']) > 0) {
+if ($display_price_bottom === true) {
 ?>
             <!--bof products price bottom card-->
             <div id="productsPriceBottom-card" class="card mb-3">
@@ -256,7 +257,8 @@ if ($display_price_bottom === true && zen_get_products_display_price((int)$_GET[
 ?>
 <?php // plugin BISN 1 of 4
   echo (is_null($product_back_in_stock_notification_form_link) ? '<!-- BISN link is null -->' : "<p>$product_back_in_stock_notification_form_link</p>");
-// eof plugin BISN 1 of 4 ?>
+// eof plugin BISN 1 of 4
+?>
             <!--bof Add to Cart Box -->
 <?php
 if (CUSTOMERS_APPROVAL === '3' && TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM === '') {
@@ -307,7 +309,7 @@ if (CUSTOMERS_APPROVAL === '3' && TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM =
         </div>
     </div>
 <?php // plugin BISN 2 of 4
-// closing tag of form 'cart_quantity' moved here: must be closed before BISN form ?>
+// closing tag of form 'cart_quantity' must be moved to here: must be closed before BISN form is opened ?>
 <!--bof Form close-->
 </form>
 <!--bof Form close-->

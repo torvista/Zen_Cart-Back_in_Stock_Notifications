@@ -8,46 +8,53 @@ I've been modifying it for years, multi-language and attributes handling being t
 As a result, this code is hugely different from the plugin version, so always test on a development server: DO NOT drop it into your production server without testing first.
 It's compatible with the current Zen Cart 1.5.8 and php7.3+.
 
-Note that the original documentation in the docs folder has NOT been updated for the moment, so the file list is out of date.
+Note that the original documentation in the docs folder has NOT been updated, so the file list is out of date.
 
 ## Installation/Upgrade
-On your development server, remove original BISN files and merge this fileset: apart from the template files, all are new/do not overwrite core files.  
-Where files are a modification from a core file, I include the core file named as filename.158 php/filename.200 php for comparison purposes.  
-Template examples are provided for responsive_classic and bootstrap.
+1. On your development server, remove original BISN files.
+1. Copying all this fileset will not overwrite any other files: they are all new.  
+But, regarding the template files, you will find bootstrap CLONE and responsive_classic CLONE folders containing modified template files (suffixed BISN php) for you to compare and merge into your own equivalents.
 
 Go to the Admin Catalog->BISN Notifications Admin page to auto upgrade/install.
 
-## Testing
-If you want to test the real sending of notifications, repeatedly/not deleting the subscriptions: set this to false  
-$delete_customer_subscriptions = true;  
-in admin\back_in_stock_notifications.php  
-The BISN configuration allows an alternative email address for the test emails to prevent cluttering of the main email account while testing.
-
-Optional Copies of real Notification Subscription Emails are sent to what is defined in the BISN Admin (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO).
-
-## Languages
-If you have a single language store, you should not see anything about languages.  
-For a multiple-language store, real notification emails should be sent in the same language as that used by the customer for the subscription.
-This is done by selecting Option 4: this sends the emails in the language that matches the currently-selected admin-language.
-Then, changing the admin language will reload Option 4 and send the *other* emails that correspond to this other admin language etc.  
-Todo: make this automatic.
-
 ## Use/How it Works
-The use of the BISN service may be restricted to only logged-in users to prevent spam from the BISN form, or you can try the ReCaptcha plugin
+The use of the BISN service may be restricted to only logged-in users to prevent spam from the BISN form, or you can try the ReCaptcha plugin  
 https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
 
-The BISN observer determines if the product is out of stock/if the BISN link and form should be shown.  
+The BISN observer determines if the product is out of stock and hence shows the BISN link and form.  
 The user fills in the form on the product info page or if logged-in, the data is filled automatically.  
 If the submitted form data has an error, the BISN subscribe page is shown, similar to Ask a Question.
-If the form data is valid, the BISN subscribe page is skipped, the subscripion is recorded and a success message is shown.  
+If the form data is valid, the BISN subscribe page is skipped, the subscripion is recorded and a success message is shown.
+
+## Languages
+If you have a single language store, you should not see anything about languages.
+
+For a multiple-language store, although real notification emails will be sent in the same language as that used by the customer for the subscription, it requires manual intervention.
+
+This is done by selecting Option 4: this sends the emails in the language that matches the currently-selected admin-language.
+Then, changing the admin language will reload the Option 4 page and send the *other* emails that correspond to this other admin language etc.  
+Todo: make this automatic.
+
+## Testing
+If you want to test the real sending of notifications repeatedly/not deleting the subscriptions:  
+in admin\back_in_stock_notifications.php  
+set this to false  
+$delete_customer_subscriptions = true;  
+
+The BISN configuration allows an alternative email destination for the test emails to prevent cluttering up the business email account while testing.
+
+Optional copies of real Notification Subscription Emails are sent to what is defined in the BISN Admin (SEND_EXTRA_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAILS_TO).
 
 ### Ceon XHTML template
-This plugin uses a unique method of building the forms and emails using variable substitution. Complicated to understand, and something that will require removal if this is ever to go into Zen Cart core.
+This plugin uses a unique (to CEON/Conor) method of building the forms and emails using templates and variable substitutions.  
+It's complicated to understand/modify, and something that needs replacing by ZC core methods... feel free to have a go and contribute that.
 
 ## Problems/Ideas
-Any problems or suggestions: open an issue here in GitHub, not in the forum.
+Any problems or suggestions: open an issue in GitHub, not in the forum.
 
 ## Changelog
+16/08/2024: update and simplify template files
+
 20/01/2023: added support for Google Recaptcha: https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
 
 18/11/2023 or thereabouts
