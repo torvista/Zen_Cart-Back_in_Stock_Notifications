@@ -14,8 +14,14 @@ Note that the original documentation in the docs folder has NOT been updated, so
 1. On your development server, remove original BISN files.
 1. Copying all this fileset will not overwrite any other files: they are all new.  
 But, regarding the template files, you will find bootstrap CLONE and responsive_classic CLONE folders containing modified template files (suffixed BISN php) for you to compare and merge into your own equivalents.
+1. If are upgrading from a previous version of BISN or from a variant, the "languages _id" column may need to be added to the "back_in_stock_notification_subscriptions" table.
+   - Using a program such as PHPMyAdmin check the structure of the "back_in_stock_notification_subscriptions" table.
+   - If the field "languages _id" does not  exist run the following SQL statement
+   
+      `ALTER TABLE back_in_stock_notification_subscriptions ADD languages_id INT(2) UNSIGNED NOT NULL DEFAULT '1' AFTER date_subscribed;`
 
-Go to the Admin Catalog->BISN Notifications Admin page to auto upgrade/install.
+
+1. Go to the Admin Catalog->BISN Notifications Admin page to auto upgrade/install.
 
 ## Use/How it Works
 The use of the BISN service may be restricted to only logged-in users to prevent spam from the BISN form, or you can try the ReCaptcha plugin  
