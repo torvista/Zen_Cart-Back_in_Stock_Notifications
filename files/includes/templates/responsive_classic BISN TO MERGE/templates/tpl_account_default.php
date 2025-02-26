@@ -1,5 +1,9 @@
 <?php
-/** plugin Back in Stock Notifications
+/** 
+ * plugin Back in Stock Notifications
+ * https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications
+ * @version $Id: torvista 26 Feb 2025
+ * 
  * Page Template
  *
  * Loaded automatically by index.php?main_page=account.

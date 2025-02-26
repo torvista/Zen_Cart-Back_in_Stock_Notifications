@@ -1,5 +1,9 @@
 <?php
-/** plugin Back in Stock Notifications
+/** 
+ * plugin Back in Stock Notifications
+ * https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications
+ * @version $Id: torvista 26 Feb 2025
+ *
  * Page Template
  *
  * BOOTSTRAP v3.7.2
@@ -309,10 +313,11 @@ if (CUSTOMERS_APPROVAL === '3' && TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM =
         </div>
     </div>
 <?php // plugin BISN 2 of 4
-// closing tag of form 'cart_quantity' must be moved to here: must be closed before BISN form is opened ?>
-<!--bof Form close-->
-</form>
-<!--bof Form close-->
+// The closing tag of form 'cart_quantity' is normally at the end of the entire file
+// It is moved here so the form is closed before the BISN form is declared ?>
+    <!--bof Form close-->
+    <?= '</form>' ?>
+    <!--bof Form close-->
 <?php // eof plugin BISN 2 of 4 ?>
     <div id="<?= $html_id_prefix ?>-moduledDisplayRow" class="row">
 <?php
@@ -393,7 +398,7 @@ if (PRODUCT_INFO_PREVIOUS_NEXT === '2' || PRODUCT_INFO_PREVIOUS_NEXT === '3') {
 <!--eof Prev/Next bottom position -->
 
 <?php /* plugin BISN 4 of 4
-this is the original close of form 'cart_quantity': moved up, prior to BISN form
+close of form 'cart_quantity' has been moved up, to be prior to the BISN form
     <!--bof Form close-->
     <?= '</form>' ?>
     <!--bof Form close-->
