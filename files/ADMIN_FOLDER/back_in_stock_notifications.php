@@ -2,19 +2,6 @@
 
 declare(strict_types=1);
 
-//todo: striped table css, change CEON css/ids/classes -> ZC standard
-//todo: POSM support
-
-/** phpstorm inspections
- * @var currencies $currencies
- * @var queryFactory $db
- * @var language $languages
- * @var messageStack $messageStack
- * @var notifier $zco_notifier
- * @var template_func $template
- * @var $current_page_base
- */
-
 /**
  * Ceon Back In Stock Notifications Admin Utility.
  *
@@ -26,8 +13,21 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
- * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023-11-12 torvista
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License V2.0
+ * @version     $Id: back_in_stock_notifications.php torvista 26 Feb 2025
+ */
+
+//todo: striped table css, change CEON css/ids/classes -> ZC standard
+//todo: POSM support
+
+/** phpstorm inspections
+ * @var queryFactory $db
+ * @var language $languages
+ * @var messageStack $messageStack
+ * @var notifier $zco_notifier
+ * @var sniffer $sniffer
+ * @var template_func $template
+ * @var $current_page_base
  */
 
 // FOR REPEAT TESTING ONLY
@@ -44,9 +44,16 @@ require('includes/application_top.php');
 $languages = !empty($languages) ? $languages : zen_get_languages();
 $use_langs = count($languages) > 1;
 
-// Check the database subscriptions table exist. If not, run the installer
+// Check the database subscriptions table exists. If not, run the installer
 $table_exists_query = 'SHOW TABLES LIKE "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '"';
 $table_exists_result = $db->Execute($table_exists_query);
+
+// "Temporary" check for languages_id column...prior to rework as an encapsulated plugin
+if (!$table_exists_result->EOF && !$sniffer->field_exists(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, 'languages_id')) {
+    $db->Execute('ALTER TABLE ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' ADD COLUMN languages_id INT(2) UNSIGNED NOT NULL DEFAULT 1 AFTER date_subscribed');
+    $messageStack->add_session('BISN Installer: column "languages_id" added to subscriptions table "' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . '".', 'success');
+    zen_redirect(zen_href_link(FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS));
+}
 
 // Check all the admin options are created
 $option_missing =
@@ -268,13 +275,13 @@ switch ($option) {
         $num_rows = $subscriptions_info->RecordCount();
         break;
 
-    case 3://test run, display all the emails that need to be sent, and also send them to the EMAIL_FROM (store email address). Subscriptions not deleted
+    case 3:// Test run, display all the emails that need to be sent, and also send them to the EMAIL_FROM (store email address). Subscriptions are not deleted
 
         //todo needs rework
         unset($send_output);
-        // create array of emails per language
+        // create an array of emails per language
         foreach ($languages as $key => $lang) {
-            $send_output[$lang['id']] = sendBackInStockNotifications((int)$lang['id'], true);//test mode == true: emails are sent only to EMAIL_FROM (store address). Subscriptions not deleted.
+            $send_output[$lang['id']] = sendBackInStockNotifications((int)$lang['id'], true);// Test mode == true: emails are sent only to EMAIL_FROM (store address). Subscriptions are not deleted.
         }
         break;
 
@@ -635,7 +642,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                         </tr>
                         <?php
                         foreach ($subscriptions_info as $subscription_info) {
-                            //skip deleted products: is already highlighted on first entry into BISN admin page, should be deleted there
+                            //skip deleted products: is already highlighted on the first entry into BISN admin page, should be deleted there
                             if ($subscription_info['products_name'] === null) {
                                 continue;
                             }
