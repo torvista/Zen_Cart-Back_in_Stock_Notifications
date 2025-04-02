@@ -1,11 +1,15 @@
 # Zen Cart - Back in Stock Notifications
+
+## Functionality
 If a product is out of stock, customers can subscribe/request to receive a notification when that product becomes available again.
 
-It's in use/tested with the current Zen Cart development master branch and php8.4+.
+## Compatibility
+Zen Cart 157 (earlier probably) to the current version 2.1, and up to php8.4+.
 
-This was based on the original CEON version, not the forked ajax version. Neither are supported by the original developers.
+## Background
+This fileset is based on the original CEON version, not the forked ajax version. Neither are supported by the original developers.
 
-I've been modifying it for years, multi-language and attributes handling being the most significant omissions from the original code.
+I've been modifying it for years, multi-language (now included) and attributes handling being the most significant omissions from the original code.
 
 As a result, this code is hugely different from the plugin version, so always test on a development server: DO NOT drop it into your production server without testing first.  
 
@@ -14,7 +18,7 @@ Note that the original documentation in the docs folder has NOT been updated, so
 ## Installation/Upgrade
 1. On your development server, remove any original BISN files that originated from the Zen cart Plugins.
 1. Copying all this fileset should not overwrite any other files: they are all new.  
-But you should always use comparison software to check that is so, and to get an idea of what you are dumping into your shop. Trust no-one!  
+BUT, you should always use comparison software to check that is so, and to get an idea of what you are dumping into your shop. Trust no-one!  
 Regarding the template files, you will find template folders "bootstrap BISN TO MERGE" and "responsive_classic BISN TO MERGE" containing modified template files for you to compare and merge into your own equivalents.
 1. Go to the Admin Catalog->BISN Notifications Admin page to auto upgrade/install.
 
@@ -22,15 +26,18 @@ Regarding the template files, you will find template folders "bootstrap BISN TO 
 If necessary, you may restrict the use of the BISN service to only logged-in users to prevent spam from the BISN form, or you can try the ReCaptcha plugin  
 https://github.com/torvista/Zen_Cart-Google_reCAPTCHA
 
-The BISN observer determines if the product is out of stock and hence shows the BISN link and form.  
+On a product page, the BISN observer determines if the product is out of stock and adds the BISN link and form to the page.  
 The user fills in the form on the product info page (or if logged-in, their customer details are inserted automatically).  
 If the submitted form data has an error, a BISN subscribe page is shown, similar to Ask a Question.
-If the form data is valid, the BISN subscribe page is skipped, the subscription is recorded and a success message is shown.
+If the form data is valid, the BISN subscribe page is skipped, the subscription is recorded and a success message is shown.  
+The shop admin may receive a copy of the notification.
+
+When a product is back in stock, notification emails may be sent (manually) from the Admin BISN page.
 
 ## Languages
 If you have a single language store, you should not see anything about languages.
 
-For a multiple-language store, although real notification emails will be sent in the same language as that used by the customer for the subscription, it requires manual intervention (is not automatic).
+For a multiple-language store, although the real (not test) notification emails will be sent in the same language as that used by the customer for the subscription, it requires manual intervention (is not automatic).
 
 This is done by selecting Option 4: this sends the emails in the language that matches the **currently-selected** admin-language.
 Then, changing the admin language will reload the Option 4 page and send the *other* emails that correspond to this other admin language etc.
