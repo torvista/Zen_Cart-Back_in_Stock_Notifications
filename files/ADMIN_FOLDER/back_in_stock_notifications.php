@@ -167,8 +167,9 @@ switch ($option) {
             default:
                 $products_query_raw .= ' ORDER BY cd.categories_name, pd.products_name';
         }
-//todo delete, not necessary?
-        //$products_query_raw = str_replace(["\n", "\r", "\t"], ' ', $products_query_raw);
+
+        $product_subscriptions_info = $db->Execute($products_query_raw);
+        $num_rows = $product_subscriptions_info->RecordCount();
 
         if (isset($_GET['page']) && (int)$_GET['page'] !== -1) { //todo check strict
             $products_split = new splitPageResults(
@@ -176,9 +177,6 @@ switch ($option) {
                 MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $products_query_raw, $num_rows
             );
         }
-
-        $product_subscriptions_info = $db->Execute($products_query_raw);
-        $num_rows = $product_subscriptions_info->RecordCount();
         break;
 
     case 2://list all the subscriptions, by customer
@@ -374,26 +372,29 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
                             MAX_DISPLAY_PAGE_LINKS,
                             $_GET['page'],
-                            zen_get_all_get_params(['page', 'action']) . '#ceon-panels-wrapper'
+                            zen_get_all_get_params(['page', 'action'])
                         );
+                    // . '#bisnSubscriptionsPanel' not possible to add the target id to the dropdown page selects: a "&" is prefixed, the "#" is encoded as %23 and "=" is appended
 
                     $pagination_columns .= ' [<a href="' . zen_href_link(
                             FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-                            zen_get_all_get_params(['page', 'action']) . 'page=-1' . '#ceon-panels-wrapper'
+                            zen_get_all_get_params(['page', 'action']) . 'page=-1' . '#bisnSubscriptionsPanel'
                         ) . '">' . TEXT_SHOW_ALL .
                         '</a>]' . '</td>' . "\n";
 
                     $pagination_columns .= '</tr></table>' . "\n";
-                } else {//page=-1: show all
-                    // All results are to be shown regardless of any maximum rows per page setting
+                } else {
+                    // page=-1: show all/no Paged Listing selected
+                    // ALL results are shown: the maximum rows per page setting is ignored
                     $pagination_columns = '<table style="width:100%">' .
                         '<tr><td class="BISNPageCount">' .
                         sprintf($count_text, 1, $num_rows, $num_rows) . '</td>' . "\n";
 
+                    // create Link to a Paged Listing
                     $pagination_columns .= '<td class="BISNPageLinks">' .
                         '<a href="' . zen_href_link(
                             FILENAME_CEON_BACK_IN_STOCK_NOTIFICATIONS,
-                            zen_get_all_get_params(['page', 'action']) . 'page=1' . '#ceon-panels-wrapper'
+                            zen_get_all_get_params(['page', 'action']) . 'page=1' . '#bisnSubscriptionsPanel'
                         ) . '">' .
                         TEXT_DISPLAY_BY_PAGE . '</a>' . '</td>' . "\n";
 
@@ -403,7 +404,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
 
             if ($option === 1) {
                 ?>
-                <fieldset class="NoMarginBottom">
+                <fieldset id="bisnSubscriptionsPanel" class="NoMarginBottom">
                     <legend><?= TEXT_PRODUCTS_WITH_SUBSCRIPTIONS; ?></legend>
                     <div class="BISNPaginationWrapper"><?= $pagination_columns; ?></div>
                     <table id="bisnTableProductSubscriptions" class="table table-striped table-hover">
@@ -424,7 +425,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                 }
                             }
                             if ($sort_column === 'product') {
-                                echo '<th>' . TABLE_HEADING_PRODUCT. '</th>';
+                                echo '<th>' . TABLE_HEADING_PRODUCT . '</th>';
                             } else {
                                 echo '<th class="ClickToSort"><a href="' .
                                     zen_href_link(
