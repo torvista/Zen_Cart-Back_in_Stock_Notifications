@@ -104,7 +104,7 @@ $bisn_options = [
     ]
 ];
 
-$option = empty($_GET['option']) || !is_numeric($_GET['option']) || (int)$_GET['option'] < 1 || (int)$_GET['option'] > 5 ? 1 : (int)$_GET['option'];
+$option = $_GET['option'] = empty($_GET['option']) || !array_key_exists((int)$_GET['option'] - 1, $bisn_options) ? 1 : (int)$_GET['option'];
 
 switch ($option) {
     case 1://list the products that have subscriptions attached
@@ -165,15 +165,19 @@ switch ($option) {
                 $products_query_raw .= ' ORDER BY cd.categories_name, pd.products_name';
         }
 
-        $product_subscriptions_info = $db->Execute($products_query_raw);
-        $num_rows = $product_subscriptions_info->RecordCount();
-
-        if (isset($_GET['page']) && (int)$_GET['page'] !== -1) { //todo check strict
+        // unless Paging is selected, get all results
+        if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {
+            // splitPageResults modifies query and creates $num_rows
             $products_split = new splitPageResults(
                 $_GET['page'],
                 MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $products_query_raw, $num_rows
             );
+            $product_subscriptions_info = $db->Execute($products_query_raw);
+        } else {
+            $product_subscriptions_info = $db->Execute($products_query_raw);
+            $num_rows = $product_subscriptions_info->RecordCount();
         }
+
         break;
 
     case 2://list all the subscriptions, by customer
@@ -255,18 +259,19 @@ switch ($option) {
                 $subscriptions_query_raw .= ' ORDER BY p.products_model,' .
                     ' bisns.date_subscribed DESC';
         }
-//todo delete, necessary?
-        //$subscriptions_query_raw = str_replace(["\n", "\r", "\t"], ' ', $subscriptions_query_raw);
-
-        if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {//todo check strict
+        // unless Paging is selected, get all results
+        if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {
+            // splitPageResults modifies query and creates $num_rows
             $subscriptions_split = new splitPageResults(
                 $_GET['page'],
-                MAX_DISPLAY_SEARCH_RESULTS_REPORTS, $subscriptions_query_raw, $num_rows
+                MAX_DISPLAY_SEARCH_RESULTS_REPORTS,
+                $subscriptions_query_raw,
+                $num_rows
             );
+        } else {
+            $subscriptions_info = $db->Execute($subscriptions_query_raw);
+            $num_rows = $subscriptions_info->RecordCount();
         }
-
-        $subscriptions_info = $db->Execute($subscriptions_query_raw);
-        $num_rows = $subscriptions_info->RecordCount();
         break;
 
     case 3:// Test run, display all the emails that need to be sent, and also send them to the EMAIL_FROM (store email address). Subscriptions are not deleted
@@ -352,7 +357,8 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                     $split_object = $subscriptions_split;
                 }
 
-                if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {//todo check strict
+                if (isset($_GET['page']) && (int)$_GET['page'] !== -1) {
+
                     // Page is to be split according to the maximum rows per page
                     $pagination_columns = '<table style="width:100%">' .
                         '<tr><td class="BISNPageCount">' .
