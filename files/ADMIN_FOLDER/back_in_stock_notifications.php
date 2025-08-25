@@ -13,8 +13,8 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003-2006 Zen Cart Development Team
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
- * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php torvista 26 Feb 2025
+ * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
+ * @version     $Id: back_in_stock_notifications.php 25 Aug 2025 torvista
  */
 
 //todo: striped table css, change CEON css/ids/classes -> ZC standard
@@ -191,9 +191,8 @@ switch ($option) {
 
         $subscriptions_query_raw = '
          SELECT
-            DISTINCT bisns.*, bisns.name, bisns.email_address,
-            bisns.date_subscribed, pd.products_name, p.products_type, p.products_quantity, c.customers_firstname, c.customers_lastname, c.customers_email_address,
-            cd.categories_name, cd.categories_id, p.products_model, bisns.languages_id
+            DISTINCT bisns.*, pd.products_name, p.products_type, p.products_quantity, c.customers_firstname, c.customers_lastname, c.customers_email_address,
+            cd.categories_name, cd.categories_id, p.products_model
          FROM
             ' . TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS . ' bisns
          LEFT JOIN
