@@ -104,10 +104,7 @@ $bisn_options = [
     ]
 ];
 
-if (empty($_GET['option']) || !is_numeric($_GET['option']) || (int)$_GET['option'] < 1 || (int)$_GET['option'] > 5) {
-    $_GET['option'] = 1;
-}
-$option = (int)$_GET['option'];
+$option = empty($_GET['option']) || !is_numeric($_GET['option']) || (int)$_GET['option'] < 1 || (int)$_GET['option'] > 5 ? 1 : (int)$_GET['option'];
 
 switch ($option) {
     case 1://list the products that have subscriptions attached
