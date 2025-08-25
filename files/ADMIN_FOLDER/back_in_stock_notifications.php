@@ -471,6 +471,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             ?>
                         </tr>
                         </thead>
+                        <tbody>
                         <?php
                         foreach ($product_subscriptions_info as $product_subscription_info) {
                             $product_null = $product_subscription_info['products_name'] === null;
@@ -481,25 +482,25 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                 $product_subscription_info['categories_id'] = '';
                             }
                             ?>
-                            <tbody>
                             <tr class="dataTableRow">
-                                <td class="dataTableContent">
-                                    <?php
-                                    if ($use_model) {
-                                        if (!$product_null) { ?>
-                                            <a href="<?= zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($product_subscription_info['product_id']) . '&products_id=' . $product_subscription_info['product_id']); ?>" target="_blank"
-                                               title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $product_subscription_info['products_model']; ?></a>
-                                            <?php
-                                        }
-                                    } ?>
-                                </td>
+                                <?php
+                                if ($use_model) {
+                                    echo '<td class="dataTableContent text-nowrap">';
+                                    if (!$product_null) { ?>
+                                        <a href="<?= zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($product_subscription_info['product_id']) . '&products_id=' . $product_subscription_info['product_id']); ?>" target="_blank"
+                                           title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $product_subscription_info['products_model']; ?></a>
+                                        <?php
+                                    }
+                                    echo '</td>';
+                                } ?>
                                 <td class="dataTableContent">
                                     <?php
                                     if (!$product_null) {
                                         echo buildLinkToProductAdminPage(
                                             (int)$product_subscription_info['product_id'],
                                             $product_subscription_info['products_name'],
-                                            (int)$product_subscription_info['products_type']
+                                            (int)$product_subscription_info['products_type'],
+                                            $product_subscription_info['product_name_extra']
                                         );
                                     } else {
                                         echo $product_subscription_info['products_name'];
@@ -533,10 +534,10 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     <?= '</form>'; ?>
                                 </td>
                             </tr>
-                            </tbody>
                             <?php
                         }
                         ?>
+                        </tbody>
                     </table>
                     <div class="BISNPaginationWrapper"><?= $pagination_columns; ?></div>
                 </fieldset>
