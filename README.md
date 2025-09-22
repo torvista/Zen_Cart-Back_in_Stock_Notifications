@@ -4,7 +4,7 @@
 If a product is out of stock, customers can subscribe/request to receive a notification when that product becomes available again.
 
 ## Compatibility
-Zen Cart 157 (earlier probably) to the current version 2.1, and up to php8.4+.
+Tested from Zen Cart 157 (earlier probably) to the current version 2.1, and with php8+.
 
 ## Background
 This fileset is based on the original CEON version, not the forked ajax version. Neither are supported by the original developers.
@@ -60,9 +60,11 @@ It's complicated to understand/modify, and something that at some point needs re
 Any problems or suggestions: open an issue in GitHub, not in the forum.
 
 ## Changelog
-For subsequent changes: see the commit history.
+For minor changes: see the commit history.
 
-26/2/2025: add check and install for db column languages_id. Drop old template files.  
+22/09/2025: Bugfix for error on dedicated subscribe page when login required.
+
+26/02/2025: add check and install for db column languages_id. Drop old template files.  
 
 16/08/2024: update and simplify template files
 

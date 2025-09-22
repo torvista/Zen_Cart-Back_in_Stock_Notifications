@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 2024 01 20 torvista
+ * @version     $Id: header_php.php 22 Sept 2025 torvista
  */
 
 /**phpStorm inspections
@@ -87,7 +87,7 @@ $zco_notifier->notify('NOTIFY_BISN_SUBSCRIBE_CAPTCHA_CHECK', $_POST);
 
 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
     $_POST['notify_me'] = 1;
-    $_POST['email'] = zen_get_customer_email_from_id((int)$_SESSION['customer_id']);
+    $_POST['email'] = get_customer_email_from_id((int)$_SESSION['customer_id']);
     $_POST['name'] = $_SESSION['customer_first_name'] . ' ' . $_SESSION['customer_last_name'];
 }
 
@@ -396,7 +396,7 @@ function sendBackInStockNotificationSubscriptionEmail(
     $html_msg['EXTRA_INFO'] = '';
 
     // Create the text version of the e-mail for Zen Cart's e-mail functionality
-    // set the email directory based on language, eg. for es "/es"
+    // set the email directory based on language, e.g. for es "/es"
     $language_folder_path_part = (strtolower($_SESSION['languages_code']) === 'en') ? '' :
         strtolower($_SESSION['languages_code']) . '/';
 
@@ -449,4 +449,17 @@ function sendBackInStockNotificationSubscriptionEmail(
             );
         }
     }
+}
+
+/**
+ * copied from admin-only function zen_get_customer_email_from_id
+ * @param $cid
+ * @return string
+ */
+function get_customer_email_from_id($cid): string
+{
+    global $db;
+    $query = $db->Execute("SELECT customers_email_address FROM " . TABLE_CUSTOMERS . " WHERE customers_id = " . (int)$cid);
+    if ($query->EOF) return '';
+    return $query->fields['customers_email_address'];
 }
