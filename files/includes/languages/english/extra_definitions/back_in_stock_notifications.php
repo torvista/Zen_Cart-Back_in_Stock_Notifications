@@ -13,22 +13,24 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 2023-11-19 torvista
+ * @version     $Id: back_in_stock_notifications.php 12 Nov 2025 torvista
  */
 
 /**
- * HTML for link on Product Listing pages. (Can be used to display a "subscribe" image etc.).
+ * HTML for links on Product LISTING pages. (Can be used to display a "subscribe" image etc.).
+ * THESE ARE NOT CURRENTLY USED
  * Note that the link is added in place of %s, %s must be present for the link to work!
  */
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
-
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_PRODUCT_LISTING_FORM_LINK_LOGIN', 'To be notified when this product is back in stock please <a href="%s">click here to Login first</a>.');
 
 /**
  * Text/HTML for other pages.
  */
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_ALREADY_SUBSCRIBED', 'You have requested to be notified when this product is back in stock.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK', 'To be notified when this product is back in stock please <a href="%s">click here</a>.');
+define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK_LOGIN', 'To be notified when this product is back in stock please <a href="%s">click here to Login first</a>.');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_TITLE', 'Let us notify you when this product is back in stock');
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO', 'Enter your details below and we will send you an e-mail when this product is back in stock:<br><span style="font-size:medium;font-weight:bold;">%s</span>');//inline css used here: better than putting only this in a discrete file for product_info
 define('BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_INTRO_ATTS', 'Enter your details below and we will send you an e-mail when the selected product is back in stock:<br><span style="font-size:medium;font-weight:bold;">%s</span>');//inline css used here: better than putting only this in a discrete file for product_info

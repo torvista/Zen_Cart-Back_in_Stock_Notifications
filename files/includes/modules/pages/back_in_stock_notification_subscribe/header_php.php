@@ -216,7 +216,7 @@ if (isset($_POST['notify_me'])) {
                     'customer_id' => (int)$subscription_customer_id,
                     'name' => zen_db_prepare_input($_POST['name']),
                     'date_subscribed' => date('Y-m-d H:i:s'),
-                    'languages_id' => (int)$_SESSION['languages_id']//steve added
+                    'languages_id' => (int)$_SESSION['languages_id']
                 ];
 
                 zen_db_perform(TABLE_BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTIONS, $sql_data_array);
@@ -332,8 +332,7 @@ function sendBackInStockNotificationSubscriptionEmail(
 
     if ($subscription_code === '') {
         // Build link to my account section
-        $text_msg_part['URL_INTRO'] =
-            BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
+        $text_msg_part['URL_INTRO'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_INTRO;
         $text_msg_part['URL_TEXT'] = BACK_IN_STOCK_NOTIFICATION_SUBSCRIPTION_EMAIL_MY_ACCOUNT_TEXT;
         $text_msg_part['URL_VALUE'] = zen_href_link(
             FILENAME_ACCOUNT_BACK_IN_STOCK_NOTIFICATIONS,
@@ -407,7 +406,8 @@ function sendBackInStockNotificationSubscriptionEmail(
         $text_msg_source = file_get_contents(DIR_FS_EMAIL_TEMPLATES . 'email_template_back_in_stock_notification_subscribe.txt');
     }
 
-    if ($text_msg_source !== false) {//if file not found
+    //if template file found
+    if ($text_msg_source !== false) {
         foreach ($text_msg_part as $key => $value) {
             $text_msg_source = str_replace('$' . $key, $value, $text_msg_source);
         }

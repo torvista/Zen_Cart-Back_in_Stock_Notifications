@@ -72,19 +72,14 @@ class zcObserverBackInStockNotificationsProductInfo extends base
             return;
         }
 
-        $attributes_no_stock = [];
-
-        //**************** Add your custom attribute-stock-handling in here *********************//
-        //*************************************************************************************//
-
         // Check if customer should be offered the option to be notified when this product is back in stock
-        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && ($products_quantity <= 0 || !empty($attributes_no_stock))) {
-            if (BACK_IN_STOCK_REQUIRES_LOGIN === '1' && !zen_is_logged_in()) {
-                return;
-            }
+        if (BACK_IN_STOCK_NOTIFICATIONS_ENABLED === '1' && $products_quantity <= 0) {
 
             $product_back_in_stock_notification_form_link = '';
-            $back_in_stock_notification_build_form = true;
+
+            // Do not display the form if customer needs to be logged in
+            // (after logging in, the subscription is automatically added)
+            $back_in_stock_notification_build_form = !(BACK_IN_STOCK_REQUIRES_LOGIN === '1');
 
             // Update the source with the details of the customer (if available)
             if (isset($_SESSION['customer_id']) && $_SESSION['customer_id']) {
@@ -150,18 +145,30 @@ class zcObserverBackInStockNotificationsProductInfo extends base
                 // Build the link to the form
 
                 if (BACK_IN_STOCK_REQUIRES_LOGIN === '1') {
-                    // account is required for subscription
-                    // if logged in: the subscription link adds the subscription (no form needed)
-                    // if not logged in: redirects to the login/account creation page
-                    $product_back_in_stock_notification_form_link = sprintf(
-                        BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
-                        zen_href_link(
-                            FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
-                            'products_id=' . (int)$_GET['products_id']
-                        )
-                    );
+                    // an account is required for subscription
+
+                    if (zen_is_logged_in()) {
+                        // if logged in: the subscription link adds the subscription (no form needed)
+                        $product_back_in_stock_notification_form_link = sprintf(
+                            BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
+                            zen_href_link(
+                                FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
+                                'products_id=' . (int)$_GET['products_id']
+                            )
+                        );
+                    } else {
+                        // if not logged in: redirects to the login/account creation page, and then automatically adds the subscription
+                        $product_back_in_stock_notification_form_link = sprintf(
+                            BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK_LOGIN,
+                            zen_href_link(
+                                FILENAME_BACK_IN_STOCK_NOTIFICATION_SUBSCRIBE,
+                                'products_id=' . (int)$_GET['products_id']
+                            )
+                        );
+                    }
+
                 } else {
-                    // guest may subscribe: link jumps to form at foot of page
+                    // a guest may subscribe: the link jumps to the form at the foot of page
                     $product_back_in_stock_notification_form_link = sprintf(
                         BACK_IN_STOCK_NOTIFICATION_TEXT_FORM_LINK,
                         zen_href_link(
