@@ -2,17 +2,17 @@
 /** 
  * plugin Back in Stock Notifications
  * https://github.com/torvista/Zen_Cart-Back_in_Stock_Notifications
- * @version $Id: torvista 26 Feb 2025
+ * @version $Id: torvista 12 Nov 2025
  * 
  * Page Template
  *
  * Loaded automatically by index.php?main_page=product_info.
  * Displays details of a typical product
  *
- * @copyright Copyright 2003-2024 Zen Cart Development Team
+ * @copyright Copyright 2003-2025 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: lat9 2024 Sep 17 Modified in v2.1.0-beta1 $
+ * @version $Id: DrByte 2025 Oct 29 Modified in v2.2.0 $
  */
 // -----
 // Enabling this product-information template to be reused for other product
@@ -116,7 +116,7 @@ if ($flag_show_ask_a_question) {
 <!-- bof Ask a Question -->
             <br>
             <span id="productQuestions">
-                <?= '<a href="' . zen_href_link(FILENAME_ASK_A_QUESTION, 'pid=' . $_GET['products_id'], 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_ASK_A_QUESTION, BUTTON_ASK_A_QUESTION_ALT, ' id="askAQuestionButton"') . '</a>' ?>
+                <?= '<a href="' . zen_href_link(FILENAME_ASK_A_QUESTION, 'pID=' . $_GET['products_id'], 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_ASK_A_QUESTION, BUTTON_ASK_A_QUESTION_ALT, ' id="askAQuestionButton"') . '</a>' ?>
             </span>
             <br class="clearBoth">
             <br>
@@ -186,7 +186,7 @@ if ($products_discount_type != 0) {
 if (CUSTOMERS_APPROVAL === '3' && TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == '') {
   // do nothing
 } else {
-    
+
     $display_qty = (($flag_show_product_info_in_cart_qty == 1 && $_SESSION['cart']->in_cart($_GET['products_id'])) ? '<p>' . PRODUCTS_ORDER_QTY_TEXT_IN_CART . $_SESSION['cart']->get_quantity($_GET['products_id']) . '</p>' : '');
     if ($products_qty_box_status == 0 || $products_quantity_order_max == 1) {
         // hide the quantity box and default to 1
@@ -316,9 +316,9 @@ if (!empty($products_url) && $flag_show_product_info_url == 1) {
 <!--eof also purchased products module-->
 
 <?php /* plugin BISN 4 of 4
-close of form 'cart_quantity' has been moved up, to be prior to the BISN form
+close of form 'cart_quantity' has been moved up, to be prior to/separate from the BISN form
 <!--bof Form close-->
-</form>
-<!--bof Form close-->
+<?= '</form>' ?>
+<!--eof Form close-->
 eof plugin BISN 4 of 4 */ ?>
 </div>
