@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     http://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: back_in_stock_notifications.php 25 Aug 2025 torvista
+ * @version     $Id: back_in_stock_notifications.php 12 Nov 2025 torvista
  */
 
 //todo: striped table css, change CEON css/ids/classes -> ZC standard
@@ -484,7 +484,6 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                             if ($product_null) {
                                 $product_subscription_info['products_model'] = '';
                                 $product_subscription_info['products_name'] = sprintf(TEXT_PRODUCT_ID_NOT_FOUND, (int)$product_subscription_info['product_id']);
-                                $product_subscription_info['product_name_extra'] = '';
                                 $product_subscription_info['categories_id'] = '';
                             }
                             ?>
@@ -505,8 +504,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                         echo buildLinkToProductAdminPage(
                                             (int)$product_subscription_info['product_id'],
                                             $product_subscription_info['products_name'],
-                                            (int)$product_subscription_info['products_type'],
-                                            $product_subscription_info['product_name_extra']
+                                            (int)$product_subscription_info['products_type']
                                         );
                                     } else {
                                         echo $product_subscription_info['products_name'];
@@ -658,8 +656,7 @@ require(DIR_WS_INCLUDES . 'header.php'); ?>
                                     <td class="dataTableContent">
                                         <a href="<?= zen_catalog_href_link(FILENAME_PRODUCT_INFO, 'cPath=' . zen_get_product_path($subscription_info['product_id']) . '&products_id=' . $subscription_info['product_id']); ?>"
                                            target="_blank"
-                                           title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $subscription_info['products_model']// for variants . ($subscription_info['product_name_extra'] === '' ? '' : ': ' . $subscription_info['product_name_extra'])
-                                            ; ?></a>
+                                           title="<?= TEXT_TITLE_VIEW_PRODUCT; ?>"><?= $subscription_info['products_model']; ?></a>
                                     </td>
                                 <?php } ?>
                                 <td class="dataTableContent">

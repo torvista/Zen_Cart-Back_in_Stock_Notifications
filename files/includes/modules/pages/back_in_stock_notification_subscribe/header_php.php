@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @copyright   Portions Copyright 2003 osCommerce
  * @link        https://www.ceon.net
  * @license     https://www.gnu.org/copyleft/gpl.html   GNU Public License V2.0
- * @version     $Id: header_php.php 22 Sept 2025 torvista
+ * @version     $Id: header_php.php 12 Nov 2025 torvista
  */
 
 /**phpStorm inspections
@@ -288,12 +288,7 @@ if (isset($_POST['notify_me'])) {
 if ($build_form) {
     // Store details for form
     $back_in_stock_notification_form_customer_name = (!empty($_POST['name']) ? htmlentities($_POST['name'], ENT_COMPAT, CHARSET) : '');
-
     $back_in_stock_notification_form_customer_email = (!empty($_POST['email']) ? htmlentities($_POST['email']) : '');
-//steve for reposting product name extra
-    $back_in_stock_notification_form_posm_product_name_extra = (!empty($_POST['posmProductNameExtra']) ? $_POST['posmProductNameExtra'] : '');//steve for php notice
-//eof
-
     if (isset($_POST['cofnospam'])) {
         $back_in_stock_notification_form_customer_email_confirmation = htmlentities($_POST['cofnospam']);
     } else {
